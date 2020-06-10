@@ -12,7 +12,7 @@ let userSchema = mongoose.Schema({
 
 let User = mongoose.model("User", userSchema);
 
-let userList = {
+let UserList = {
     
     get_all : function() {
         return User.find()

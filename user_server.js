@@ -1,24 +1,16 @@
-let express = require("express");
-// let morgan = require("morgan");
-// let mongoose = require("mongoose");
-let bodyParser = require("body-parser");
-// let uuid = require("uuid");
-// let bcrypt = require("bcryptjs");
+let express         = require("express");
+let bodyParser      = require("body-parser");
+let {UserList}      = require("./user_model");
+const { USER_PORT } = require("./user_config");
 
-// let { NewsFeed, ClinkinsList, UserList, ActiveSessions } = require("./model");
-// const { DATABASE_URL, PORT } = require("./config");
-
-let app = express();
-let jsonParser = bodyParser.json();
-// mongoose.Promise = global.Promise;
+let app             = express();
+let jsonParser      = bodyParser.json();
 
 app.use(express.static("public"));
 
-// app.use(morgan("dev"));
-
 
 app.get("/user-list", (req, res, next) => {
-	UserList.get()
+	UserList.get_all()
 		.then( users => {
 			return res.status(200).json(users);
 		})
@@ -30,6 +22,7 @@ app.get("/user-list", (req, res, next) => {
 			});
 		});
 });
+
 
 app.get("/user-list/:user_id", (req, res, next) => {
 	UserList.get_by_id(req.params.user_id)
@@ -45,36 +38,9 @@ app.get("/user-list/:user_id", (req, res, next) => {
 		});
 });
 
-app.get("/user-list/:user_name", (req, res, next) => {
-	UserList.get_by_id(req.params.user_name)
-		.then( user => {
-			return res.status(200).json(user);
-		})
-		.catch( err => {
-			res.statusMessage = "Something went wrong with the DB."
-			return res.status(500).json({
-				status: 500,
-				message: "Something went wrong with the DB."
-			});
-		});
-});
-
-app.get("/user-list/:user_email", (req, res, next) => {
-	UserList.get_by_id(req.params.user_email)
-		.then( user => {
-			return res.status(200).json(user);
-		})
-		.catch( err => {
-			res.statusMessage = "Something went wrong with the DB."
-			return res.status(500).json({
-				status: 500,
-				message: "Something went wrong with the DB."
-			});
-		});
-});
 
 app.post("/user-list", jsonParser, (req, res) => {
-	UserList.post(req.body)
+	UserList.post_new(req.body)
 		.then( user => {
 			return res.status(200).json(user);
 		})
@@ -88,5 +54,22 @@ app.post("/user-list", jsonParser, (req, res) => {
 });
 
 
+app.post("/user-login", jsonParser, (req, res) => {
+	UserList.login(req.body.user_id)
+		.then( user => {
+			if(user){
+				if(user.password == req.body.password){
+					return res.status(200).json({ access: true });
+				}
+				else{
+					return res.status(409).json({ access: false });
+				}
+			}
+			else{
+				return res.status(409).json({ access: false });
+			}
+		})
+})
 
-module.exports = { app };
+
+app.listen(USER_PORT)
