@@ -1,1 +1,0 @@
-exports.USER_PORT = process.env.USER_PORT || 8080;
