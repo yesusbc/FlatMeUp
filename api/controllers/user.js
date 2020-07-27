@@ -1,8 +1,10 @@
 'use strict'
 var bcrypt = require('bcrypt-nodejs');
+var mongoosePaginate = require('mongoose-pagination');
 var User = require('../models/user');
 var jwt = require('../services/jwt');
 
+// Test Methods
 function home(req, res){
 	res.status(200).send({
 		message: 'Hola mundo desde el servidor de NodeJS'
@@ -16,6 +18,7 @@ function pruebas(req, res){
 	});
 }
 
+// Register
 function saveUser(req, res){
 	var params = req.body;
 	var user = new User();
@@ -57,6 +60,7 @@ function saveUser(req, res){
 	}
 }
 
+// Loggin
 function loginUser(req, res){
 	var params = req.body;
 
@@ -90,9 +94,68 @@ function loginUser(req, res){
 	});
 }
 
+// Get user data
+function getUser(req, res){
+	var userId = req.params.id;
+
+	User.findById(userId, (err, user) => {
+		if(err) return res.status(500).send({message: 'Error in request'});
+
+		if(!user) return res.status(404).send({message: 'User doesnt exist'});
+
+		return res.status(200).send({user});
+	});
+}
+
+// Return a paginated users list
+function getUsers(req, res){
+	var identity_user_id = req.user.sub;
+
+	var page = 1;
+	if(req.params.page){
+		page = req.params.page;
+	}
+
+	var itemsPerPage = 5;
+
+	User.find().sort('_id').paginate(page, itemsPerPage, (err, users, total) => {
+		if(err) return res.status(500).send({message: 'Error in request'});
+
+		if(!users) return res.status(404).send({message: 'No users available'});
+
+		return res.status(200).send({
+			users,
+			total,
+			pages: Math.ceil(total/itemsPerPage)
+		});
+	});
+}
+
+// Edit User data
+function updateUser(req, res){
+	var userId = req.params.id;
+	var update = req.body;
+
+	// Erase password property
+	delete update.password;
+
+	if(userId != req.user.sub) return res.status(500).send({message: 'You are not allowed to acces to this user'});
+
+	User.findByIdAndUpdate(userId, update, {new: true}, (err, userUpdated) =>{
+		if(err) return res.status(500).send({message: 'Error in request'});
+
+		if(!userUpdated) return res.status(404).send({message: 'User actualization Failed'});
+
+		return res.status(200).send({user: userUpdated});
+	});
+}
+
 module.exports = {
 	home,
 	pruebas,
 	saveUser,
-	loginUser
+	loginUser,
+	getUser,
+	getUsers,
+	updateUser
 }

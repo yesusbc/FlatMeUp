@@ -2,7 +2,7 @@
 
 var jwt = require('jwt-simple');
 var moment = require('moment');
-var secret = 'clave_seccreta_FlatMeUp';
+var secret = 'clave_secreta_FlatMeUp';
 
 exports.createToken = function (user){
 	var payload = {
