@@ -27,7 +27,13 @@ function saveUser(req, res){
 		user.name = params.name;
 		user.userName = params.userName;
 		user.email = params.email;
-		user.role = 'ROLE_USER';
+		user.contributionsNumber = 0;
+		user.gender = params.gender ? params.gender : null;
+		user.occupation = params.occupation ? params.occupation : null;
+		user.country = params.country ? params.country : null;
+		user.city = params.city ? params.city : null;
+		user.birthday = params.birthday ? params.birthday : null;
+
 		// user.image = null;
 
 		// Look for repeated userName or repeted Email

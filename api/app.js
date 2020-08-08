@@ -22,5 +22,5 @@ app.use('/api', user_routes);
 
 
 
-// exportar
+// Export
 module.exports = app;

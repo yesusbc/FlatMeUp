@@ -4,14 +4,21 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var PublicationSchema = Schema({
-		address: String,
-		rate: [Number],
-		// ruido, seguridad, precio beneficio, rentero, conservacion/limpieza, upvotedownvote, me interesa?
-		text: String,
-		file: String,
-		created_at: String,
-		vote: [Number],
-		user: { type: Schema.ObjectId, ref: 'User' }
+	user: { type: Schema.ObjectId, ref: 'User' }
+	address: String,
+	apartment: String,
+	text: String,
+	file: String,
+	created_at: String,
+	rate: Number,
+	noise: Number,
+	priceBenefit: Number,
+	landlordSupport: Number,
+	maintenance: Number,
+	votesCounter: Number,
+	canBeContacted: Number,
+	interactionWithBuilding: Number,
+	timeOfInteraction: Number,	
 });
 
 module.exports = mongoose.model('Publication', PublicationSchema);
