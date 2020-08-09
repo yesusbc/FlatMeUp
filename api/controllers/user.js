@@ -2,6 +2,7 @@
 var bcrypt = require('bcrypt-nodejs');
 var mongoosePaginate = require('mongoose-pagination');
 var User = require('../models/user');
+var Publication = require('../models/publication');
 var jwt = require('../services/jwt');
 
 // Test Methods
@@ -155,6 +156,29 @@ function updateUser(req, res){
 		return res.status(200).send({user: userUpdated});
 	});
 }
+
+/*
+function getCounters(req, res){
+	var userId = req.user.sub;
+	if(req.params.id){
+		userId = req.params.id;
+	}
+
+	getCountFollow(userId).then((value) =>{
+		return res.status(200).send(value);
+	});
+}
+
+async function getCountFollow(user_id){
+	var pubications = await Publication.count({"user": userId}).exec((err, count) => {
+		if(err) return handleError(err);
+		return count;
+	});
+
+	return {
+		publications: publications
+	}
+}*/
 
 module.exports = {
 	home,

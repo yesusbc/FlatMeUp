@@ -4,11 +4,13 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var PublicationSchema = Schema({
-	user: { type: Schema.ObjectId, ref: 'User' }
+	user: { type: Schema.ObjectId, ref: 'User' },
 	address: String,
 	apartment: String,
 	text: String,
-	file: String,
+	file: [{
+        type: String
+    }],
 	created_at: String,
 	rate: Number,
 	noise: Number,

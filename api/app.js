@@ -7,7 +7,7 @@ var app = express();
 
 // Load Routes
 var user_routes = require('./routes/user');
-
+var publication_routes = require('./routes/publication');
 
 // Middlewares
 app.use(bodyParser.urlencoded({extended:false}));
@@ -19,6 +19,7 @@ app.use(bodyParser.json());
 
 // Routes
 app.use('/api', user_routes);
+app.use('/api', publication_routes);
 
 
 
