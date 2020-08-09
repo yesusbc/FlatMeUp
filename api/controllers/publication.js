@@ -6,6 +6,7 @@ var moment           = require('moment');
 var mongoosePaginate = require('mongoose-pagination');
 
 var Publication = require('../models/publication');
+var Building = require('../models/building');
 var User        = require('../models/user');
 
 function probando(req, res){
@@ -50,7 +51,56 @@ function savePublication(req, res){
 			User.findByIdAndUpdate(publication.user, {contributionsNumber: contributionsNumber+1}, (err, countUpdated) =>{
 			});
 		}); // 
-		return res.status(200).send({publication: publicationStored});
+		
+		// If address doesnt exist, then create new record
+		Building.findOne({'address': publication.address}).exec((err, addressExists) => {
+			if(!addressExists){
+				var building                   = new Building();
+				building.address               = publication.address;
+				building.apartment             = publication.apartment;
+				building.globalRate            = publication.rate;
+				building.globalNoise           = publication.noise;
+				building.globalPriceBenefit    = publication.priceBenefit;
+				building.globalLandlordSupport = publication.landlordSupport;
+				building.globalMaintenance     = publication.maintenance;
+				building.reviewsCounter        = 1;
+				building.created_at            = publication.created_at;
+				building.save((err, buildingStored) => {
+					if(err) return res.status(500).send({message: 'Error when creating building'});
+					if(buildingStored){
+						res.status(200).send({building: buildingStored, publication: publicationStored});
+					}else{
+						res.status(404).send({message: 'Error when creating building from publication, not saved'});
+					}
+				});
+			}else{
+				// Check for apartment as well, if it doesnt exist, then create record
+				Building.findOne({'address': publication.address, 'apartment': publication.apartment}).exec((err, addressExists) => { 
+					if(!addressExists){
+						var building                   = new Building();
+						building.address               = publication.address;
+						building.apartment             = publication.apartment;
+						building.globalRate            = publication.rate;
+						building.globalNoise           = publication.noise;
+						building.globalPriceBenefit    = publication.priceBenefit;
+						building.globalLandlordSupport = publication.landlordSupport;
+						building.globalMaintenance     = publication.maintenance;
+						building.reviewsCounter        = 1;
+						building.created_at            = publication.created_at;
+						building.save((err, buildingStored) => {
+							if(err) return res.status(500).send({message: 'Error when creating building - apartment'});
+							if(buildingStored){
+								res.status(200).send({building: buildingStored, publication: publicationStored});
+							}else{
+								res.status(404).send({message: 'Error when creating building apt from publication, not saved'});
+							}
+						});
+					}else{
+						return res.status(200).send({publication: publicationStored});
+					}
+				});
+			}
+		});
 	});
 }
 
