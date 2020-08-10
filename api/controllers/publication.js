@@ -18,7 +18,7 @@ function probando(req, res){
 function savePublication(req, res){
 	var params = req.body;
 
-	if(!params.address || !params.text){
+	if(!params.street || !params.text){
 		return res.status(200).send({
 			message: 'Either address or text is missing'
 		});
@@ -27,11 +27,16 @@ function savePublication(req, res){
 	var publication = new Publication();
 
 	publication.user       = req.user.sub;
-	publication.address    = params.address;
 	publication.text       = params.text;
 	publication.file       = 'null';
 	publication.created_at = moment().unix();
-	publication.apartment               = params.apartment               ? params.apartment               : null;
+	publication.address.country         = params.country                 ? params.country                 : null;
+	publication.address.state           = params.state                   ? params.state                   : null;
+	publication.address.city            = params.city                    ? params.city                    : null;
+	publication.address.street          = params.street                  ? params.street                  : null;
+	publication.address.buildingNumber  = params.buildingNumber          ? params.buildingNumber          : null;
+	publication.address.apartment       = params.apartment               ? params.apartment               : null;
+	publication.address.zip             = params.zip                     ? params.zip                     : null;
 	publication.rate                    = params.rate                    ? params.rate                    : null;
 	publication.noise                   = params.noise                   ? params.noise                   : null;
 	publication.priceBenefit            = params.priceBenefit            ? params.priceBenefit            : null;
@@ -48,23 +53,35 @@ function savePublication(req, res){
 		// Contributions number + 1
 		User.findOne({'_id':publication.user}).exec((err, userInf) => {
 			var contributionsNumber = userInf.contributionsNumber;
+			console.log(contributionsNumber);
+			console.log(userInf.contributionsNumber);
 			User.findByIdAndUpdate(publication.user, {contributionsNumber: contributionsNumber+1}, (err, countUpdated) =>{
 			});
 		}); // 
 		
 		// If address doesnt exist, then create new record
-		Building.findOne({'address': publication.address}).exec((err, addressExists) => {
+		Building.findOne({'address.country'        : params.country,
+						  'address.state'          : params.state,
+						  'address.city'           : params.city,
+						  'address.street'         : params.street,
+						  'address.buildingNumber' : params.buildingNumber,
+						  'address.zip'            : params.zip}).exec((err, addressExists) => {
 			if(!addressExists){
-				var building                   = new Building();
-				building.address               = publication.address;
-				building.apartment             = publication.apartment;
-				building.globalRate            = publication.rate;
-				building.globalNoise           = publication.noise;
-				building.globalPriceBenefit    = publication.priceBenefit;
-				building.globalLandlordSupport = publication.landlordSupport;
-				building.globalMaintenance     = publication.maintenance;
-				building.reviewsCounter        = 1;
-				building.created_at            = publication.created_at;
+				var building                    = new Building();
+				building.address.country        = params.country;
+				building.address.state          = params.state;
+				building.address.city           = params.city;
+				building.address.street         = params.street;
+				building.address.buildingNumber = params.buildingNumber;
+				building.address.zip            = params.zip;
+				building.address.apartment      = params.apartment ? params.apartment : null;
+				building.globalRate             = publication.rate;
+				building.globalNoise            = publication.noise;
+				building.globalPriceBenefit     = publication.priceBenefit;
+				building.globalLandlordSupport  = publication.landlordSupport;
+				building.globalMaintenance      = publication.maintenance;
+				building.reviewsCounter         = 1;
+				building.created_at             = publication.created_at;
 				building.save((err, buildingStored) => {
 					if(err) return res.status(500).send({message: 'Error when creating building'});
 					if(buildingStored){
@@ -74,19 +91,30 @@ function savePublication(req, res){
 					}
 				});
 			}else{
-				// Check for apartment as well, if it doesnt exist, then create record
-				Building.findOne({'address': publication.address, 'apartment': publication.apartment}).exec((err, addressExists) => { 
+				// Address exists but perhaps aparment dont, Check for apartment as well, if it doesnt exist, then create record
+				Building.findOne({'address.apartment'      : params.apartment,
+								  'address.country'        : params.country,
+						  		  'address.state'          : params.state,
+						  		  'address.city'           : params.city,
+						  		  'address.street'         : params.street,
+						  		  'address.buildingNumber' : params.buildingNumber,
+						  		  'address.zip'            : params.zip}).exec((err, addressExists) => { 
 					if(!addressExists){
 						var building                   = new Building();
-						building.address               = publication.address;
-						building.apartment             = publication.apartment;
-						building.globalRate            = publication.rate;
-						building.globalNoise           = publication.noise;
-						building.globalPriceBenefit    = publication.priceBenefit;
-						building.globalLandlordSupport = publication.landlordSupport;
-						building.globalMaintenance     = publication.maintenance;
-						building.reviewsCounter        = 1;
-						building.created_at            = publication.created_at;
+						building.address.country        = params.country;
+						building.address.state          = params.state;
+						building.address.city           = params.city;
+						building.address.street         = params.street;
+						building.address.buildingNumber = params.buildingNumber;
+						building.address.zip            = params.zip;
+						building.address.apartment      = params.apartment;
+						building.globalRate             = publication.rate;
+						building.globalNoise            = publication.noise;
+						building.globalPriceBenefit     = publication.priceBenefit;
+						building.globalLandlordSupport  = publication.landlordSupport;
+						building.globalMaintenance      = publication.maintenance;
+						building.reviewsCounter         = 1;
+						building.created_at             = publication.created_at;
 						building.save((err, buildingStored) => {
 							if(err) return res.status(500).send({message: 'Error when creating building - apartment'});
 							if(buildingStored){
@@ -96,6 +124,20 @@ function savePublication(req, res){
 							}
 						});
 					}else{
+						// If building already exist, then
+						// reviewsCounter must increase
+						var apartment = params.apartment ? params.apartment : null;
+						Building.findOne({'address.apartment'      : apartment,
+									  	  'address.country'        : params.country,
+							  		  	  'address.state'          : params.state,
+							  		  	  'address.city'           : params.city,
+							  		  	  'address.street'         : params.street,
+							  		  	  'address.buildingNumber' : params.buildingNumber,
+							  		  	  'address.zip'            : params.zip}).exec((err, pubInf) => {
+							var reviewsNumber = pubInf.reviewsCounter;
+							Building.findByIdAndUpdate(pubInf.id, {reviewsCounter: reviewsNumber+1}, (err, reviewsCountUpdated) =>{
+							});
+						}); // 
 						return res.status(200).send({publication: publicationStored});
 					}
 				});
@@ -177,11 +219,30 @@ function getImageFile(req, res){
 	});
 }
 
+function upDownVote(req, res){
+	var vote = req.body.vote;
+	var publicationId = req.params.publicationId;
+	Publication.findOne({'_id':publicationId}).exec((err, publication) => {
+		if(publication){
+			var newVote = publication.votesCounter + parseInt(vote);
+			Publication.findByIdAndUpdate(publicationId, {votesCounter: newVote}, (err, publicationUpdated) =>{
+						
+						if(err) return res.status(500).send({message: 'Error in voting request'});
+						if(!publicationUpdated) return res.status(404).send({message: 'Votes not updated'});
+						return res.status(200).send({publication: publicationUpdated});
+					});
+		}else{
+			return res.status(404).send({message: 'Publication not found'});
+		}
+	});
+}
+
 module.exports = {
 	probando,
 	savePublication,
 	getPublication,
 	deletePublication,
 	uploadImage,
-	getImageFile
+	getImageFile,
+	upDownVote
 }

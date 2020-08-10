@@ -10,6 +10,9 @@ var md_auth = require('../middlewares/authenticated');
 
 api.get('/testbuilding', BuildingController.testbuilding);
 api.post('/create-building', BuildingController.createBuilding);
+api.get('/get-buildings/:page?', BuildingController.getBuildings);
+api.get('/get-building/:buildingId', BuildingController.getBuildingById);
+api.post('/get-building-loc/:page?', BuildingController.getBuildingsByAddress);
 
 module.exports = api;
 

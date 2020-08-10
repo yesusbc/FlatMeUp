@@ -5,8 +5,16 @@ var Schema = mongoose.Schema;
 
 var PublicationSchema = Schema({
 	user: { type: Schema.ObjectId, ref: 'User' },
-	address: String,
-	apartment: String,
+	// address: String,
+	address: {
+		country: String,
+        state: String,
+        city: String,
+        street: String,
+        buildingNumber: Number,
+        apartment: String,
+        zip: Number
+    },
 	text: String,
 	file: [{
         type: String
