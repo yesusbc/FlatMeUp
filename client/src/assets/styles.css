@@ -8,6 +8,10 @@
 	border-bottom: 1px solid #eee;
 }
 
+.active{
+	background: #D3D3D3;
+}
+
 
 /*HEADER*/
 .navigation {
@@ -18,4 +22,8 @@
 .navigation .navbar {
 	border-radius: 0px !important;
 	border: none;
+}
+
+.navigation .navbar a:hover{
+	background: #D3D3D3 !important;
 }

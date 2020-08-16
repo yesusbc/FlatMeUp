@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit{
 				}else{
 					this.status = 'success';	
 					// Pending to save on storage, persisting data
+					localStorage.setItem('identity', JSON.stringify(this.identity));
 
 					// get token
 					this.getToken();
@@ -63,6 +64,7 @@ export class LoginComponent implements OnInit{
 				}else{
 					this.status = 'success';	
 					// Pending to save on storage, persisting token
+					localStorage.setItem('token', this.token);
 
 					// get counters and statistics of user
 				}
