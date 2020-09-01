@@ -67,6 +67,8 @@ export class LoginComponent implements OnInit{
 					localStorage.setItem('token', this.token);
 
 					// get counters and statistics of user
+
+					this._router.navigate(['/']);
 				}
 			},
 			error => {
