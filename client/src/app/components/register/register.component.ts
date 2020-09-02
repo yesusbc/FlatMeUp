@@ -25,6 +25,7 @@ export class RegisterComponent implements OnInit{
 			"",
 			"",
 			"",
+			"",
 			0,
 			0,
 			"",

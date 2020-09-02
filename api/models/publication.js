@@ -15,6 +15,7 @@ var PublicationSchema = Schema({
         apartment: String,
         zip: Number
     },
+    typeOfBuilding: Number,
 	text: String,
 	file: [{
         type: String

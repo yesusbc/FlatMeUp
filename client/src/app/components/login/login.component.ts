@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit{
 		private _userService: UserService
 	){
 		this.title = 'Login';
-		this.user = new User( "","","","","",0,0,"","","","","");
+		this.user = new User( "","","","","","",0,0,"","","","","");
 	}
 	ngOnInit(){
 		console.log('Componente de login cargado...');

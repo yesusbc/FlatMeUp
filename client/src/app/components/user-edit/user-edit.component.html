@@ -18,6 +18,11 @@
 		</p>
 
 		<p>
+			<label>Lastname</label>
+			<input type="text" name="lastname" #lastname="ngModel" [(ngModel)]="user.lastname"  class="form-control"/>
+		</p>
+
+		<p>
 			<label>Username</label>
 			<input type="text" name="userName" #userName="ngModel" [(ngModel)]="user.userName" required class="form-control"/>
 			<span *ngIf="!userName.value && userName.touche">Username is obligatory

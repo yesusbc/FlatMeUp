@@ -28,6 +28,7 @@ function createBuilding(req, res){
 				building.address.buildingNumber = params.buildingNumber;
 				building.address.zip            = params.zip;
 				building.address.apartment     = params.apartment ? params.apartment : null;
+				building.typeOfBuilding         = 0;
 				building.globalRate             = 0;
 				building.globalNoise            = 0;
 				building.globalPriceBenefit     = 0;
@@ -61,6 +62,7 @@ function createBuilding(req, res){
 						building.address.buildingNumber = params.buildingNumber;
 						building.address.zip            = params.zip;
 						building.address.apartment      = params.apartment;
+						building.typeOfBuilding         = 0;
 						building.globalRate             = 0;
 						building.globalNoise            = 0;
 						building.globalPriceBenefit     = 0;

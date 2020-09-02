@@ -17,26 +17,25 @@ function probando(req, res){
 
 function savePublication(req, res){
 	var params = req.body;
-
-	if(!params.street || !params.text){
+	if(!params.address.street || !params.text){
 		return res.status(200).send({
 			message: 'Either address or text is missing'
 		});
 	}
-
 	var publication = new Publication();
 
 	publication.user       = req.user.sub;
 	publication.text       = params.text;
 	publication.file       = 'null';
 	publication.created_at = moment().unix();
-	publication.address.country         = params.country                 ? params.country                 : null;
-	publication.address.state           = params.state                   ? params.state                   : null;
-	publication.address.city            = params.city                    ? params.city                    : null;
-	publication.address.street          = params.street                  ? params.street                  : null;
-	publication.address.buildingNumber  = params.buildingNumber          ? params.buildingNumber          : null;
-	publication.address.apartment       = params.apartment               ? params.apartment               : null;
-	publication.address.zip             = params.zip                     ? params.zip                     : null;
+	publication.address.country         = params.address.country         ? params.address.country                 : null;
+	publication.address.state           = params.address.state           ? params.address.state                   : null;
+	publication.address.city            = params.address.city            ? params.address.city                    : null;
+	publication.address.street          = params.address.street          ? params.address.street                  : null;
+	publication.address.buildingNumber  = params.address.buildingNumber  ? params.address.buildingNumber          : null;
+	publication.address.apartment       = params.address.apartment       ? params.address.apartment               : null;
+	publication.address.zip             = params.address.zip             ? params.address.zip                     : null;
+	publication.typeOfBuilding          = params.typeOfBuilding          ? params.typeOfBuilding          : null;
 	publication.rate                    = params.rate                    ? params.rate                    : null;
 	publication.noise                   = params.noise                   ? params.noise                   : null;
 	publication.priceBenefit            = params.priceBenefit            ? params.priceBenefit            : null;
@@ -75,6 +74,7 @@ function savePublication(req, res){
 				building.address.buildingNumber = params.buildingNumber;
 				building.address.zip            = params.zip;
 				building.address.apartment      = params.apartment ? params.apartment : null;
+				building.typeOfBuilding         = publication.typeOfBuilding;
 				building.globalRate             = publication.rate;
 				building.globalNoise            = publication.noise;
 				building.globalPriceBenefit     = publication.priceBenefit;
@@ -108,6 +108,7 @@ function savePublication(req, res){
 						building.address.buildingNumber = params.buildingNumber;
 						building.address.zip            = params.zip;
 						building.address.apartment      = params.apartment;
+						building.typeOfBuilding         = publication.typeOfBuilding;
 						building.globalRate             = publication.rate;
 						building.globalNoise            = publication.noise;
 						building.globalPriceBenefit     = publication.priceBenefit;

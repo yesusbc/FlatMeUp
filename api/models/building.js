@@ -14,6 +14,7 @@ var BuildingSchema = Schema({
         apartment: String,
         zip: Number
     },
+    typeOfBuilding: Number,
 	file: [{
         type: String
     }],

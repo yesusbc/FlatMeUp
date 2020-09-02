@@ -26,6 +26,7 @@ function saveUser(req, res){
 
 	if (params.name && params.userName && params.email && params.password){
 		user.name = params.name;
+		user.lastname = params.lastname;
 		user.userName = params.userName;
 		user.email = params.email;
 		user.contributionsNumber = 0;
@@ -148,12 +149,25 @@ function updateUser(req, res){
 
 	if(userId != req.user.sub) return res.status(500).send({message: 'You are not allowed to acces to this user'});
 
-	User.findByIdAndUpdate(userId, update, {new: true}, (err, userUpdated) =>{
-		if(err) return res.status(500).send({message: 'Error in request'});
+	// Look for repeated userName or repeted Email
+	User.find({ $or:[
+					{email: update.email.toLowerCase()},
+					{userName: update.userName.toLowerCase()}
+					]}).exec((err, users) => {
+						var user_isset = false;
+						users.forEach((user) => {
+							if(user && user._id != userId) user_isset = true;
+						});
+						
+						if(user_isset) return res.status(404).send({message: 'Data is already taken'});
 
-		if(!userUpdated) return res.status(404).send({message: 'User actualization Failed'});
+		User.findByIdAndUpdate(userId, update, {new: true}, (err, userUpdated) =>{
+			if(err) return res.status(500).send({message: 'Error in request'});
 
-		return res.status(200).send({user: userUpdated});
+			if(!userUpdated) return res.status(404).send({message: 'User actualization Failed'});
+
+			return res.status(200).send({user: userUpdated});
+		});
 	});
 }
 
