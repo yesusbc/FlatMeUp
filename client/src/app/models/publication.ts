@@ -13,7 +13,7 @@ export class Publication{
     	},
         public typeOfBuilding:number,
     	public text:string,
-    	public file:string,
+    	public file:string[],
     	public created_at:string,
     	public rate:number,
     	public noise:number,

@@ -9,7 +9,7 @@
 		Publication failed, try again
 	</div>
 
-	<form #reviewForm="ngForm" (ngSubmit)="onSubmit(reviewForm)" class="col-lg-12">
+	<form #ReviewForm="ngForm" (ngSubmit)="onSubmit(ReviewForm)" class="col-lg-12">
 		<p>
 			<!-- TODO: Work in address, it must parse the address to street, state, country, etc. Missing Google Services. -->
 			<label>Address: </label>
@@ -59,15 +59,17 @@
 
 		</p>
 
-
-
-
 		<p>
-			<input type="checkbox" name="canBeContacted" value="canBeContacted">
+			<input type="checkbox" name="canBeContacted" #canBeContacted="ngModel" [(ngModel)]="publication.canBeContacted" value="canBeContacted">
 			<label for="canBeContacted"> Can I be Contacted?</label><br>
 		</p>
 
-		<input type="submit" value="{{title}}" class="btn btn-success"[disabled]="!reviewForm.form.valid"/>
+		<p>
+			<label>Upload a picture</label>
+			<input type="file" placeholder="Upload picture" (change)="fileChangeEvent($event)"/>
+		</p>
+
+		<input type="submit" value="{{title}}" class="btn btn-success"[disabled]="!ReviewForm.form.valid"/>
 	</form>
 </div>
 

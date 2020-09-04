@@ -19,4 +19,23 @@ export class PublicationService{
 		return this._http.post(this.url+'write-a-review', params, {headers: headers});
 
 	}
+
+	// Create building '/create-building',
+
+
+
+	getBuildings(token, page=1):Observable<any>{
+		let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
+
+		return this._http.get(this.url+'get-buildings/'+page, {headers: headers});
+	}
+
+
+	// get Building by ID  /get-building/:buildingId',
+
+	// get BUilding by LOC  '/get-building-loc/:page?'
+
+	// get review '/review/:id',
+
+	// delete review  '/review/:id',
 }

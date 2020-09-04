@@ -167,7 +167,7 @@ function deletePublication(req, res){
 	});
 }
 
-function uploadImage(req, res){
+function uploadImageOnExistingPublication(req, res){
 	var publicationId = req.params.id;
 
 	if(req.files){
@@ -199,6 +199,32 @@ function uploadImage(req, res){
 	}
 }
 
+function uploadImage(req, res){
+	var publicationId = req.params.publicationId;
+
+	if(req.files){
+		var file_path  = req.files.image.path;
+		var file_split = file_path.split('/');
+		var file_name  = file_split[2];
+		var ext_split  = file_name.split('.');
+		var file_ext   = ext_split[1];
+
+		if (file_ext=='png' || file_ext=='jpg' || file_ext=='jpeg'){
+
+			Publication.findByIdAndUpdate(publicationId, {$push: {file: file_name}}, {new: true}, (err, publicationUpdated) =>{
+						if(err) return res.status(500).send({message: 'Error in request'});
+						if(!publicationUpdated) return res.status(404).send({message: 'Couldnot upload image'});
+
+						return res.status(200).send({publication: publicationUpdated});
+					});
+		}else{
+			return removeFilesOfUploads(res, file_path, 'Extension not valid');
+		}
+	}else{
+		return res.status(200).send({message: 'Image was not uploaded'});
+	}
+}
+
 function removeFilesOfUploads(res, file_path, message){
 	fs.unlink(file_path, (err) =>{
 		return res.status(200).send({message: message});
@@ -207,9 +233,7 @@ function removeFilesOfUploads(res, file_path, message){
 
 function getImageFile(req, res){
 	var image_file = req.params.imageFile;
-	console.log(image_file);
 	var path_file = './uploads/publications/'+image_file;
-	console.log(path_file);
 
 	fs.exists(path_file, (exists) => {
 		if(exists){
