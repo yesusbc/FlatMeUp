@@ -24,9 +24,12 @@ export class PublicationService{
 
 
 
-	getBuildings(token, page=1):Observable<any>{
-		let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
-
+	// getBuildings(token, page=1):Observable<any>{
+	// 	let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
+	//	return this._http.get(this.url+'get-buildings/'+page, {headers: headers});
+	// }
+	getBuildingsByPage(page=1):Observable<any>{
+		let headers = new HttpHeaders().set('Content-Type', 'application/json');
 		return this._http.get(this.url+'get-buildings/'+page, {headers: headers});
 	}
 

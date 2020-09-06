@@ -3,9 +3,11 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { routing, appRoutingProviders } from './app-routing.module';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 
 // Components
 import { AppComponent } from './app.component';
+import { AddressComponent } from './components/google-places/address.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
@@ -15,6 +17,7 @@ import { PublicationComponent } from './components/publication/publication.compo
 @NgModule({
   declarations: [
     AppComponent,
+    AddressComponent,
     LoginComponent,
     RegisterComponent,
     HomeComponent,
@@ -22,6 +25,7 @@ import { PublicationComponent } from './components/publication/publication.compo
     PublicationComponent
   ],
   imports: [
+    GooglePlaceModule,
     BrowserModule,
     FormsModule,
     routing,

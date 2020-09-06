@@ -11,9 +11,9 @@ var PublicationSchema = Schema({
         state: String,
         city: String,
         street: String,
-        buildingNumber: Number,
+        buildingNumber: String,
         apartment: String,
-        zip: Number
+        zip: String
     },
     typeOfBuilding: Number,
 	text: String,

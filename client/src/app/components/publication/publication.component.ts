@@ -23,6 +23,9 @@ export class PublicationComponent implements OnInit{
 	public user: User;
 	public url: string;
 	public status: string;
+    public formattedaddress;
+    public options;
+    public addressCorrect;
 
 	constructor(
 		private _route: ActivatedRoute,
@@ -36,14 +39,20 @@ export class PublicationComponent implements OnInit{
 		this.identity = this._userService.getIdentity();
 		this.token = this._userService.getToken();
 		this.url = GLOBAL.url;
-		this.publication = new Publication("","", {
+		this.publication = new Publication("","",{
 													country:"", 
 													state:"", 
 													city:"",
 											        street:"",
-											        buildingNumber:0,
+											        buildingNumber:"",
 											        apartment:"",
-											        zip:0},0,"",[],"",0,0,0,0,0,0,1,0,0);
+											        zip:""},0,"",[],"",0,0,0,0,0,0,1,0,0);
+		this.options={ 
+            componentRestrictions:{ 
+                types: 'address'
+                // country:["MX"] 
+            } 
+        }
 	}
 
 	ngOnInit(){
@@ -58,11 +67,14 @@ export class PublicationComponent implements OnInit{
 					if (response.publication){
 						// this.publication = response.publication;
 						this.status = 'success';
-						this._uploadService.makeFileRequest(this.url+'upload-image/'+response.publication._id, [], this.filesToUpload, this.token, 'image')
-								.then((result: any) => {
-									this.publication.file = result.publication.image;
-								});
+						if (this.filesToUpload){
+							this._uploadService.makeFileRequest(this.url+'upload-image/'+response.publication._id, [], this.filesToUpload, this.token, 'image')
+									.then((result: any) => {
+										this.publication.file = result.publication.image;
+									});
+						}
 						ReviewForm.reset();
+						this.formattedaddress = "";
 					}else{
 						this.status = 'error';
 					}
@@ -80,8 +92,31 @@ export class PublicationComponent implements OnInit{
 
 	public filesToUpload: Array<File>;
 	fileChangeEvent(fileInput: any){
+		console.log(this.filesToUpload);
 		this.filesToUpload = <Array<File>>fileInput.target.files;
 	}
+
+	public AddressChange(address: any) { 
+    //setting address from API to local variable 
+    this.publication.address.buildingNumber = (address.address_components[0]) ? address.address_components[0].long_name : "";
+    this.publication.address.street = (address.address_components[1]) ? address.address_components[1].long_name : "";
+    this.publication.address.city = (address.address_components[2]) ? address.address_components[2].long_name : "";
+    this.publication.address.state = (address.address_components[3]) ? address.address_components[3].long_name : "";
+    this.publication.address.country = (address.address_components[4]) ? address.address_components[4].long_name : "";
+    this.publication.address.zip = (address.address_components[5]) ? address.address_components[5].long_name : "";
+    
+    this.addressCorrect = "success";
+    if (this.publication.address.buildingNumber == "" ||
+    	this.publication.address.street == "" ||
+    	this.publication.address.city == "" ||
+    	this.publication.address.state == "" ||
+    	this.publication.address.country == "" ||
+    	this.publication.address.zip == ""){
+    	this.addressCorrect = "error";
+    }
+
+    this.formattedaddress = address.formatted_address;
+    } 
 
 }		
 

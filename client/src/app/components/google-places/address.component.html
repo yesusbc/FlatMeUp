@@ -1,0 +1,8 @@
+<div class="col-lg-8 col-lg-offset-2">
+  <div class="google-places-container"> 
+    <h2>{{title}}</h2> 
+  <input ngx-google-places-autocomplete [options]= 
+   'options'  (onAddressChange)="AddressChange($event)" class="form-control"/> 
+  {{ formattedaddress }} 
+  </div> 
+</div>

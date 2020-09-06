@@ -33,7 +33,7 @@ function savePublication(req, res){
 	publication.address.city            = params.address.city            ? params.address.city                    : null;
 	publication.address.street          = params.address.street          ? params.address.street                  : null;
 	publication.address.buildingNumber  = params.address.buildingNumber  ? params.address.buildingNumber          : null;
-	publication.address.apartment       = params.address.apartment       ? params.address.apartment               : null;
+	publication.address.apartment       = params.address.apartment       ? params.address.apartment               : "";
 	publication.address.zip             = params.address.zip             ? params.address.zip                     : null;
 	publication.typeOfBuilding          = params.typeOfBuilding          ? params.typeOfBuilding          : null;
 	publication.rate                    = params.rate                    ? params.rate                    : null;
@@ -52,28 +52,28 @@ function savePublication(req, res){
 		// Contributions number + 1
 		User.findOne({'_id':publication.user}).exec((err, userInf) => {
 			var contributionsNumber = userInf.contributionsNumber;
-			console.log(contributionsNumber);
-			console.log(userInf.contributionsNumber);
 			User.findByIdAndUpdate(publication.user, {contributionsNumber: contributionsNumber+1}, (err, countUpdated) =>{
 			});
 		}); // 
 		
 		// If address doesnt exist, then create new record
-		Building.findOne({'address.country'        : params.country,
-						  'address.state'          : params.state,
-						  'address.city'           : params.city,
-						  'address.street'         : params.street,
-						  'address.buildingNumber' : params.buildingNumber,
-						  'address.zip'            : params.zip}).exec((err, addressExists) => {
+		Building.findOne({'address.country'        : params.address.country,
+						  'address.state'          : params.address.state,
+						  'address.city'           : params.address.city,
+						  'address.street'         : params.address.street,
+						  'address.buildingNumber' : params.address.buildingNumber,
+						  'address.zip'            : params.address.zip}).exec((err, addressExists) => {
+			console.log("address exist: ");
+			console.log(addressExists);
 			if(!addressExists){
 				var building                    = new Building();
-				building.address.country        = params.country;
-				building.address.state          = params.state;
-				building.address.city           = params.city;
-				building.address.street         = params.street;
-				building.address.buildingNumber = params.buildingNumber;
-				building.address.zip            = params.zip;
-				building.address.apartment      = params.apartment ? params.apartment : null;
+				building.address.country        = params.address.country;
+				building.address.state          = params.address.state;
+				building.address.city           = params.address.city;
+				building.address.street         = params.address.street;
+				building.address.buildingNumber = params.address.buildingNumber;
+				building.address.zip            = params.address.zip;
+				building.address.apartment      = params.address.apartment ? params.address.apartment : "";
 				building.typeOfBuilding         = publication.typeOfBuilding;
 				building.globalRate             = publication.rate;
 				building.globalNoise            = publication.noise;
@@ -92,22 +92,22 @@ function savePublication(req, res){
 				});
 			}else{
 				// Address exists but perhaps aparment dont, Check for apartment as well, if it doesnt exist, then create record
-				Building.findOne({'address.apartment'      : params.apartment,
-								  'address.country'        : params.country,
-						  		  'address.state'          : params.state,
-						  		  'address.city'           : params.city,
-						  		  'address.street'         : params.street,
-						  		  'address.buildingNumber' : params.buildingNumber,
-						  		  'address.zip'            : params.zip}).exec((err, addressExists) => { 
+				Building.findOne({'address.apartment'      : params.address.apartment,
+								  'address.country'        : params.address.country,
+						  		  'address.state'          : params.address.state,
+						  		  'address.city'           : params.address.city,
+						  		  'address.street'         : params.address.street,
+						  		  'address.buildingNumber' : params.address.buildingNumber,
+						  		  'address.zip'            : params.address.zip}).exec((err, addressExists) => { 
 					if(!addressExists){
 						var building                   = new Building();
-						building.address.country        = params.country;
-						building.address.state          = params.state;
-						building.address.city           = params.city;
-						building.address.street         = params.street;
-						building.address.buildingNumber = params.buildingNumber;
-						building.address.zip            = params.zip;
-						building.address.apartment      = params.apartment;
+						building.address.country        = params.address.country;
+						building.address.state          = params.address.state;
+						building.address.city           = params.address.city;
+						building.address.street         = params.address.street;
+						building.address.buildingNumber = params.address.buildingNumber;
+						building.address.zip            = params.address.zip;
+						building.address.apartment      = params.address.apartment;
 						building.typeOfBuilding         = publication.typeOfBuilding;
 						building.globalRate             = publication.rate;
 						building.globalNoise            = publication.noise;
@@ -127,14 +127,14 @@ function savePublication(req, res){
 					}else{
 						// If building already exist, then
 						// reviewsCounter must increase
-						var apartment = params.apartment ? params.apartment : null;
-						Building.findOne({'address.apartment'      : apartment,
-									  	  'address.country'        : params.country,
-							  		  	  'address.state'          : params.state,
-							  		  	  'address.city'           : params.city,
-							  		  	  'address.street'         : params.street,
-							  		  	  'address.buildingNumber' : params.buildingNumber,
-							  		  	  'address.zip'            : params.zip}).exec((err, pubInf) => {
+						var apartment = params.address.apartment ? params.address.apartment : null;
+						Building.findOne({'address.apartment'      : params.address.apartment,
+									  	  'address.country'        : params.address.country,
+							  		  	  'address.state'          : params.address.state,
+							  		  	  'address.city'           : params.address.city,
+							  		  	  'address.street'         : params.address.street,
+							  		  	  'address.buildingNumber' : params.address.buildingNumber,
+							  		  	  'address.zip'            : params.address.zip}).exec((err, pubInf) => {
 							var reviewsNumber = pubInf.reviewsCounter;
 							Building.findByIdAndUpdate(pubInf.id, {reviewsCounter: reviewsNumber+1}, (err, reviewsCountUpdated) =>{
 							});
