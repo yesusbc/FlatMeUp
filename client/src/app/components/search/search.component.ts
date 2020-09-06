@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({ 
-    selector: 'address', 
-    templateUrl: './address.component.html'
+    selector: 'search', 
+    templateUrl: './search.component.html'
     }) 
-export class AddressComponent implements OnInit{ 
+export class SearchComponent implements OnInit{ 
     public title;
     public formattedaddress;
     public options;
@@ -14,7 +15,9 @@ export class AddressComponent implements OnInit{
     public state;
     public country;
     public zip;
-    constructor(){
+    constructor(
+        private _router: Router,
+    ){
         this.title = "Type Address";
         this.formattedaddress ="";
         this.options={ 

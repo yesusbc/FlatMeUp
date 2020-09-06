@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PublicationService } from '../../services/publication.service';
 import  { Building } from '../../models/building';
+import { GLOBAL } from '../../services/global';
 
 @Component({
 	selector: 'home',
@@ -17,6 +18,7 @@ export class HomeComponent implements OnInit{
 	public pages;
 	public buildings: Building[];
 	public address;
+	public url: string;
 
 	constructor(
 		private _router: Router,
@@ -24,6 +26,7 @@ export class HomeComponent implements OnInit{
 	){
 		this.title = 'Welcome to FlatMeUp';
 		this.page = 1;
+		this.url = GLOBAL.url;
 	}
 
 	ngOnInit(){
@@ -36,6 +39,7 @@ export class HomeComponent implements OnInit{
 				response => {
 					if(response.buildings){
 						console.log(response);
+						console.log(this.buildings);
 						this.total = response.total;
 						this.pages = response.pages;
 						this.buildings = response.buildings;

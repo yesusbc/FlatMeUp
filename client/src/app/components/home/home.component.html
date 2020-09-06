@@ -1,15 +1,23 @@
 <div class="col-lg-8 col-lg-offset-2">
 	<h1 class="h1-strong">{{title}}</h1>
 
-	<address></address>
+	<div>
+		<search></search>
+	</div>
 
 	<div id="buildings">
 		<div *ngFor="let building of buildings" class="item-building">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					{{building.file}}
+					<div class="building-image">
+						<!-- Pending Buildings fetch -->
+						<img src="{{url+'get-image/'+building.file}}" alt={{building.address.street}} width="350" height="200">
+					</div>
 					<div class="building-text pull-left">
-						<h4>{{building.address.street + "," + building.address.state + "." + building.address.country}}</h4>
+						<h4>{{building.address.street + ", " + 
+							building.address.buildingNumber + ". " +
+							building.address.state + ", " + 
+							building.address.country}}</h4>
 					</div>
 				</div>
 			</div>
