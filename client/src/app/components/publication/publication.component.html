@@ -15,6 +15,9 @@
 			<input ngx-google-places-autocomplete [options]= 
    				'options'  (onAddressChange)="AddressChange($event)" class="form-control"/> 
   				{{ formattedaddress }} 
+  		</p>
+
+  		<p>
   			<span class="alert alert-success" *ngIf="addressCorrect == 'success'">
 				Address is correct
 			</span>
@@ -73,7 +76,7 @@
 			<input type="file" placeholder="Upload picture" (change)="fileChangeEvent($event)" multiple/>
 		</p>
 
-		<input type="submit" value="{{title}}" class="btn btn-success"[disabled]="!ReviewForm.form.valid"/>
+		<input type="submit" value="{{title}}" class="btn btn-success"[disabled]="!ReviewForm.form.valid && addressCorrect=='error'"/>
 	</form>
 </div>
 

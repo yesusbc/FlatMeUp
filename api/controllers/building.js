@@ -8,6 +8,7 @@ function testbuilding(req, res){
 	});
 }
 
+// Maybe it needs to be params.address.xxx
 function createBuilding(req, res){
 	var params = req.body;
 	var building = new Building();

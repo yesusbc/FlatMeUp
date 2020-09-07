@@ -6,6 +6,7 @@ import { UserService } from '../../services/user.service';
 import { UploadService } from '../../services/upload.service';
 import { PublicationService } from '../../services/publication.service';
 import { GLOBAL } from '../../services/global';
+import { AddressComponent } from "ngx-google-places-autocomplete/objects/addressComponent";
 
 
 
@@ -48,10 +49,8 @@ export class PublicationComponent implements OnInit{
 											        apartment:"",
 											        zip:""},0,"",[],"",0,0,0,0,0,0,1,0,0);
 		this.options={ 
-            componentRestrictions:{ 
-                types: 'address'
-                // country:["MX"] 
-            } 
+          types: 'address',
+          fields: ['address_components', 'place_id']
         }
 	}
 
@@ -96,27 +95,44 @@ export class PublicationComponent implements OnInit{
 		this.filesToUpload = <Array<File>>fileInput.target.files;
 	}
 
-	public AddressChange(address: any) { 
-    //setting address from API to local variable 
-    this.publication.address.buildingNumber = (address.address_components[0]) ? address.address_components[0].long_name : "";
-    this.publication.address.street = (address.address_components[1]) ? address.address_components[1].long_name : "";
-    this.publication.address.city = (address.address_components[2]) ? address.address_components[2].long_name : "";
-    this.publication.address.state = (address.address_components[3]) ? address.address_components[3].long_name : "";
-    this.publication.address.country = (address.address_components[4]) ? address.address_components[4].long_name : "";
-    this.publication.address.zip = (address.address_components[5]) ? address.address_components[5].long_name : "";
-    
-    this.addressCorrect = "success";
-    if (this.publication.address.buildingNumber == "" ||
-    	this.publication.address.street == "" ||
-    	this.publication.address.city == "" ||
-    	this.publication.address.state == "" ||
-    	this.publication.address.country == "" ||
-    	this.publication.address.zip == ""){
-    	this.addressCorrect = "error";
+    public AddressChange(address: any) { 
+    	//setting address from API to local variable 
+        this.publication.address.buildingNumber = this.getComponentByType(address,"street_number") ? this.getComponentByType(address,"street_number").long_name : undefined;
+        this.publication.address.street = this.getComponentByType(address,"route") ? this.getComponentByType(address,"route").long_name : undefined;
+        this.publication.address.city = this.getComponentByType(address,"locality") ? this.getComponentByType(address,"locality").long_name : undefined;
+        this.publication.address.state = this.getComponentByType(address,"administrative_area_level_1") ? this.getComponentByType(address,"administrative_area_level_1").long_name : undefined;
+        this.publication.address.country = this.getComponentByType(address,"country") ? this.getComponentByType(address,"country").long_name : undefined;
+        this.publication.address.zip = this.getComponentByType(address,"postal_code") ? this.getComponentByType(address,"postal_code").long_name : undefined;
+        
+        this.addressCorrect = "success";
+    	if (this.publication.address.buildingNumber == undefined ||
+    		this.publication.address.street == undefined ){
+    		this.addressCorrect = "error";
+    	} 
+
+    	this.formattedaddress = address.formatted_address;
     }
 
-    this.formattedaddress = address.formatted_address;
-    } 
+
+    public getComponentByType(address: any, type: string): AddressComponent {
+        if(!type)
+            return null;
+
+        if (!address || !address.address_components || address.address_components.length == 0)
+            return null;
+
+        type = type.toLowerCase();
+
+        for (let comp of address.address_components) {
+            if(!comp.types || comp.types.length == 0)
+                continue;
+
+            if(comp.types.findIndex(x => x.toLowerCase() == type) > -1)
+                return comp;
+        }
+
+        return null;
+    }
 
 }		
 

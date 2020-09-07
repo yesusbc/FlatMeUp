@@ -23,11 +23,6 @@ export class PublicationService{
 	// Create building '/create-building',
 
 
-
-	// getBuildings(token, page=1):Observable<any>{
-	// 	let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
-	//	return this._http.get(this.url+'get-buildings/'+page, {headers: headers});
-	// }
 	getBuildingsByPage(page=1):Observable<any>{
 		let headers = new HttpHeaders().set('Content-Type', 'application/json');
 		return this._http.get(this.url+'get-buildings/'+page, {headers: headers});
@@ -36,7 +31,10 @@ export class PublicationService{
 
 	// get Building by ID  /get-building/:buildingId',
 
-	// get BUilding by LOC  '/get-building-loc/:page?'
+	getBuildingsByAddress(page=1, address):Observable<any>{
+		let headers = new HttpHeaders().set('Content-Type', 'application/json');
+		return this._http.post(this.url+'get-building-loc/'+page, address,{headers: headers});
+	}
 
 	// get review '/review/:id',
 

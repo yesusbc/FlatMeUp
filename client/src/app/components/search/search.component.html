@@ -1,8 +1,31 @@
 <div class="col-lg-8 col-lg-offset-2">
-  <div class="google-places-container"> 
-    <h2>{{title}}</h2> 
-  <input ngx-google-places-autocomplete [options]= 
-   'options'  (onAddressChange)="AddressChange($event)" class="form-control"/> 
-  {{ formattedaddress }} 
-  </div> 
+  	<div class="google-places-container"> 
+    	<h2>{{title}}</h2> 
+  		<input ngx-google-places-autocomplete [options]= 
+   		'options'  (onAddressChange)="AddressChange($event)" class="form-control"/> 
+  		{{ formattedaddress }} 
+  </div>
+
+	<button type="button" (click)="getBuildingsByAddress(1)">Search</button>
+
+  	<div id="buildings">
+		<div *ngFor="let building of buildings" class="item-building">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="building-image">
+						<!-- Pending Buildings fetch -->
+						<img src="{{url+'get-image/'+building.file}}" alt={{building.address.street}} width="350" height="200">
+					</div>
+					<div class="building-text pull-left">
+						<h4>{{building.address.street + ", " + 
+							building.address.buildingNumber + ". " +
+							building.address.state + ", " + 
+							building.address.country}}</h4>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </div>
+
