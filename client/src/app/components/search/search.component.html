@@ -8,12 +8,13 @@
 
 	<button type="button" (click)="getBuildingsByAddress(1)">Search</button>
 
+	<!-- TODO, separate types of searching, by page, address, etc -->
   	<div id="buildings">
 		<div *ngFor="let building of buildings" class="item-building">
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<div class="building-image">
-						<!-- Pending Buildings fetch -->
+						<!-- Pending Buildings images fetch -->
 						<img src="{{url+'get-image/'+building.file}}" alt={{building.address.street}} width="350" height="200">
 					</div>
 					<div class="building-text pull-left">

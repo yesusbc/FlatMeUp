@@ -22,12 +22,10 @@ export class PublicationService{
 
 	// Create building '/create-building',
 
-
 	getBuildingsByPage(page=1):Observable<any>{
 		let headers = new HttpHeaders().set('Content-Type', 'application/json');
 		return this._http.get(this.url+'get-buildings/'+page, {headers: headers});
 	}
-
 
 	// get Building by ID  /get-building/:buildingId',
 

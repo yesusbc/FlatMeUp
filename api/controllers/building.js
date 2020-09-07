@@ -12,22 +12,22 @@ function testbuilding(req, res){
 function createBuilding(req, res){
 	var params = req.body;
 	var building = new Building();
-	if (params.country && params.state && params.city && params.street && params.buildingNumber && params.zip){
+	if (params.address.country && params.address.state && params.address.city && params.address.street && params.address.buildingNumber && params.zip){
 		// If address doesnt exist, then create new record
-		Building.findOne({'address.country'        : params.country,
-						  'address.state'          : params.state,
-						  'address.city'           : params.city,
-						  'address.street'         : params.street,
-						  'address.buildingNumber' : params.buildingNumber,
-						  'address.zip'            : params.zip}).exec((err, addressExists) => {
+		Building.findOne({'address.country'        : params.address.country,
+						  'address.state'          : params.address.state,
+						  'address.city'           : params.address.city,
+						  'address.street'         : params.address.street,
+						  'address.buildingNumber' : params.address.buildingNumber,
+						  'address.zip'            : params.address.zip}).exec((err, addressExists) => {
 			if(!addressExists){
 				var building                    = new Building();
-				building.address.country        = params.country;
-				building.address.state          = params.state;
-				building.address.city           = params.city;
-				building.address.street         = params.street;
-				building.address.buildingNumber = params.buildingNumber;
-				building.address.zip            = params.zip;
+				building.address.country        = params.address.country;
+				building.address.state          = params.address.state;
+				building.address.city           = params.address.city;
+				building.address.street         = params.address.street;
+				building.address.buildingNumber = params.address.buildingNumber;
+				building.address.zip            = params.address.zip;
 				building.address.apartment     = params.apartment ? params.apartment : null;
 				building.typeOfBuilding         = 0;
 				building.globalRate             = 0;
@@ -47,22 +47,22 @@ function createBuilding(req, res){
 				});
 			}else{
 				// Check for apartment as well, if it doesnt exist, then create record
-				Building.findOne({'address.apartment'      : params.apartment,
-								  'address.country'        : params.country,
-						  		  'address.state'          : params.state,
-						  		  'address.city'           : params.city,
-						  		  'address.street'         : params.street,
-						  		  'address.buildingNumber' : params.buildingNumber,
-						  		  'address.zip'            : params.zip}).exec((err, addressExists) => { 
+				Building.findOne({'address.apartment'      : params.address.apartment,
+								  'address.country'        : params.address.country,
+						  		  'address.state'          : params.address.state,
+						  		  'address.city'           : params.address.city,
+						  		  'address.street'         : params.address.street,
+						  		  'address.buildingNumber' : params.address.buildingNumber,
+						  		  'address.zip'            : params.address.zip}).exec((err, addressExists) => { 
 					if(!addressExists){
 						var building                   = new Building();
-						building.address.country        = params.country;
-						building.address.state          = params.state;
-						building.address.city           = params.city;
-						building.address.street         = params.street;
-						building.address.buildingNumber = params.buildingNumber;
-						building.address.zip            = params.zip;
-						building.address.apartment      = params.apartment;
+						building.address.country        = params.address.country;
+						building.address.state          = params.address.state;
+						building.address.city           = params.address.city;
+						building.address.street         = params.address.street;
+						building.address.buildingNumber = params.address.buildingNumber;
+						building.address.zip            = params.address.zip;
+						building.address.apartment      = params.address.apartment;
 						building.typeOfBuilding         = 0;
 						building.globalRate             = 0;
 						building.globalNoise            = 0;
@@ -133,13 +133,13 @@ function getBuildingsByAddress(req, res){
 	}
 
 	var itemsPerPage    = 6;
-	var country         = params.country        ? params.country       : undefined;
-	var state           = params.state          ? params.state         : undefined;
-	var city            = params.city           ? params.city          : undefined;
-	var street          = params.street         ? params.street        : undefined;
-	var buildingNumber  = params.buildingNumber ? params.buildingNumber: undefined;
-	var apartment       = params.apartment      ? params.apartment     : undefined;
-	var zip             = params.zip            ? params.zip           : undefined;
+	var country         = params.address.country        ? params.address.country       : undefined;
+	var state           = params.address.state          ? params.address.state         : undefined;
+	var city            = params.address.city           ? params.address.city          : undefined;
+	var street          = params.address.street         ? params.address.street        : undefined;
+	var buildingNumber  = params.address.buildingNumber ? params.address.buildingNumber: undefined;
+	var apartment       = params.address.apartment      ? params.address.apartment     : undefined;
+	var zip             = params.address.zip            ? params.address.zip           : undefined;
 
 	var queryFilter = {
     	'address.country':        country,
@@ -150,13 +150,12 @@ function getBuildingsByAddress(req, res){
     	'address.apartment':      apartment,
     	'address.zip':            zip
 	}
-	// Remove undefined
+	// Remove undefined elements from query
 	Object.keys(queryFilter).forEach(key => queryFilter[key] === undefined && delete queryFilter[key])
 
 	Building.find(queryFilter).sort('-created_at').select('address globalRate reviewsCounter').paginate(page, itemsPerPage, (err, buildings, totalBuildings) => {	
 		if(err) return res.status(500).send({message: 'Error in buildings request'});
 		if(!buildings) return res.status(404).send({message: 'No buildings with those filters'});
-		console.log(buildings);
 		return res.status(200).send({
 			total: totalBuildings,
 			pages: Math.ceil(totalBuildings/itemsPerPage),
