@@ -4,6 +4,7 @@ import { PublicationService } from '../../services/publication.service';
 import { Publication } from '../../models/publication';
 import  { Building } from '../../models/building';
 import { AddressComponent } from "ngx-google-places-autocomplete/objects/addressComponent";
+import { GLOBAL } from '../../services/global';
 
 
 @Component({ 
@@ -21,6 +22,7 @@ export class SearchComponent implements OnInit{
     public total;
     public pages;
     public buildings: Building[];
+    public url: string;
     constructor(
         private _router: Router,
         private _publicationService: PublicationService
@@ -39,10 +41,12 @@ export class SearchComponent implements OnInit{
           types: 'address',
           fields: ['address_components', 'place_id']
         }
+        this.url = GLOBAL.url;
     }
 
     ngOnInit(){
         console.log('address.component loaded');
+        this.getBuildingsByPage(this.page);
     }
 
     public AddressChange(address: any) { 
@@ -73,6 +77,34 @@ export class SearchComponent implements OnInit{
         }
 
         return null;
+    }
+
+    public getBuildingsByPage(page){
+        this._publicationService.getBuildingsByPage(page).subscribe(
+                response => {
+                    if(response.buildings){
+                        console.log(response);
+                        console.log(response.buildings);
+                        console.log(response.buildings[0].file[1]);
+                        this.total = response.total;
+                        this.pages = response.pages;
+                        this.buildings = response.buildings;
+
+                        if (page > this.pages){
+                            this._router.navigate(['/home']);
+                        }
+                    }else{
+                        this.status = 'error';
+                    }
+                },
+                error => {
+                    var errorMessage = <any>error;
+                    console.log(errorMessage);
+                    if(errorMessage != null){
+                        this.status = 'error';
+                    }
+                }
+            );
     }
 
     public getBuildingsByAddress(page){

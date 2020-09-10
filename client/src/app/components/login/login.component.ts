@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit{
 	public status:string;
 	public identity;
 	public token;
+	public birthday: Date;
 
 	constructor(
 		private _route: ActivatedRoute,
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit{
 		private _userService: UserService
 	){
 		this.title = 'Login';
-		this.user = new User( "","","","","","",0,0,"","","","","");
+		this.birthday = new Date(1900,0,0);
+		this.user = new User( "","","","","","",0,0,"","","","",this.birthday);
 	}
 	ngOnInit(){
 		console.log('Componente de login cargado...');

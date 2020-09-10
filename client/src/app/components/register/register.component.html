@@ -46,10 +46,37 @@
 				Password is obligatory 
 			</span>
 		</p>
+
+		<p>
+			<label>Gender: </label>
+			  <input type="radio" name="gender" value=0 #gender="ngModel" [(ngModel)]="user.gender">
+			  <label for="male">Male</label><br>
+			  <input type="radio" name="gender" value=1 #gender="ngModel" [(ngModel)]="user.gender">
+			  <label for="female">Female</label><br>
+			  <input type="radio" name="gender" value=2 #gender="ngModel" [(ngModel)]="user.gender">
+			  <label for="other">Other</label>
+		</p>
+
+		<p>
+			<label>Occupation: </label>
+			<input type="text" name="occupation" #occupation="ngModel" [(ngModel)]="user.occupation" class="form-control"/>
+		</p>
+
+		<!-- Missing: Address in form of list-->
+		<p>
+			<label>Country: </label>
+			<input type="text" name="country" #country="ngModel" [(ngModel)]="user.country" class="form-control"/>
+			<label>State: </label>
+			<input type="text" name="state" #state="ngModel" [(ngModel)]="user.state" class="form-control"/>
+			<label>City: </label>
+			<input type="text" name="city" #city="ngModel" [(ngModel)]="user.city" class="form-control"/>
+		</p>
+
+		<p>
+			<label>Birthday:</label>
+			<input type="date" name="birthday" #birthday="ngModel" [(ngModel)]="user.birthday" class="form-control">
+		</p>
 		
-		<!-- Missing: gender, occupation, country, state, city, birthday -->
-
-
 		<input type="submit" value="{{title}}" class="btn btn-success"[disabled]="!registerForm.form.valid"/>
 	</form>
 </div>

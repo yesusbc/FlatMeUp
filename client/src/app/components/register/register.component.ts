@@ -13,6 +13,7 @@ export class RegisterComponent implements OnInit{
 	public title:string;
 	public user: User;
 	public status: string;
+	public birthday: Date;
 
 	constructor(
 		private _route: ActivatedRoute,
@@ -20,6 +21,7 @@ export class RegisterComponent implements OnInit{
 		private _userService: UserService
 	){
 		this.title = 'Register';
+		this.birthday = new Date(1900,0,0);
 		this.user = new User( "",
 			"",
 			"",
@@ -32,7 +34,7 @@ export class RegisterComponent implements OnInit{
 			"",
 			"",
 			"",
-			"");
+			this.birthday);
 	}
 	ngOnInit(){
 		console.log('Componente de register cargado...');
@@ -42,7 +44,6 @@ export class RegisterComponent implements OnInit{
 		this._userService.register(this.user).subscribe(
 			response => {
 				if(response.user && response.user._id){
-					// console.log(response.user);
 					this.status = 'success';
 					registerForm.reset();
 				}else{

@@ -15,6 +15,7 @@ export class UserEditComponent implements OnInit{
 	public identity;
 	public token;
 	public status: string;
+	public id;
 
 	constructor(
 		private _route: ActivatedRoute,

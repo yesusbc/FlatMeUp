@@ -153,7 +153,7 @@ function getBuildingsByAddress(req, res){
 	// Remove undefined elements from query
 	Object.keys(queryFilter).forEach(key => queryFilter[key] === undefined && delete queryFilter[key])
 
-	Building.find(queryFilter).sort('-created_at').select('address globalRate reviewsCounter').paginate(page, itemsPerPage, (err, buildings, totalBuildings) => {	
+	Building.find(queryFilter).sort('-created_at').select('address globalRate reviewsCounter file').paginate(page, itemsPerPage, (err, buildings, totalBuildings) => {	
 		if(err) return res.status(500).send({message: 'Error in buildings request'});
 		if(!buildings) return res.status(404).send({message: 'No buildings with those filters'});
 		return res.status(200).send({

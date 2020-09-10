@@ -13,6 +13,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { PublicationComponent } from './components/publication/publication.component';
+import { ProfileComponent } from './components/profile/profile.component';
+
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { PublicationComponent } from './components/publication/publication.compo
     RegisterComponent,
     HomeComponent,
     UserEditComponent,
-    PublicationComponent
+    PublicationComponent,
+    ProfileComponent
   ],
   imports: [
     GooglePlaceModule,

@@ -12,6 +12,6 @@ export class User{
 		public country: string,
 		public state: string,
 		public city: string,
-		public birthday: string
+		public birthday: Date
 	){}
 }

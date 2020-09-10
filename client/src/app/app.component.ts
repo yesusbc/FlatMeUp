@@ -11,6 +11,7 @@ import { UserService } from './services/user.service';
 export class AppComponent implements OnInit, DoCheck{
   public title:string;
   public identity;
+  public id;
 
   constructor(
   	private _route: ActivatedRoute,
@@ -23,6 +24,7 @@ export class AppComponent implements OnInit, DoCheck{
   ngOnInit(){
   	this.identity = this._userService.getIdentity();
   	console.log(this.identity);
+    this.id = this.identity._id;
   }
 
   ngDoCheck(){

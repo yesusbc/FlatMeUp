@@ -1,0 +1,48 @@
+<div class="col-lg-8 col-lg-offset-2">
+	<h1 class="h1-strong">{{title}}</h1>
+
+	<div>
+		<a [routerLink]="['/profile/edit']" [routerLinkActive]="['active']">
+            Edit profile
+        </a>
+    </div>
+
+	<div class="user-info">
+		<p>
+			<label class="form-control">Name: {{user.name}}</label>
+		</p>
+
+		<p>
+			<label class="form-control">Lastname: {{user.lastname}}</label>
+		</p>
+
+		<p>
+			<label class="form-control">Username: {{user.userName}}</label>
+		</p>
+
+		<p>
+			<label class="form-control">Email: {{user.email}}</label>
+		</p>
+		
+		<p>
+			  <label *ngIf="user.gender==0" class="form-control">Gender: Male</label>
+			  <label *ngIf="user.gender==1" class="form-control">Gender: Female</label>
+			  <label *ngIf="user.gender==2" class="form-control">Gender: Other</label>
+		</p>
+
+		<p>
+			<label class="form-control">Occupation: {{user.occupation}}</label>
+		</p>
+
+		<!-- Missing: Address in form of list-->
+		<p>
+			<label class="form-control">Country: {{user.country}}</label>
+			<label class="form-control">State: {{user.state}}</label>
+			<label class="form-control">City: {{user.city}}</label>
+		</p>
+
+		<p>
+			<label class="form-control">Birthday: {{day}}/{{month}}/{{year}}</label>
+		</p>
+	</div>
+</div>

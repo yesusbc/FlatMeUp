@@ -33,6 +33,7 @@ function saveUser(req, res){
 		user.gender = params.gender ? params.gender : null;
 		user.occupation = params.occupation ? params.occupation : null;
 		user.country = params.country ? params.country : null;
+		user.state = params.state ? params.state : null;
 		user.city = params.city ? params.city : null;
 		user.birthday = params.birthday ? params.birthday : null;
 
