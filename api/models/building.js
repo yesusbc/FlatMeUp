@@ -4,7 +4,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var BuildingSchema = Schema({
-	// address: String,
 	address: {
 		country: String,
         state: String,

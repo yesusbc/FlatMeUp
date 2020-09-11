@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 
 var PublicationSchema = Schema({
 	user: { type: Schema.ObjectId, ref: 'User' },
-	// address: String,
+	buildingId: { type: Schema.ObjectId, ref: 'Building' },
 	address: {
 		country: String,
         state: String,

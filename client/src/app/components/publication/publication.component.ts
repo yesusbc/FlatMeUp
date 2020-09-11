@@ -40,7 +40,7 @@ export class PublicationComponent implements OnInit{
 		this.identity = this._userService.getIdentity();
 		this.token = this._userService.getToken();
 		this.url = GLOBAL.url;
-		this.publication = new Publication("","",{
+		this.publication = new Publication("","", "",{
 													country:"", 
 													state:"", 
 													city:"",

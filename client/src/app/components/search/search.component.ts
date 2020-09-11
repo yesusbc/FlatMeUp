@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { PublicationService } from '../../services/publication.service';
 import { Publication } from '../../models/publication';
@@ -23,13 +23,14 @@ export class SearchComponent implements OnInit{
     public pages;
     public buildings: Building[];
     public url: string;
+    @Input() commingFromHome: string;
     constructor(
         private _router: Router,
         private _publicationService: PublicationService
     ){
         this.title = "Type Address";
         this.formattedaddress ="";
-        this.publication = new Publication("","",{
+        this.publication = new Publication("", "", "",{
                                                     country:"", 
                                                     state:"", 
                                                     city:"",
@@ -46,7 +47,10 @@ export class SearchComponent implements OnInit{
 
     ngOnInit(){
         console.log('address.component loaded');
-        this.getBuildingsByPage(this.page);
+        if(this.commingFromHome){
+            this.getBuildingsByPage(this.page);
+        }
+        
     }
 
     public AddressChange(address: any) { 

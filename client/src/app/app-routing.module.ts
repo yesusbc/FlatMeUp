@@ -20,7 +20,7 @@ const appRoutes: Routes = [
 	{path: 'profile/edit', component: UserEditComponent},
 	{path: 'profile/my-reviews', component: MyReviewsComponent},
 	{path: 'profile/:id', component: ProfileComponent},
-	{path: 'write-a-review', component: MyReviewsComponent}
+	{path: 'write-a-review', component: PublicationComponent}
 ];
 
 export const appRoutingProviders: any[] = [];

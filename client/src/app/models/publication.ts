@@ -2,6 +2,7 @@ export class Publication{
 	constructor(
 		public _id:string,
 		public user:string,
+        public buildingId:string,
 		public address: {
 			country:string,
 	        state:string,

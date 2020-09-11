@@ -25,6 +25,7 @@ function savePublication(req, res){
 	var publication = new Publication();
 
 	publication.user       = req.user.sub;
+	publication.buildingId = req.user.sub;
 	publication.text       = params.text;
 	publication.file       = 'null';
 	publication.created_at = moment().unix();
@@ -63,8 +64,6 @@ function savePublication(req, res){
 						  'address.street'         : params.address.street,
 						  'address.buildingNumber' : params.address.buildingNumber,
 						  'address.zip'            : params.address.zip}).exec((err, addressExists) => {
-			console.log("address exist: ");
-			console.log(addressExists);
 			if(!addressExists){
 				var building                    = new Building();
 				building.address.country        = params.address.country;
@@ -85,6 +84,10 @@ function savePublication(req, res){
 				building.save((err, buildingStored) => {
 					if(err) return res.status(500).send({message: 'Error when creating building'});
 					if(buildingStored){
+						publicationStored.buildingId = buildingStored._id;
+						Publication.findByIdAndUpdate(publication._id, {buildingId: buildingStored._id}, (err, buildingIdUpdated) =>{
+							if(err) return res.status(500).send({message: 'Error when adding building ID to publication'});
+						});
 						res.status(200).send({building: buildingStored, publication: publicationStored});
 					}else{
 						res.status(404).send({message: 'Error when creating building from publication, not saved'});
@@ -119,7 +122,10 @@ function savePublication(req, res){
 						building.save((err, buildingStored) => {
 							if(err) return res.status(500).send({message: 'Error when creating building - apartment'});
 							if(buildingStored){
-								res.status(200).send({building: buildingStored, publication: publicationStored});
+								publicationStored.buildingId = buildingStored._id;
+								Publication.findByIdAndUpdate(publication._id, {buildingId: buildingStored._id}, (err, buildingIdUpdated) =>{
+								if(err) return res.status(500).send({message: 'Error when adding building ID to publication'});
+								});
 							}else{
 								res.status(404).send({message: 'Error when creating building apt from publication, not saved'});
 							}
@@ -134,9 +140,13 @@ function savePublication(req, res){
 							  		  	  'address.city'           : params.address.city,
 							  		  	  'address.street'         : params.address.street,
 							  		  	  'address.buildingNumber' : params.address.buildingNumber,
-							  		  	  'address.zip'            : params.address.zip}).exec((err, pubInf) => {
-							var reviewsNumber = pubInf.reviewsCounter;
-							Building.findByIdAndUpdate(pubInf.id, {reviewsCounter: reviewsNumber+1}, (err, reviewsCountUpdated) =>{
+							  		  	  'address.zip'            : params.address.zip}).exec((err, buildingInf) => {
+							var reviewsNumber = buildingInf.reviewsCounter;
+							Building.findByIdAndUpdate(buildingInf.id, {reviewsCounter: reviewsNumber+1}, (err, reviewsCountUpdated) =>{
+							});
+							publicationStored.buildingId = buildingInf._id;
+							Publication.findByIdAndUpdate(publication._id, {buildingId: buildingInf._id}, (err, buildingIdUpdated) =>{
+							if(err) return res.status(500).send({message: 'Error when adding building ID to publication'});
 							});
 						}); // 
 						return res.status(200).send({publication: publicationStored});
