@@ -10,6 +10,7 @@ import { PublicationComponent } from './components/publication/publication.compo
 import { SearchComponent } from './components/search/search.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { MyReviewsComponent } from './components/myreviews/myreviews.component';
+import { BuildingComponent } from './components/building/building.component';
 
 const appRoutes: Routes = [
 	{path: '', component: HomeComponent},
@@ -20,6 +21,7 @@ const appRoutes: Routes = [
 	{path: 'profile/edit', component: UserEditComponent},
 	{path: 'profile/my-reviews', component: MyReviewsComponent},
 	{path: 'profile/:id', component: ProfileComponent},
+	{path: 'building/:buildingId', component: BuildingComponent},
 	{path: 'write-a-review', component: PublicationComponent}
 ];
 

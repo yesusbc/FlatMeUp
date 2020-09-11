@@ -18,6 +18,11 @@
   		</p>
 
   		<p>
+			<label>Apt: </label>
+			<input type="text" name="apartment" #address.apartment="ngModel" [(ngModel)]="publication.address.apartment"/> 
+  		</p>
+
+  		<p>
   			<span class="alert alert-success" *ngIf="addressCorrect == 'success'">
 				Address is correct
 			</span>
@@ -39,7 +44,7 @@
 
 		<p>
 			<label for="rate">Global Rate:</label>
-  			<input type="number" name="rate" #rate="ngModel" [(ngModel)]="publication.rate" class="form-control"min="1" max="5">
+  			<input type="number" name="rate" #rate="ngModel" [(ngModel)]="publication.rate" class="form-control" min="1" max="5">
 
 			<label for="noise">Noise:</label>
   			<input type="number" name="noise" #noise="ngModel" [(ngModel)]="publication.noise" class="form-control"min="1" max="5">

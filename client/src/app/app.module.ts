@@ -15,7 +15,7 @@ import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { PublicationComponent } from './components/publication/publication.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { MyReviewsComponent } from './components/myreviews/myreviews.component';
-
+import { BuildingComponent } from './components/building/building.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +27,8 @@ import { MyReviewsComponent } from './components/myreviews/myreviews.component';
     UserEditComponent,
     PublicationComponent,
     ProfileComponent,
-    MyReviewsComponent
+    MyReviewsComponent,
+    BuildingComponent
   ],
   imports: [
     GooglePlaceModule,

@@ -6,9 +6,9 @@ export class Building{
             state:string,
             city:string,
             street:string,
-            buildingNumber:number,
+            buildingNumber:string,
             apartment:string,
-            zip:number
+            zip:string
         },
         public typeOfBuilding:number,
         public file:string[],

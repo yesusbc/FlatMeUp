@@ -27,7 +27,10 @@ export class PublicationService{
 		return this._http.get(this.url+'get-buildings/'+page, {headers: headers});
 	}
 
-	// get Building by ID  /get-building/:buildingId',
+	getBuildingById(buildingId):Observable<any>{
+		let headers = new HttpHeaders().set('Content-Type', 'application/json');
+		return this._http.get(this.url+'get-building/'+buildingId, {headers: headers});
+	}
 
 	// Get reviews from building
 
