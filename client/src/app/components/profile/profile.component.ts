@@ -3,11 +3,13 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import { GLOBAL } from '../../services/global';
+import { Publication } from '../../models/publication';
+import { PublicationService } from '../../services/publication.service';
 
 @Component({
 	selector: 'profile',
 	templateUrl: './profile.component.html',
-	providers: [UserService]
+	providers: [UserService, PublicationService]
 })
 
 export class ProfileComponent implements OnInit{
@@ -24,13 +26,17 @@ export class ProfileComponent implements OnInit{
 	constructor(
 		private _route: ActivatedRoute,
 		private _router: Router,
-		private _userService: UserService
+		private _userService: UserService,
+		private _publicationService: PublicationService
 	){
 		this.title = 'Profile';
 		this.user = this._userService.getIdentity();
 		this.identity = this.user;
 		this.token = this._userService.getToken();
 		this.url = GLOBAL.url;
+		this.year = "----";
+		this.month = "--";
+		this.day = "--";
 	}
 
 	ngOnInit(){
@@ -51,10 +57,13 @@ export class ProfileComponent implements OnInit{
 				if(response.user){
 					this.status = 'success';
 					this.user = response.user;
-					this.year = response.user.birthday.slice(0,4);
-					this.month = response.user.birthday.slice(5,7);
-					this.day = response.user.birthday.slice(8,10);
+					if(response.user.birthday){
+						this.year = response.user.birthday.slice(0,4);
+						this.month = response.user.birthday.slice(5,7);
+						this.day = response.user.birthday.slice(8,10);
+					}
 					console.log(response);
+
 				}else{
 					this.status = 'error';
 				}

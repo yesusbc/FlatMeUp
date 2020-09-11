@@ -1,0 +1,35 @@
+<div class="col-lg-8 col-lg-offset-2">
+	<h1 class="h1-strong">{{title}}</h1>
+	
+	<div>
+	    <a [routerLink]="['/profile/'+user._id]" [routerLinkActive]="['active']">
+			<span class="glyphicon glyphicon-user"></span>
+	        My Profile
+	    </a>
+
+	    <a [routerLink]="['/profile/my-reviews']" [routerLinkActive]="['active']">
+			<span class="glyphicon glyphicon-user"></span>
+	        My Reviews
+	    </a>
+	</div>
+
+	<div id="reviews">
+		<div *ngFor="let review of publications" class="item-review">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="review-image">
+						<!-- Get image from building binded to review -->
+					</div>
+					<div class="building-text pull-left">
+						<p>
+						Rate: {{review.rate}}
+						</p>
+						<p>
+						Review: {{review.text}}
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

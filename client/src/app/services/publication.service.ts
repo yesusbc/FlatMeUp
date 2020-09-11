@@ -34,7 +34,18 @@ export class PublicationService{
 		return this._http.post(this.url+'get-building-loc/'+page, address,{headers: headers});
 	}
 
-	// get review '/review/:id',
+	getReviewsUser(token, page=1):Observable<any>{
+		let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
+		return this._http.get(this.url+'/my-reviews/'+page, {headers: headers});
+	}
 
-	// delete review  '/review/:id',
+	getReview(pub_id):Observable<any>{
+		let headers = new HttpHeaders().set('Content-Type', 'application/json');
+		return this._http.get(this.url+'review/'+pub_id, {headers: headers});
+	}
+
+	deleteReviewUser(token, pub_id):Observable<any>{
+		let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
+		return this._http.delete(this.url+'delete-review/'+pub_id, {headers: headers});
+	}
 }

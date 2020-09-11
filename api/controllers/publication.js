@@ -157,6 +157,28 @@ function getPublication(req, res){
 	});
 }
 
+function getPublicationsUser(req, res){
+	var page = 1;
+
+	if(req.params.page){
+		page = req.params.page;
+	}
+
+	var user = req.user.sub;
+	var itemsPerPage = 4;
+
+	Publication.find({'user': user}).sort('-created_at').paginate(page, itemsPerPage, (err, publications, totalPublications) => {	
+		if (err) return res.status(500).send({message: 'Error when returning publications of user'});
+
+		return res.status(200).send({
+			total: totalPublications,
+			pages: Math.ceil(totalPublications/itemsPerPage),
+			publications
+		});
+
+	});
+}
+
 function deletePublication(req, res){
 	var publicationId = req.params.id;
 
@@ -266,6 +288,7 @@ module.exports = {
 	probando,
 	savePublication,
 	getPublication,
+	getPublicationsUser,
 	deletePublication,
 	uploadImage,
 	getImageFile,

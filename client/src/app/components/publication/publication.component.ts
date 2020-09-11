@@ -9,7 +9,6 @@ import { GLOBAL } from '../../services/global';
 import { AddressComponent } from "ngx-google-places-autocomplete/objects/addressComponent";
 
 
-
 @Component({
 	selector: 'publication',
 	templateUrl: './publication.component.html',
@@ -27,6 +26,7 @@ export class PublicationComponent implements OnInit{
     public formattedaddress;
     public options;
     public addressCorrect;
+
 
 	constructor(
 		private _route: ActivatedRoute,

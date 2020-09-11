@@ -2,12 +2,23 @@
 	<h1 class="h1-strong">{{title}}</h1>
 
 	<div>
-		<a [routerLink]="['/profile/edit']" [routerLinkActive]="['active']">
-            Edit profile
-        </a>
-    </div>
+	    <a [routerLink]="['/profile/'+user._id]" [routerLinkActive]="['active']">
+			<span class="glyphicon glyphicon-user"></span>
+	        My Profile
+	    </a>
+
+	    <a [routerLink]="['/profile/my-reviews']" [routerLinkActive]="['active']">
+			<span class="glyphicon glyphicon-user"></span>
+	        My Reviews
+	    </a>
+	</div>
 
 	<div class="user-info">
+		<div>
+			<a [routerLink]="['/profile/edit']" [routerLinkActive]="['active']">
+            	Edit profile
+        	</a>
+    	</div>
 		<p>
 			<label class="form-control">Name: {{user.name}}</label>
 		</p>

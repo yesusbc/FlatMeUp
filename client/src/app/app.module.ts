@@ -14,6 +14,7 @@ import { HomeComponent } from './components/home/home.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { PublicationComponent } from './components/publication/publication.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { MyReviewsComponent } from './components/myreviews/myreviews.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     HomeComponent,
     UserEditComponent,
     PublicationComponent,
-    ProfileComponent
+    ProfileComponent,
+    MyReviewsComponent
   ],
   imports: [
     GooglePlaceModule,

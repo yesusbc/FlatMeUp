@@ -9,6 +9,7 @@ import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { PublicationComponent } from './components/publication/publication.component';
 import { SearchComponent } from './components/search/search.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { MyReviewsComponent } from './components/myreviews/myreviews.component';
 
 const appRoutes: Routes = [
 	{path: '', component: HomeComponent},
@@ -17,8 +18,9 @@ const appRoutes: Routes = [
 	{path: 'register', component: RegisterComponent},
 	{path: 'search', component: SearchComponent},
 	{path: 'profile/edit', component: UserEditComponent},
+	{path: 'profile/my-reviews', component: MyReviewsComponent},
 	{path: 'profile/:id', component: ProfileComponent},
-	{path: 'write-a-review', component: PublicationComponent}
+	{path: 'write-a-review', component: MyReviewsComponent}
 ];
 
 export const appRoutingProviders: any[] = [];
