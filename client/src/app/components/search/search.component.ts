@@ -39,7 +39,7 @@ export class SearchComponent implements OnInit{
                                                     apartment:"",
                                                     zip:""},0,"",[],"",0,0,0,0,0,0,1,0,0);
         this.options={ 
-          types: 'address',
+          types: [],
           fields: ['address_components', 'place_id']
         }
         this.url = GLOBAL.url;
@@ -87,9 +87,6 @@ export class SearchComponent implements OnInit{
         this._publicationService.getBuildingsByPage(page).subscribe(
                 response => {
                     if(response.buildings){
-                        console.log(response);
-                        console.log(response.buildings);
-                        console.log(response.buildings[0].file[1]);
                         this.total = response.total;
                         this.pages = response.pages;
                         this.buildings = response.buildings;
@@ -136,6 +133,10 @@ export class SearchComponent implements OnInit{
                     }
                 }
             );
+    }
+
+    public explicitSearch(buildingId){
+        this._router.navigate([ '/building/'+buildingId])
     }
 
 }

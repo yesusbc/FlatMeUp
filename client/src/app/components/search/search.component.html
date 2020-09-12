@@ -11,12 +11,12 @@
   	<div id="buildings">
 		<div *ngFor="let building of buildings" class="item-building">
 			<div class="panel panel-default">
-				<div class="panel-body">
+				<div class="panel-body" (click)="explicitSearch(building._id)" style="cursor: pointer;">
 					<div class="building-image">
 						<!-- Image fetching could be more elegant -->
 						<a href="#">
-							<img src="{{url+'get-image/'+building.file[1]}}" *ngIf="building.file[1]" width="300" height="150"/>
-							<img src="assets/building.png" class="building-default" *ngIf="!building.file[1]" width="350" height="200"/>
+							<img src="{{url+'get-image/'+building.file[0]}}" *ngIf="building.file[0]" width="300" height="150"/>
+							<img src="assets/building.png" class="building-default" *ngIf="!building.file[0]" width="350" height="200"/>
 						</a>
 					</div>
 					<div class="building-text pull-left">

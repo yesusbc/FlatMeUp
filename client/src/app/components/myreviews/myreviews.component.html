@@ -16,13 +16,16 @@
 	<div id="reviews">
 		<div *ngFor="let review of publications" class="item-review">
 			<div class="panel panel-default">
-				<div class="panel-body">
+				<div class="panel-body"  (click)="explicitSearch(review.buildingId)" style="cursor: pointer;">
 					<div class="review-image">
 						<!-- Get image from building binded to review -->
 					</div>
 					<div class="building-text pull-left">
 						<p>
 						Rate: {{review.rate}}
+						</p>
+						<p>
+						Address: {{review.address.street}}, {{review.address.buildingNumber}}. {{review.address.country}}.
 						</p>
 						<p>
 						Review: {{review.text}}

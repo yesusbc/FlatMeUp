@@ -49,7 +49,7 @@ export class PublicationComponent implements OnInit{
 											        apartment:"",
 											        zip:""},0,"",[],"",0,0,0,0,0,0,1,0,0);
 		this.options={ 
-          types: 'address',
+          types: [],
           fields: ['address_components', 'place_id']
         }
 	}
@@ -66,10 +66,15 @@ export class PublicationComponent implements OnInit{
 					if (response.publication){
 						// this.publication = response.publication;
 						this.status = 'success';
-						if (this.filesToUpload){
-							this._uploadService.makeFileRequest(this.url+'upload-image/'+response.publication._id, [], this.filesToUpload, this.token, 'image')
+						if (this.filesToUploadPub){
+							this._uploadService.makeFileRequest(this.url+'upload-image-pub/'+response.publication._id, [], this.filesToUploadPub, this.token, 'image')
 									.then((result: any) => {
 										this.publication.file = result.publication.image;
+									});
+						}
+						if (this.filesToUploadBuilding){
+							this._uploadService.makeFileRequest(this.url+'upload-image-building/'+response.publication.buildingId, [], this.filesToUploadBuilding, this.token, 'image')
+									.then((result: any) => {
 									});
 						}
 						ReviewForm.reset();
@@ -89,10 +94,19 @@ export class PublicationComponent implements OnInit{
 			);
 	}
 
-	public filesToUpload: Array<File>;
-	fileChangeEvent(fileInput: any){
-		console.log(this.filesToUpload);
-		this.filesToUpload = <Array<File>>fileInput.target.files;
+	public filesToUploadPub: Array<File>;
+	public filesToUploadBuilding: Array<File>;
+	fileChangeEvent(fileInput: any, reason){
+		console.log(reason);
+		if(reason=='pub'){
+			console.log(this.filesToUploadPub);
+			this.filesToUploadPub = <Array<File>>fileInput.target.files;
+		}
+		if(reason=='building'){
+			console.log(this.filesToUploadBuilding);
+			this.filesToUploadBuilding = <Array<File>>fileInput.target.files;
+		}
+
 	}
 
     public AddressChange(address: any) { 

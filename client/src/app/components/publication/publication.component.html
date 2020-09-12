@@ -77,8 +77,13 @@
 		</p>
 
 		<p>
-			<label>Upload a picture</label>
-			<input type="file" placeholder="Upload picture" (change)="fileChangeEvent($event)" multiple/>
+			<label>Upload a picture about your publication</label>
+			<input type="file" placeholder="Upload picture - Publication" (change)="fileChangeEvent($event, 'pub')" multiple/>
+		</p>
+
+				<p>
+			<label>Upload a picture of the Building</label>
+			<input type="file" placeholder="Upload picture - Building" (change)="fileChangeEvent($event, 'building')" multiple/>
 		</p>
 
 		<input type="submit" value="{{title}}" class="btn btn-success"[disabled]="!ReviewForm.form.valid && addressCorrect=='error'"/>

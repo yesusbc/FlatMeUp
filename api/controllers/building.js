@@ -164,6 +164,32 @@ function getBuildingsByAddress(req, res){
 	});
 }
 
+function uploadImage(req, res){
+	var buildingId = req.params.buildingId;
+
+	if(req.files){
+		var file_path  = req.files.image.path;
+		var file_split = file_path.split('/');
+		var file_name  = file_split[2];
+		var ext_split  = file_name.split('.');
+		var file_ext   = ext_split[1];
+
+		if (file_ext=='png' || file_ext=='jpg' || file_ext=='jpeg'){
+
+			Building.findByIdAndUpdate(buildingId, {$push: {file: file_name}}, {new: true}, (err, buildingUpdated) =>{
+						if(err) return res.status(500).send({message: 'Error in request'});
+						if(!buildingUpdated) return res.status(404).send({message: 'Couldnot upload image'});
+
+						return res.status(200).send({building: buildingUpdated});
+					});
+		}else{
+			return removeFilesOfUploads(res, file_path, 'Extension not valid');
+		}
+	}else{
+		return res.status(200).send({message: 'Image was not uploaded'});
+	}
+}
+
 
 /*
 function getGlobalCounters(req, res){
@@ -196,5 +222,6 @@ module.exports = {
 	createBuilding,
 	getBuildings,
 	getBuildingById,
-	getBuildingsByAddress
+	getBuildingsByAddress,
+	uploadImage
 }

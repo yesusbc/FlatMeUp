@@ -68,4 +68,8 @@ export class MyReviewsComponent implements OnInit{
                 }
             );
     }
+    
+    public explicitSearch(buildingId){
+        this._router.navigate([ '/building/'+buildingId])
+    }
 }
