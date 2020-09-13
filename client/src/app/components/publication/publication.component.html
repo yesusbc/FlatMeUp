@@ -77,13 +77,15 @@
 		</p>
 
 		<p>
-			<label>Upload a picture about your publication</label>
+			<label>Upload pictures about your publication</label>
 			<input type="file" placeholder="Upload picture - Publication" (change)="fileChangeEvent($event, 'pub')" multiple/>
+			<span *ngFor="let filename of filesToUploadPub_names">{{filename}}, </span>
 		</p>
 
 				<p>
-			<label>Upload a picture of the Building</label>
+			<label>Upload pictures of the Building</label>
 			<input type="file" placeholder="Upload picture - Building" (change)="fileChangeEvent($event, 'building')" multiple/>
+			<span *ngFor="let filename of filesToUploadBuilding_names">{{filename}}, </span>
 		</p>
 
 		<input type="submit" value="{{title}}" class="btn btn-success"[disabled]="!ReviewForm.form.valid && addressCorrect=='error'"/>

@@ -25,9 +25,8 @@ function savePublication(req, res){
 	var publication = new Publication();
 
 	publication.user       = req.user.sub;
-	publication.buildingId = req.user.sub;
+	publication.buildingId = null;
 	publication.text       = params.text;
-	publication.file       = 'null';
 	publication.created_at = moment().unix();
 	publication.address.country         = params.address.country         ? params.address.country                 : null;
 	publication.address.state           = params.address.state           ? params.address.state                   : null;
@@ -85,6 +84,8 @@ function savePublication(req, res){
 					if(err) return res.status(500).send({message: 'Error when creating building'});
 					if(buildingStored){
 						publicationStored.buildingId = buildingStored._id;
+						console.log("1");
+						console.log(publicationStored.buildingId);
 						Publication.findByIdAndUpdate(publication._id, {buildingId: buildingStored._id}, (err, buildingIdUpdated) =>{
 							if(err) return res.status(500).send({message: 'Error when adding building ID to publication'});
 						});
@@ -122,7 +123,9 @@ function savePublication(req, res){
 						building.save((err, buildingStored) => {
 							if(err) return res.status(500).send({message: 'Error when creating building - apartment'});
 							if(buildingStored){
+								console.log("2");
 								publicationStored.buildingId = buildingStored._id;
+								console.log(publicationStored.buildingId);
 								Publication.findByIdAndUpdate(publication._id, {buildingId: buildingStored._id}, (err, buildingIdUpdated) =>{
 								if(err) return res.status(500).send({message: 'Error when adding building ID to publication'});
 								});
@@ -144,12 +147,16 @@ function savePublication(req, res){
 							var reviewsNumber = buildingInf.reviewsCounter;
 							Building.findByIdAndUpdate(buildingInf.id, {reviewsCounter: reviewsNumber+1}, (err, reviewsCountUpdated) =>{
 							});
+						
+
 							publicationStored.buildingId = buildingInf._id;
-							Publication.findByIdAndUpdate(publication._id, {buildingId: buildingInf._id}, (err, buildingIdUpdated) =>{
-							if(err) return res.status(500).send({message: 'Error when adding building ID to publication'});
-							});
-						}); // 
+							Publication.findByIdAndUpdate(publication._id, {buildingId: buildingInf._id}, (err, publicationUpdated) =>{
+								if(err) return res.status(500).send({message: 'Error when adding building ID to publication'});
+								});
+
 						return res.status(200).send({publication: publicationStored});
+
+						}); // 
 					}
 				});
 			}
@@ -164,6 +171,28 @@ function getPublication(req, res){
 		if(err) return res.status(500).send({message: 'Error when retrieving review'});
 		if(!publication) return res.status(404).send({message: 'publication doesnt exist'});
 			return res.status(200).send({publication});
+	});
+}
+
+function getPublicationsById(req, res){
+	var page = 1;
+
+	if(req.params.page){
+		page = req.params.page;
+	}
+
+	var buildingId = req.params.buildingId;
+	var itemsPerPage = 4;
+
+	Publication.find({'buildingId': buildingId}).sort('-created_at').paginate(page, itemsPerPage, (err, publications, totalPublications) => {	
+		if (err) return res.status(500).send({message: 'Error when returning publications of user'});
+
+		return res.status(200).send({
+			total: totalPublications,
+			pages: Math.ceil(totalPublications/itemsPerPage),
+			publications
+		});
+
 	});
 }
 
@@ -199,59 +228,46 @@ function deletePublication(req, res){
 	});
 }
 
-function uploadImageOnExistingPublication(req, res){
-	var publicationId = req.params.id;
-
-	if(req.files){
-		var file_path  = req.files.image.path;
-		var file_split = file_path.split('/');
-		var file_name  = file_split[2];
-		var ext_split  = file_name.split('.');
-		var file_ext   = ext_split[1];
-
-		if (file_ext=='png' || file_ext=='jpg' || file_ext=='jpeg'){
-			// Check if user is owner of that publication
-			Publication.findOne({'user':req.user.sub, '_id':publicationId}).exec((err, publication) => {
-				if(publication){
-					// If user is owner, then add picture
-					Publication.findByIdAndUpdate(publicationId, {$push: {file: file_name}}, {new: false}, (err, publicationUpdated) =>{
-						if(err) return res.status(500).send({message: 'Error in request'});
-						if(!publicationUpdated) return res.status(404).send({message: 'Couldnot upload image'});
-						return res.status(200).send({publication: publicationUpdated});
-					});
-				}else{
-					return removeFilesOfUploads(res, file_path, 'You are not allowed to upload images');
-				}
-			});
-		}else{
-			return removeFilesOfUploads(res, file_path, 'Extension not valid');
-		}
-	}else{
-		return res.status(200).send({message: 'Image was not uploaded'});
-	}
-}
-
 function uploadImage(req, res){
 	var publicationId = req.params.publicationId;
+	var filenames_list = [];
 
 	if(req.files){
-		var file_path  = req.files.image.path;
-		var file_split = file_path.split('/');
-		var file_name  = file_split[2];
-		var ext_split  = file_name.split('.');
-		var file_ext   = ext_split[1];
-
-		if (file_ext=='png' || file_ext=='jpg' || file_ext=='jpeg'){
-
-			Publication.findByIdAndUpdate(publicationId, {$push: {file: file_name}}, {new: true}, (err, publicationUpdated) =>{
-						if(err) return res.status(500).send({message: 'Error in request'});
-						if(!publicationUpdated) return res.status(404).send({message: 'Couldnot upload image'});
-
-						return res.status(200).send({publication: publicationUpdated});
-					});
+		if(req.files.image.length){
+			for (var idx=0; idx < req.files.image.length; idx++){
+				var file_path = req.files.image[idx].path;
+				console.log(file_path);
+		    	var file_split = file_path.split('/');
+				var file_name  = file_split[2];
+				var ext_split  = file_name.split('.');
+				var file_ext   = ext_split[1];
+				if (file_ext=='png' || file_ext=='jpg' || file_ext=='jpeg'){
+					filenames_list.push(file_name);
+				}else{
+					return removeFilesOfUploads(res, file_path, 'Extension not valid');
+				}
+			}
 		}else{
-			return removeFilesOfUploads(res, file_path, 'Extension not valid');
+			var file_path  = req.files.image.path;
+			var file_split = file_path.split('/');
+			var file_name  = file_split[2];
+			var ext_split  = file_name.split('.');
+			var file_ext   = ext_split[1];
+
+			if (file_ext=='png' || file_ext=='jpg' || file_ext=='jpeg'){
+				filenames_list.push(file_name);
+			}else{
+				return removeFilesOfUploads(res, file_path, 'Extension not valid');
+			}
 		}
+
+
+		Publication.findByIdAndUpdate(publicationId, {$push: {file: filenames_list}}, {new: true}, (err, publicationUpdated) =>{
+					if(err) return res.status(500).send({message: 'Error in request'});
+					if(!publicationUpdated) return res.status(404).send({message: 'Couldnot upload image'});
+
+					return res.status(200).send({publication: publicationUpdated});
+				});
 	}else{
 		return res.status(200).send({message: 'Image was not uploaded'});
 	}
@@ -302,5 +318,6 @@ module.exports = {
 	deletePublication,
 	uploadImage,
 	getImageFile,
-	upDownVote
+	upDownVote,
+	getPublicationsById
 }

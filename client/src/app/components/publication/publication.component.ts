@@ -26,6 +26,10 @@ export class PublicationComponent implements OnInit{
     public formattedaddress;
     public options;
     public addressCorrect;
+    public filesToUploadPub: Array<any>;
+    public filesToUploadPub_names: Array<any>;
+	public filesToUploadBuilding: Array<any>;
+	public filesToUploadBuilding_names: Array<any>;
 
 
 	constructor(
@@ -36,6 +40,10 @@ export class PublicationComponent implements OnInit{
 		private _publicationService: PublicationService
 	){
 		this.title = 'Write a Review';
+		this.filesToUploadPub = [];
+		this.filesToUploadBuilding = [];
+		this.filesToUploadPub_names = [];
+		this.filesToUploadBuilding_names = [];
 		this.user = this._userService.getIdentity();
 		this.identity = this._userService.getIdentity();
 		this.token = this._userService.getToken();
@@ -60,19 +68,20 @@ export class PublicationComponent implements OnInit{
 
 	onSubmit(ReviewForm){
 
-		console.log(this.publication);
 		this._publicationService.addPublication(this.token, this.publication).subscribe(
 				response => {
 					if (response.publication){
 						// this.publication = response.publication;
 						this.status = 'success';
-						if (this.filesToUploadPub){
+
+						if (this.filesToUploadPub.length > 0){
 							this._uploadService.makeFileRequest(this.url+'upload-image-pub/'+response.publication._id, [], this.filesToUploadPub, this.token, 'image')
 									.then((result: any) => {
 										this.publication.file = result.publication.image;
 									});
 						}
-						if (this.filesToUploadBuilding){
+
+						if (this.filesToUploadBuilding.length > 0){
 							this._uploadService.makeFileRequest(this.url+'upload-image-building/'+response.publication.buildingId, [], this.filesToUploadBuilding, this.token, 'image')
 									.then((result: any) => {
 									});
@@ -94,17 +103,16 @@ export class PublicationComponent implements OnInit{
 			);
 	}
 
-	public filesToUploadPub: Array<File>;
-	public filesToUploadBuilding: Array<File>;
+
 	fileChangeEvent(fileInput: any, reason){
-		console.log(reason);
 		if(reason=='pub'){
-			console.log(this.filesToUploadPub);
-			this.filesToUploadPub = <Array<File>>fileInput.target.files;
+			this.filesToUploadPub.push(<Array<File>>fileInput.target.files);
+			this.filesToUploadPub_names.push(fileInput.target.files[0].name);
+			
 		}
 		if(reason=='building'){
-			console.log(this.filesToUploadBuilding);
-			this.filesToUploadBuilding = <Array<File>>fileInput.target.files;
+			this.filesToUploadBuilding.push(<Array<File>>fileInput.target.files);
+			this.filesToUploadBuilding_names.push(fileInput.target.files[0].name);
 		}
 
 	}

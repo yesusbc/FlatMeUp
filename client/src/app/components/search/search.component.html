@@ -21,8 +21,10 @@
 					</div>
 					<div class="building-text pull-left">
 						<h4>{{building.address.street + ", " + 
-							building.address.buildingNumber + ". " +
-							building.address.state + ", " + 
+							building.address.buildingNumber}}
+							<span *ngIf="building.address.apartment">, {{building.address.apartment}}</span>
+							. 
+							{{building.address.state + ", " + 
 							building.address.country}}
 						</h4>
 						<p>

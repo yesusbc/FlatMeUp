@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { PublicationService } from '../../services/publication.service';
-// import { Publication } from '../../models/publication';
+import { Publication } from '../../models/publication';
 import  { Building } from '../../models/building';
 import { GLOBAL } from '../../services/global';
 
@@ -15,20 +15,22 @@ export class BuildingComponent implements OnInit{
     public title;
 
     public status;
-    // public publication: Publication;
-    // public page;
-    // public total;
-    // public pages;
+    public publications: Publication[];
+    public page;
+    public total;
+    public pages;
     public building: Building;
     public url: string;
     public buildingId: string;
+    public showImage;
 
     constructor(
         private _route: ActivatedRoute,
         private _router: Router,
         private _publicationService: PublicationService
     ){
-        this.title = "Building";
+        this.title = "Ratings & Reviews";
+        this.page = 1;
         // this.buildingId = "5f55b72304fe8f1658fb6426";
         this.building = new Building("",{
                                                     country:"", 
@@ -44,6 +46,7 @@ export class BuildingComponent implements OnInit{
     ngOnInit(){
         console.log('building.component loaded');    
         this.loadPage(); 
+        this.getPublicationsByBuildingId(this.page);
     }
 
     loadPage(){
@@ -75,6 +78,37 @@ export class BuildingComponent implements OnInit{
             );
     }
 
+    public getPublicationsByBuildingId(page){
+        this._publicationService.getPublicationsByBuildingId(this.buildingId, page).subscribe(
+                response => {
+                    if(response.publications){
+                        this.total = response.total;
+                        this.pages = response.pages;
+                        this.publications = response.publications;
 
+                        if (page > this.pages){
+                            this._router.navigate(['/home']);
+                        }
+                    }else{
+                        this.status = 'error';
+                    }
+                },
+                error => {
+                    var errorMessage = <any>error;
+                    console.log(errorMessage);
+                    if(errorMessage != null){
+                        this.status = 'error';
+                    }
+                }
+            );
+    }
+
+    showThisImage(id){
+        this.showImage = id;
+    }
+
+    hideThisImage(id){
+        this.showImage = 0;
+    }
 
 }
