@@ -15,6 +15,7 @@ function probando(req, res){
 	});
 }
 
+// This function will save the publication, and if there is no existing building already, then it will create a new building
 function savePublication(req, res){
 	var params = req.body;
 	if(!params.address.street || !params.text){
@@ -49,14 +50,27 @@ function savePublication(req, res){
 	publication.save((err, publicationStored) =>{
 		if(err) return res.status(500).send({message: 'Error when saving publication'});
 		if(!publicationStored) return res.status(404).send({message: 'Publication not saved'});
+
 		// Contributions number + 1
-		User.findOne({'_id':publication.user}).exec((err, userInf) => {
-			var contributionsNumber = userInf.contributionsNumber;
-			User.findByIdAndUpdate(publication.user, {contributionsNumber: contributionsNumber+1}, (err, countUpdated) =>{
+		getContributionsNumber(publication.user).then((contributionsNumber) => {
+			User.findByIdAndUpdate(publication.user, {contributionsNumber: contributionsNumber}, (err, countUpdated) =>{
 			});
-		}); // 
+		}); 
+
+		var building                    = new Building();
+		building.address.country        = params.address.country;
+		building.address.state          = params.address.state;
+		building.address.city           = params.address.city;
+		building.address.street         = params.address.street;
+		building.address.buildingNumber = params.address.buildingNumber;
+		building.address.zip            = params.address.zip;
+		building.address.apartment      = params.address.apartment ? params.address.apartment : "";
+		building.typeOfBuilding         = publication.typeOfBuilding;
+		building.globalRate             = publication.rate;
+		building.reviewsCounter         = 1;
+		building.created_at             = publication.created_at;
 		
-		// If address doesnt exist, then create new record
+		// Check if address exists
 		Building.findOne({'address.country'        : params.address.country,
 						  'address.state'          : params.address.state,
 						  'address.city'           : params.address.city,
@@ -64,28 +78,11 @@ function savePublication(req, res){
 						  'address.buildingNumber' : params.address.buildingNumber,
 						  'address.zip'            : params.address.zip}).exec((err, addressExists) => {
 			if(!addressExists){
-				var building                    = new Building();
-				building.address.country        = params.address.country;
-				building.address.state          = params.address.state;
-				building.address.city           = params.address.city;
-				building.address.street         = params.address.street;
-				building.address.buildingNumber = params.address.buildingNumber;
-				building.address.zip            = params.address.zip;
-				building.address.apartment      = params.address.apartment ? params.address.apartment : "";
-				building.typeOfBuilding         = publication.typeOfBuilding;
-				building.globalRate             = publication.rate;
-				building.globalNoise            = publication.noise;
-				building.globalPriceBenefit     = publication.priceBenefit;
-				building.globalLandlordSupport  = publication.landlordSupport;
-				building.globalMaintenance      = publication.maintenance;
-				building.reviewsCounter         = 1;
-				building.created_at             = publication.created_at;
+				// If address doesnt exist, then create new record
 				building.save((err, buildingStored) => {
 					if(err) return res.status(500).send({message: 'Error when creating building'});
 					if(buildingStored){
 						publicationStored.buildingId = buildingStored._id;
-						console.log("1");
-						console.log(publicationStored.buildingId);
 						Publication.findByIdAndUpdate(publication._id, {buildingId: buildingStored._id}, (err, buildingIdUpdated) =>{
 							if(err) return res.status(500).send({message: 'Error when adding building ID to publication'});
 						});
@@ -95,6 +92,7 @@ function savePublication(req, res){
 					}
 				});
 			}else{
+				// Address exists
 				// Address exists but perhaps aparment dont, Check for apartment as well, if it doesnt exist, then create record
 				Building.findOne({'address.apartment'      : params.address.apartment,
 								  'address.country'        : params.address.country,
@@ -104,26 +102,9 @@ function savePublication(req, res){
 						  		  'address.buildingNumber' : params.address.buildingNumber,
 						  		  'address.zip'            : params.address.zip}).exec((err, addressExists) => { 
 					if(!addressExists){
-						var building                   = new Building();
-						building.address.country        = params.address.country;
-						building.address.state          = params.address.state;
-						building.address.city           = params.address.city;
-						building.address.street         = params.address.street;
-						building.address.buildingNumber = params.address.buildingNumber;
-						building.address.zip            = params.address.zip;
-						building.address.apartment      = params.address.apartment;
-						building.typeOfBuilding         = publication.typeOfBuilding;
-						building.globalRate             = publication.rate;
-						building.globalNoise            = publication.noise;
-						building.globalPriceBenefit     = publication.priceBenefit;
-						building.globalLandlordSupport  = publication.landlordSupport;
-						building.globalMaintenance      = publication.maintenance;
-						building.reviewsCounter         = 1;
-						building.created_at             = publication.created_at;
 						building.save((err, buildingStored) => {
 							if(err) return res.status(500).send({message: 'Error when creating building - apartment'});
 							if(buildingStored){
-								console.log("2");
 								publicationStored.buildingId = buildingStored._id;
 								console.log(publicationStored.buildingId);
 								Publication.findByIdAndUpdate(publication._id, {buildingId: buildingStored._id}, (err, buildingIdUpdated) =>{
@@ -134,34 +115,49 @@ function savePublication(req, res){
 							}
 						});
 					}else{
-						// If building already exist, then
-						// reviewsCounter must increase
-						var apartment = params.address.apartment ? params.address.apartment : null;
-						Building.findOne({'address.apartment'      : params.address.apartment,
-									  	  'address.country'        : params.address.country,
-							  		  	  'address.state'          : params.address.state,
-							  		  	  'address.city'           : params.address.city,
-							  		  	  'address.street'         : params.address.street,
-							  		  	  'address.buildingNumber' : params.address.buildingNumber,
-							  		  	  'address.zip'            : params.address.zip}).exec((err, buildingInf) => {
-							var reviewsNumber = buildingInf.reviewsCounter;
-							Building.findByIdAndUpdate(buildingInf.id, {reviewsCounter: reviewsNumber+1}, (err, reviewsCountUpdated) =>{
-							});
-						
-
-							publicationStored.buildingId = buildingInf._id;
-							Publication.findByIdAndUpdate(publication._id, {buildingId: buildingInf._id}, (err, publicationUpdated) =>{
-								if(err) return res.status(500).send({message: 'Error when adding building ID to publication'});
+						// If building and apartment already exist, then just add buildingId to publication
+						Publication.findByIdAndUpdate(publication._id, {buildingId: addressExists._id}, (err, publicationUpdated) =>{
+							if(err) return res.status(500).send({message: 'Error when adding building ID to publication'});
+								// Update global stats
+								// To check if value is returning 0 or digit
+								Building.aggregate([
+    							{
+        							"$group": {
+            						"_id": addressExists._id,
+            						"globalRate": { "$avg": "$globalRate" }
+        							}
+    							}
+								]).exec((err, stats) => {
+									console.log(stats)
+									if(err) console.log(err);
+									var reviewsCounter = addressExists.reviewsCounter+1; 
+									var lastAvg = stats[0]["globalRate"].toFixed(2);
+									var newAvg = lastAvg;
+									if (publication.rate){
+										var newAvg = ((lastAvg*(reviewsCounter))+publication.rate)/(reviewsCounter).toFixed(2);
+									}
+									
+									Building.findByIdAndUpdate(addressExists.id, {
+										reviewsCounter: reviewsCounter,
+										globalRate : newAvg,
+									}, (err, updatedStats) =>{
 								});
+							});
+						});
 
 						return res.status(200).send({publication: publicationStored});
-
-						}); // 
 					}
 				});
 			}
 		});
 	});
+}
+
+async function getContributionsNumber(userId){
+	var contributionsNumber = await User.findOne({'_id': userId}).exec((err, userInf) => {
+			if(err) return err;
+			return userInf.contributionsNumber;
+		}); 
 }
 
 function getPublication(req, res){

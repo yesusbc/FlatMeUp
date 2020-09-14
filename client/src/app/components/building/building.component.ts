@@ -23,6 +23,13 @@ export class BuildingComponent implements OnInit{
     public url: string;
     public buildingId: string;
     public showImage;
+    public stats;
+    public globalRate;
+    public globalNoise;
+    public globalPriceBenefit;
+    public globalLandlordSupport;
+    public globalMaintenance;
+    public reviewsCounter;
 
     constructor(
         private _route: ActivatedRoute,
@@ -39,7 +46,13 @@ export class BuildingComponent implements OnInit{
                                                     street:"",
                                                     buildingNumber:"",
                                                     apartment:"",
-                                                    zip:""},0,[],"",0,0,0,0,0,0);
+                                                    zip:""},0,[],"",0);
+        this.globalRate = "-";
+        this.globalNoise = "-";
+        this.globalPriceBenefit = "-";
+        this.globalLandlordSupport = "-";
+        this.globalMaintenance = "-";
+        this.reviewsCounter = "-";
         this.url = GLOBAL.url;
     }
 
@@ -63,6 +76,12 @@ export class BuildingComponent implements OnInit{
                         console.log("success");
                         console.log(response);
                         this.building = response.building;
+                        this.globalRate = response.globalRate ? response.globalRate : "--";
+                        this.globalNoise = response.globalNoise ? response.globalNoise : "--";
+                        this.globalPriceBenefit = response.globalPriceBenefit ? response.globalPriceBenefit : "--";
+                        this.globalLandlordSupport = response.globalLandlordSupport ? response.globalLandlordSupport : "--";
+                        this.globalMaintenance = response.globalMaintenance ? response.globalMaintenance : "--";
+                        this.reviewsCounter = response.reviewsCounter ? response.reviewsCounter : "--";
 
                     }else{
                         this.status = 'error';

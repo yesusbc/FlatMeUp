@@ -23,6 +23,7 @@ export class MyReviewsComponent implements OnInit{
 	public page;
     public total;
     public pages;
+    public showImage;
 
 	constructor(
 		private _route: ActivatedRoute,
@@ -69,7 +70,11 @@ export class MyReviewsComponent implements OnInit{
             );
     }
     
-    public explicitSearch(buildingId){
-        this._router.navigate([ '/building/'+buildingId])
+    showThisImage(id){
+        this.showImage = id;
+    }
+
+    hideThisImage(id){
+        this.showImage = 0;
     }
 }

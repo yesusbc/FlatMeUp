@@ -14,22 +14,35 @@
 	</div>
 
 	<div id="reviews">
-		<div *ngFor="let review of publications" class="item-review">
+		<div *ngFor="let publication of publications" class="item-publication">
 			<div class="panel panel-default">
-				<div class="panel-body"  (click)="explicitSearch(review.buildingId)" style="cursor: pointer;">
-					<div class="review-image">
-						<!-- Get image from building binded to review -->
+				<div class="panel-body">
+					<div class="publication-image">
+						<!-- Get image from building binded to publication -->
 					</div>
 					<div class="building-text pull-left">
 						<p>
-						Rate: {{review.rate}}
+						Rate: {{publication.rate}}
 						</p>
+						<a [routerLink]="['/building/'+publication.buildingId]">
+						Address: {{publication.address.street}}, {{publication.address.buildingNumber}}. {{publication.address.country}}.
+						</a>
 						<p>
-						Address: {{review.address.street}}, {{review.address.buildingNumber}}. {{review.address.country}}.
+						Review: {{publication.text}}
 						</p>
-						<p>
-						Review: {{review.text}}
-						</p>
+					</div>
+
+					<div class="col-lg-12" *ngIf="publication.file[0]">
+						<button class="btn btn-warning" pull-right (click)="showThisImage(publication._id)" *ngIf="showImage != publication._id">
+							<span class="glyphicon 	glyphicon-picture"></span>
+						</button>
+						<button class="btn btn-danger" pull-right (click)="hideThisImage(publication._id)" *ngIf="showImage == publication._id">
+							<span class="glyphicon 	glyphicon-remove-circle"></span>
+						</button>
+					</div>
+
+					<div class="col-lg-12" *ngIf="publication.file[0] != 'null' && showImage == publication._id">
+						<img src="{{url+'get-image/'+publication.file[0]}}" class="col-lg-12" width="400" height="250"/>
 					</div>
 				</div>
 			</div>

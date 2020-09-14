@@ -19,10 +19,6 @@ var BuildingSchema = Schema({
     }],
 	created_at: String,
 	globalRate: Number,
-	globalNoise: Number,
-	globalPriceBenefit: Number,
-	globalLandlordSupport: Number,
-	globalMaintenance: Number,
 	reviewsCounter: Number,	
 });
 

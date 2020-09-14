@@ -13,11 +13,6 @@ export class Building{
         public typeOfBuilding:number,
         public file:string[],
         public created_at:string,
-        public globalRate:number,
-        public globalNoise:number,
-        public globalPriceBenefit:number,
-        public globalLandlordSupport:number,
-        public globalMaintenance:number,
         public reviewsCounter:number,
     ){}
 }

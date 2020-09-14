@@ -1,5 +1,6 @@
 'use strict'
 const Building         = require('../models/building');
+const Publication        = require('../models/publication');
 const moment           = require('moment');
 
 function testbuilding(req, res){
@@ -96,7 +97,41 @@ function getBuildingById(req, res){
 	Building.findOne({'_id': buildingId}).exec((err, buildingExists) => {
 		if (err) return res.status(500).send({message: 'Error when returning building'});
 		if(buildingExists){
-			res.status(200).send({building: buildingExists});
+			// Get review counter
+			Publication.count({"buildingId": buildingId}).exec((err, reviewsCounter) => {
+				// Get stats
+				Publication.aggregate([
+	    			{
+	        		"$group": {
+	            				"_id": buildingId,
+	            				"globalRate": { "$avg": "$rate" },
+	            				"globalNoise": { "$avg": "$noise" },
+	            				"globalPriceBenefit": { "$avg": "$pricebenefit" },
+	            				"globalLandlordSupport": { "$avg": "$landlordSupport" },
+	            				"globalMaintenance": { "$avg": "$maintenance" }
+	        					}
+	    			}
+				], function(err, results){
+	    			if (err) console.log ("record not found");
+	    			else {
+	    				console.log(results[0]);
+	    				var globalRate = results[0]["globalRate"];
+    					var globalNoise = results[0]["globalNoise"];
+    					var globalPriceBenefit = results[0]["globalPriceBenefit"];
+    					var globalLandlordSupport = results[0]["globalLandlordSupport"];
+    					var globalMaintenance = results[0]["globalMaintenance"];
+	    				res.status(200).send({
+	    					building: buildingExists, 
+	    					globalRate,
+	    					globalNoise,
+	    					globalPriceBenefit,
+	    					globalLandlordSupport,
+	    					globalMaintenance,
+	    					reviewsCounter});
+	    				}     
+					});
+			});
+			
 		}else{
 			res.status(404).send({message: "Building doesnt exists"});
 		}
@@ -207,6 +242,27 @@ function uploadImage(req, res){
 	}else{
 		return res.status(200).send({message: 'Image was not uploaded'});
 	}
+}
+
+// if(err) return handleError(err);
+async function getStats(buildingId){
+	var results = 
+		await Publication.aggregate([
+    			{
+        		"$group": {
+            				"_id": buildingId,
+            				"globalRate": { "$avg": "$rate" },
+            				"globalNoise": { "$avg": "$noise" },
+            				"globalPriceBenefit": { "$avg": "$pricebenefit" },
+            				"globalLandlordSupport": { "$avg": "$landlordSupport" },
+            				"globalMaintenance": { "$avg": "$maintenance" }
+        					}
+    			}
+			]).exec((err, stats) => {
+				if(err) return err;
+				return stats[0];
+
+			});
 }
 
 
