@@ -44,7 +44,6 @@ export class MyReviewsComponent implements OnInit{
 	}
 
 	getReviewsUser(page){
-		console.log("hi from here");
         this._publicationService.getReviewsUser(this.token, page).subscribe(
                 response => {
                     if(response.publications){
@@ -76,5 +75,20 @@ export class MyReviewsComponent implements OnInit{
 
     hideThisImage(id){
         this.showImage = 0;
+    }
+
+    refresh(event = null){
+        this.getReviewsUser(this.page);
+    }
+
+    deleteReview(publicationId){
+        this._publicationService.deleteReviewUser(this.token, publicationId).subscribe(
+            response => {
+                this.refresh();    
+            },
+            error => {
+                console.log(<any>error);
+            }
+        );
     }
 }

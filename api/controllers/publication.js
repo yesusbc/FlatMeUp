@@ -48,6 +48,7 @@ function savePublication(req, res){
 	publication.timeOfInteraction       = params.timeOfInteraction       ? params.timeOfInteraction       : null;
 
 	publication.save((err, publicationStored) =>{
+		console.log(publicationStored);
 		if(err) return res.status(500).send({message: 'Error when saving publication'});
 		if(!publicationStored) return res.status(404).send({message: 'Publication not saved'});
 
@@ -219,7 +220,6 @@ function deletePublication(req, res){
 
 	Publication.find({'user': req.user.sub, '_id': publicationId}).remove((err, publicationRemoved)=> {
 		if(err) return res.status(500).send({message: 'Error when deleting review'});
-		if(!publicationRemoved) return res.status(404).send({message: 'review was not deleted'});
 		return res.status(200).send({message: 'Publication removed'});
 	});
 }

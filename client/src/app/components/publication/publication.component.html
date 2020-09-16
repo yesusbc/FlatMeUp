@@ -13,7 +13,7 @@
 		<p>
 			<label>Address: </label>
 			<input ngx-google-places-autocomplete [options]= 
-   				'options'  (onAddressChange)="AddressChange($event)" class="form-control"/> 
+   				'options'  (onAddressChange)="AddressChange($event)" class="form-control" required/> 
   				{{ formattedaddress }} 
   		</p>
 
@@ -22,17 +22,17 @@
 			<input type="text" name="apartment" #address.apartment="ngModel" [(ngModel)]="publication.address.apartment"/> 
   		</p>
 
-  		<p>
-  			<span class="alert alert-success" *ngIf="addressCorrect == 'success'">
+  		<div>
+  			<div class="alert alert-success" *ngIf="addressCorrect == 'success'">
 				Address is correct
-			</span>
-  			<span class="alert alert-danger" *ngIf="addressCorrect == 'error'">
+			</div>
+  			<div class="alert alert-danger" *ngIf="addressCorrect == 'error'">
 				Address is incorrect, check if you're typing building number and street name correctly.
-			</span>
-		</p>
+			</div>
+		</div>
 
 		<p>
-			<label for="typeOfBuilding">Type Of Building:</label>
+			<label>Type Of Building:</label>
 			<select name="typeOfBuilding" >
 			  <option value="any">-</option>
 			  <option value="office">Office</option>
@@ -43,31 +43,34 @@
 		</p>
 
 		<p>
-			<label for="rate">Global Rate:</label>
+			<label>Global Rate:</label>
   			<input type="number" name="rate" #rate="ngModel" [(ngModel)]="publication.rate" class="form-control" min="1" max="5">
 
-			<label for="noise">Noise:</label>
+			<label>Noise:</label>
   			<input type="number" name="noise" #noise="ngModel" [(ngModel)]="publication.noise" class="form-control"min="1" max="5">
 		</p>
 
 		<p>
-			<label for="priceBenefit">Price-Benefit:</label>
+			<label>Price-Benefit:</label>
   			<input type="number" name="priceBenefit" #priceBenefit="ngModel" [(ngModel)]="publication.priceBenefit" class="form-control"min="1" max="5">
 
-			<label for="landlordSupport">Landlord Support:</label>
+			<label>Landlord Support:</label>
   			<input type="number" name="landlordSupport" #safety="ngModel" [(ngModel)]="publication.landlordSupport" class="form-control"min="1" max="5">
 		</p>
 
 		<p>
-			<label for="maintenance">Maintenance:</label>
+			<label>Maintenance:</label>
   			<input type="number" name="maintenance" #globalRating="ngModel" [(ngModel)]="publication.maintenance" class="form-control"min="1" max="5">
 		</p>
 
 		<p>
-			<label for="text">Review:</label>
-			<textarea  name="text" #text="ngModel" [(ngModel)]="publication.text" class="form-control" rows="4" cols="50" required>
+			<label>Review:</label>
+			<textarea  type="text" name="text" #text="ngModel" [(ngModel)]="publication.text" class="form-control" rows="4" cols="50" required>
 			Type here the review.
 			</textarea>
+			<span *ngIf="!text.valid && text.touched">
+				Review is obligatory 
+			</span>
 
 		</p>
 
@@ -88,7 +91,7 @@
 			<span *ngFor="let filename of filesToUploadBuilding_names">{{filename}}, </span>
 		</p>
 
-		<input type="submit" value="{{title}}" class="btn btn-success"[disabled]="!ReviewForm.form.valid && addressCorrect=='error'"/>
+		<input type="submit" value="{{title}}" class="btn btn-success"[disabled]="!ReviewForm.form.valid || addressCorrect!='success'"/>
 	</form>
 </div>
 
