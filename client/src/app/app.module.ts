@@ -4,6 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { routing, appRoutingProviders } from './app-routing.module';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+// import { MomentModule } from 'angular2-moment';
+
+// Customs Model
+import { MessagesModule } from './messages/messages.module';
 
 // Components
 import { AppComponent } from './app.component';
@@ -35,7 +39,8 @@ import { BuildingComponent } from './components/building/building.component';
     BrowserModule,
     FormsModule,
     routing,
-    HttpClientModule
+    HttpClientModule,
+    MessagesModule
   ],
   providers: [
   	appRoutingProviders
