@@ -2,4 +2,28 @@
 	<h3>{{title}}</h3>
 
 	<!-- formulario envio mensajes -->
+	<div class="alert alert-success" *ngIf="status == 'success'">
+		Message Sent successfully, <a [routerLink]="['/profile/messages/sent']">Sent messages </a> 
+	</div>
+
+	<div class="alert alert-danger" *ngIf="status == 'error'">
+		Message failed, try again
+	</div>
+
+	<form #formAdd="ngForm" (ngSubmit)="onSubmit(formAdd)">
+		<p *ngIf="destUser">
+			<label>For: </label>
+			{{destUser.lastname}},{{destUser.name}} 
+		</p>
+
+		<p>
+			<label>Message: </label>
+			<textarea name="text" #text="ngModel" [(ngModel)]="message.text" class="form-control" required></textarea>
+			<span *ngIf="!text.valid && text.touched">
+				Message is obligatory
+			</span>
+		</p>
+
+		<input type="submit" value="{{title}}" class="btn btn-success" [disabled]="!formAdd.form.valid"/>
+	</form>
 </div>

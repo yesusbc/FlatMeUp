@@ -130,4 +130,9 @@ export class BuildingComponent implements OnInit{
         this.showImage = 0;
     }
 
+    sendMessage(destUserId){
+        console.log("navigate");
+        this._router.navigate(['profile/messages/send'], { state: { destUserId: destUserId } });
+    }
+
 }

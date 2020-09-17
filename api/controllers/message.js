@@ -23,6 +23,7 @@ function saveMessage(req, res){
 	message.emitter = req.user.sub;
 	message.receiver = params.receiver;
 	message.viewed = 0;
+	console.log(message);
 	message.save((err, messageStored) => {
 		if(err) return res.status(500).send({message: 'Error in message'});
 		if(!messageStored) return res.status(500).send({message: 'Message not sent'});
@@ -40,7 +41,7 @@ function getReceivedMessages(req, res){
 	}
 
 	var itemsPerPage = 4;
-	Message.find({receiver: userId}).populate('emitter', 'name userName email _id').paginate(page, itemsPerPage, (err, messages, totalMessages) => {	
+	Message.find({receiver: userId}).populate('emitter', 'name lastname userName email _id').sort('-created_at').paginate(page, itemsPerPage, (err, messages, totalMessages) => {	
 		if(err) return res.status(500).send({message: 'Error in messages request'});
 		if(!messages) return res.status(404).send({message: 'No messages'});
 
@@ -62,10 +63,10 @@ function getEmittedMessages(req, res){
 
 	var itemsPerPage = 4;
 	// emmiter receiver ??
-	Message.find({emitter: userId}).populate('emitter', 'name userName email _id').paginate(page, itemsPerPage, (err, messages, totalMessages) => {	
+	Message.find({emitter: userId}).populate('emitter receiver', 'name lastname userName _id').sort('-created_at').paginate(page, itemsPerPage, (err, messages, totalMessages) => {	
 		if(err) return res.status(500).send({message: 'Error in messages request'});
 		if(!messages) return res.status(404).send({message: 'No messages'});
-
+		console.log(messages);
 		return res.status(200).send({
 			total: totalMessages,
 			pages: Math.ceil(totalMessages/itemsPerPage),

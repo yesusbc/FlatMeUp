@@ -172,6 +172,21 @@ function updateUser(req, res){
 	});
 }
 
+function getUserPublicData(req, res){
+	var userId = req.params.destUserId;
+	console.log(userId);
+	User.findById({'_id':userId},{name:1, lastname:1}, (err, user) => {
+		if(err) return res.status(500).send({message: 'Error in request'});
+
+		if(!user) return res.status(404).send({message: 'User doesnt exist'});
+
+		console.log(user);
+
+		return res.status(200).send({user});
+	});
+}
+
+
 /*
 function getCounters(req, res){
 	var userId = req.user.sub;
@@ -202,5 +217,6 @@ module.exports = {
 	loginUser,
 	getUser,
 	getUsers,
-	updateUser
+	updateUser,
+	getUserPublicData
 }
