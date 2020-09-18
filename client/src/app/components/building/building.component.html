@@ -51,7 +51,7 @@
 							{{ (publication.created_at | amFromUnix) | amLocale:'en' | amTimeAgo}}
 						</span>
 						<div>
-							<button class="btn btn-success" pull-left (click)="sendMessage(publication.user)" *ngIf="publication.canBeContacted == 1">
+							<button class="btn btn-success" pull-left (click)="sendMessage(publication.user, refAddress)" *ngIf="publication.canBeContacted == 1">
 								<span class="glyphicon 	glyphicon-envelope"></span>
 							</button>
 							<button class="btn btn-warning" pull-left *ngIf="publication.canBeContacted == 0">

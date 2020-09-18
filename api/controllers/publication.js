@@ -43,7 +43,7 @@ function savePublication(req, res){
 	publication.landlordSupport         = params.landlordSupport         ? params.landlordSupport         : null;
 	publication.maintenance             = params.maintenance             ? params.gender                  : null;
 	publication.votesCounter            = params.votesCounter            ? params.votesCounter            : 0;
-	publication.canBeContacted          = params.canBeContacted          ? params.canBeContacted          : 1;
+	publication.canBeContacted          = params.canBeContacted          ? params.canBeContacted          : 0;
 	publication.interactionWithBuilding = params.interactionWithBuilding ? params.interactionWithBuilding : null;
 	publication.timeOfInteraction       = params.timeOfInteraction       ? params.timeOfInteraction       : null;
 

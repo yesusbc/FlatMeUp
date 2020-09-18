@@ -15,9 +15,11 @@ import { BuildingComponent } from './components/building/building.component';
 const appRoutes: Routes = [
 	{path: '', component: HomeComponent},
 	{path: 'home', component: HomeComponent},
+	{path: 'home/:page', component: HomeComponent},
 	{path: 'login', component: LoginComponent},
 	{path: 'register', component: RegisterComponent},
 	{path: 'search', component: SearchComponent},
+	{path: 'search/:page', component: SearchComponent},
 	{path: 'profile/edit', component: UserEditComponent},
 	{path: 'profile/my-reviews', component: MyReviewsComponent},
 	{path: 'profile/:id', component: ProfileComponent},

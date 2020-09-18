@@ -42,5 +42,22 @@
 		</div>
 	</div>
 
+	<div>
+		<ul class="pagination pull-right" *ngIf="commingFromHome">
+			<li *ngIf="page > 1"><a [routerLink]="['/home', prev_page]">
+			Previous</a></li>
+			<li *ngIf="pages != page"><a [routerLink]="['/home', next_page]">
+			Next</a></li>
+		</ul>
+
+		<ul class="pagination pull-right" *ngIf="!commingFromHome">
+			<!-- This must pass buildings, so then search can traverse through it with the page -->
+			<li *ngIf="page > 1"><a [routerLink]="['/search', prev_page]">
+			Previous</a></li>
+			<li *ngIf="pages != page"><a [routerLink]="['/search', next_page]">
+			Next</a></li>
+		</ul>
+	</div>
+
 </div>
 

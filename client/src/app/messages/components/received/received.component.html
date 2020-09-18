@@ -9,7 +9,10 @@
 						<p class="name-lastname">
 							From: {{message.emitter.lastname + ', ' + message.emitter.name}}
 						</p>
-
+						<span class="nickname">
+							Reference: {{message.address}}
+						</span>
+						<br/>
 						<span class="date nickname">
 							{{ (message.created_at | amFromUnix) | amLocale:'en' | amTimeAgo}}
 						</span>

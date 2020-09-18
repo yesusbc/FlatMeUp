@@ -30,6 +30,7 @@ export class BuildingComponent implements OnInit{
     public globalLandlordSupport;
     public globalMaintenance;
     public reviewsCounter;
+    public refAddress;
 
     constructor(
         private _route: ActivatedRoute,
@@ -38,7 +39,6 @@ export class BuildingComponent implements OnInit{
     ){
         this.title = "Ratings & Reviews";
         this.page = 1;
-        // this.buildingId = "5f55b72304fe8f1658fb6426";
         this.building = new Building("",{
                                                     country:"", 
                                                     state:"", 
@@ -82,6 +82,7 @@ export class BuildingComponent implements OnInit{
                         this.globalLandlordSupport = response.globalLandlordSupport ? response.globalLandlordSupport : "--";
                         this.globalMaintenance = response.globalMaintenance ? response.globalMaintenance : "--";
                         this.reviewsCounter = response.reviewsCounter ? response.reviewsCounter : "--";
+                        this.refAddress = response.building.address.street + ", " + response.building.address.buildingNumber;
 
                     }else{
                         this.status = 'error';
@@ -130,9 +131,9 @@ export class BuildingComponent implements OnInit{
         this.showImage = 0;
     }
 
-    sendMessage(destUserId){
+    sendMessage(destUserId, refAddress){
         console.log("navigate");
-        this._router.navigate(['profile/messages/send'], { state: { destUserId: destUserId } });
+        this._router.navigate(['profile/messages/send'], { state: { destUserId: destUserId, refAddress: refAddress } });
     }
 
 }

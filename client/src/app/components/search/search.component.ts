@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { PublicationService } from '../../services/publication.service';
-import { Publication } from '../../models/publication';
 import  { Building } from '../../models/building';
 import { AddressComponent } from "ngx-google-places-autocomplete/objects/addressComponent";
 import { GLOBAL } from '../../services/global';
@@ -17,27 +16,31 @@ export class SearchComponent implements OnInit{
     public formattedaddress;
     public options;
     public status;
-    public publication: Publication;
+    public building: Building;
     public page;
     public total;
     public pages;
     public buildings: Building[];
     public url: string;
     @Input() commingFromHome: string;
+    public next_page;
+    public prev_page;
+
     constructor(
         private _router: Router,
+        private _route: ActivatedRoute,
         private _publicationService: PublicationService
     ){
         this.title = "Type Address";
         this.formattedaddress ="";
-        this.publication = new Publication("", "", "",{
+        this.building = new Building("",{
                                                     country:"", 
                                                     state:"", 
                                                     city:"",
                                                     street:"",
                                                     buildingNumber:"",
                                                     apartment:"",
-                                                    zip:""},0,"",[],"",0,0,0,0,0,0,1,0,0);
+                                                    zip:""},0,[],"",0);
         this.options={ 
           types: [],
           fields: ['address_components', 'place_id']
@@ -47,21 +50,51 @@ export class SearchComponent implements OnInit{
 
     ngOnInit(){
         console.log('address.component loaded');
-        if(this.commingFromHome){
-            this.getBuildingsByPage(this.page);
-        }
-        
+        this.actualPage();
     }
 
     public AddressChange(address: any) { 
     //setting address from API to local variable 
-        this.publication.address.buildingNumber = this.getComponentByType(address,"street_number") ? this.getComponentByType(address,"street_number").long_name : undefined;
-        this.publication.address.street = this.getComponentByType(address,"route") ? this.getComponentByType(address,"route").long_name : undefined;
-        this.publication.address.city = this.getComponentByType(address,"locality") ? this.getComponentByType(address,"locality").long_name : undefined;
-        this.publication.address.state = this.getComponentByType(address,"administrative_area_level_1") ? this.getComponentByType(address,"administrative_area_level_1").long_name : undefined;
-        this.publication.address.country = this.getComponentByType(address,"country") ? this.getComponentByType(address,"country").long_name : undefined;
-        this.publication.address.zip = this.getComponentByType(address,"postal_code") ? this.getComponentByType(address,"postal_code").long_name : undefined;
+        this.building.address.buildingNumber = this.getComponentByType(address,"street_number") ? this.getComponentByType(address,"street_number").long_name : undefined;
+        this.building.address.street = this.getComponentByType(address,"route") ? this.getComponentByType(address,"route").long_name : undefined;
+        this.building.address.city = this.getComponentByType(address,"locality") ? this.getComponentByType(address,"locality").long_name : undefined;
+        this.building.address.state = this.getComponentByType(address,"administrative_area_level_1") ? this.getComponentByType(address,"administrative_area_level_1").long_name : undefined;
+        this.building.address.country = this.getComponentByType(address,"country") ? this.getComponentByType(address,"country").long_name : undefined;
+        this.building.address.zip = this.getComponentByType(address,"postal_code") ? this.getComponentByType(address,"postal_code").long_name : undefined;
     } 
+
+    actualPage(){
+        this._route.params.subscribe( params => {
+            // let user_id = params['id'];
+            // this.userPageId = user_id;
+
+            let page = params['page'];
+            this.page = page;
+
+            if(!params['page']){
+                page = 1;
+            }
+
+            if (!page){
+                page = 1;
+            }else{
+                this.next_page = parseInt(page)+1;
+                this.prev_page = parseInt(page)-1;
+            
+                if(this.prev_page <= 0){
+                    this.prev_page = 1;
+                }
+            }
+            
+            if(this.commingFromHome){
+                this.getBuildingsByPage(page);
+            }
+            if(this.formattedaddress){
+                console.log("yes");
+                this.getBuildingsByAddress(page);
+            }
+        });
+    }
 
     public getComponentByType(address: any, type: string): AddressComponent {
         if(!type)
@@ -109,7 +142,7 @@ export class SearchComponent implements OnInit{
     }
 
     public getBuildingsByAddress(page){
-        this._publicationService.getBuildingsByAddress(page, this.publication).subscribe(
+        this._publicationService.getBuildingsByAddress(page, this.building).subscribe(
                 response => {
                     if(response.buildings){
                         console.log(response);
