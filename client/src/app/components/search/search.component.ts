@@ -120,6 +120,8 @@ export class SearchComponent implements OnInit{
         this._publicationService.getBuildingsByPage(page).subscribe(
                 response => {
                     if(response.buildings){
+                        console.log(response);
+                        console.log(this.buildings);
                         this.total = response.total;
                         this.pages = response.pages;
                         this.buildings = response.buildings;
@@ -142,6 +144,7 @@ export class SearchComponent implements OnInit{
     }
 
     public getBuildingsByAddress(page){
+        this.page = page;
         this._publicationService.getBuildingsByAddress(page, this.building).subscribe(
                 response => {
                     if(response.buildings){
@@ -170,6 +173,11 @@ export class SearchComponent implements OnInit{
 
     public explicitSearch(buildingId){
         this._router.navigate([ '/building/'+buildingId])
+    }
+
+    changePage(page, buildings){
+        console.log("search");
+        this._router.navigate(['search'], { state: { page: page, buildings: buildings } });
     }
 
 }

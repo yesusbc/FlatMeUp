@@ -52,10 +52,13 @@
 
 		<ul class="pagination pull-right" *ngIf="!commingFromHome">
 			<!-- This must pass buildings, so then search can traverse through it with the page -->
-			<li *ngIf="page > 1"><a [routerLink]="['/search', prev_page]">
-			Previous</a></li>
-			<li *ngIf="pages != page"><a [routerLink]="['/search', next_page]">
-			Next</a></li>
+			<li *ngIf="page > 1">
+       			<button type="button" (click)="getBuildingsByAddress(prev_page)" >Previous</button>
+   			</li>
+
+   			<li *ngIf="pages != page">
+       			<button type="button" (click)="getBuildingsByAddress(next_page)" >Next</button>
+   			</li>
 		</ul>
 	</div>
 

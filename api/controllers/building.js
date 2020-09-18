@@ -2,6 +2,7 @@
 const Building         = require('../models/building');
 const Publication        = require('../models/publication');
 const moment           = require('moment');
+const { ObjectId } = require('mongodb');
 
 function testbuilding(req, res){
 	res.status(200).send({
@@ -101,16 +102,23 @@ function getBuildingById(req, res){
 			Publication.count({"buildingId": buildingId}).exec((err, reviewsCounter) => {
 				// Get stats
 				Publication.aggregate([
-	    			{
-	        		"$group": {
-	            				"_id": buildingId,
-	            				"globalRate": { "$avg": "$rate" },
-	            				"globalNoise": { "$avg": "$noise" },
-	            				"globalPriceBenefit": { "$avg": "$pricebenefit" },
-	            				"globalLandlordSupport": { "$avg": "$landlordSupport" },
-	            				"globalMaintenance": { "$avg": "$maintenance" }
+	    			
+	    			{ '$match':{ "buildingId": ObjectId(buildingId) } },
+
+	        		{'$group': {
+	        			 		'_id': null,
+	            				'globalRate': { '$avg': '$rate' },
+	            				'globalNoise': { '$avg': '$noise' },
+	            				'globalPriceBenefit': { '$avg': '$pricebenefit' },
+	            				'globalLandlordSupport': { '$avg': '$landlordSupport' },
+	            				'globalMaintenance': { '$avg': '$maintenance' }
 	        					}
-	    			}
+	        				}
+	    			
+
+
+
+
 				], function(err, results){
 	    			if (err) console.log ("record not found");
 	    			else {
@@ -144,7 +152,7 @@ function getBuildings(req, res){
 		page = req.params.page;
 	}
 
-	var itemsPerPage = 8;
+	var itemsPerPage = 4;
 
 	Building.find({}).select('address apartment globalRate file reviewsCounter created_at').paginate(page, itemsPerPage, (err, buildings, totalBuildings) => {	
 		if (err) return res.status(500).send({message: 'Error when returning buildings'});
@@ -167,7 +175,7 @@ function getBuildingsByAddress(req, res){
 		page = req.params.page;
 	}
 
-	var itemsPerPage    = 6;
+	var itemsPerPage    = 4;
 	var country         = params.address.country        ? params.address.country       : undefined;
 	var state           = params.address.state          ? params.address.state         : undefined;
 	var city            = params.address.city           ? params.address.city          : undefined;
@@ -244,26 +252,6 @@ function uploadImage(req, res){
 	}
 }
 
-// if(err) return handleError(err);
-async function getStats(buildingId){
-	var results = 
-		await Publication.aggregate([
-    			{
-        		"$group": {
-            				"_id": buildingId,
-            				"globalRate": { "$avg": "$rate" },
-            				"globalNoise": { "$avg": "$noise" },
-            				"globalPriceBenefit": { "$avg": "$pricebenefit" },
-            				"globalLandlordSupport": { "$avg": "$landlordSupport" },
-            				"globalMaintenance": { "$avg": "$maintenance" }
-        					}
-    			}
-			]).exec((err, stats) => {
-				if(err) return err;
-				return stats[0];
-
-			});
-}
 
 
 /*
