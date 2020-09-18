@@ -33,6 +33,9 @@
 						<p>
 						Number of reviews: {{building.reviewsCounter}}
 						</p>
+						<span class="date">
+							{{ (building.created_at | amFromUnix) | amLocale:'en' | amTimeAgo}}
+						</span>
 					</div>
 				</div>
 			</div>

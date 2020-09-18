@@ -27,6 +27,10 @@
 				<p>
 				Number of reviews: {{reviewsCounter}}
 				</p>
+
+				<span class="date">
+					{{ (building.created_at | amFromUnix) | amLocale:'en' | amTimeAgo}}
+				</span>
 			</div>
 		</div>
 
@@ -41,13 +45,16 @@
 						{{publication.text}}
 						</p>
 						<p>
-						Can be contacted:
+						Can be contacted: {{publication.canBeContacted}}
 						</p>
+						<span class="date">
+							{{ (publication.created_at | amFromUnix) | amLocale:'en' | amTimeAgo}}
+						</span>
 						<div>
-							<button class="btn btn-success" pull-left (click)="sendMessage(publication.user)" *ngIf="publication.canBeContacted">
+							<button class="btn btn-success" pull-left (click)="sendMessage(publication.user)" *ngIf="publication.canBeContacted == 1">
 								<span class="glyphicon 	glyphicon-envelope"></span>
 							</button>
-							<button class="btn btn-warning" pull-left *ngIf="!publication.canBeContacted">
+							<button class="btn btn-warning" pull-left *ngIf="publication.canBeContacted == 0">
 								<span class="glyphicon 	glyphicon-envelope"></span>
 							</button> 
 						</div>

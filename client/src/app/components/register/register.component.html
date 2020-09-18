@@ -10,6 +10,7 @@
 	</div>
 
 	<form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" class="col-lg-12">
+		<h3>Obligatory</h3>
 		<p>
 			<label>Name: </label>
 			<input type="text" name="name" #name="ngModel" [(ngModel)]="user.name" class="form-control" required/>
@@ -46,6 +47,8 @@
 				Password is obligatory 
 			</span>
 		</p>
+
+		<h3>Optional</h3>
 
 		<p>
 			<label>Gender: </label>

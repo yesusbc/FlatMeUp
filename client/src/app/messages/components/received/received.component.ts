@@ -86,4 +86,9 @@ export class ReceivedComponent implements OnInit {
 				}
 			);
 	}
+
+	sendMessage(destUserId){
+        console.log("navigate");
+        this._router.navigate(['profile/messages/send'], { state: { destUserId: destUserId } });
+    }
 }

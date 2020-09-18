@@ -67,7 +67,7 @@ export class PublicationComponent implements OnInit{
 	}
 
 	onSubmit(ReviewForm){
-
+		console.log(this.publication);
 		this._publicationService.addPublication(this.token, this.publication).subscribe(
 				response => {
 					if (response.publication){
