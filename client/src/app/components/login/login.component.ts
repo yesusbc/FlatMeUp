@@ -40,9 +40,8 @@ export class LoginComponent implements OnInit{
 					this.status = 'error';
 				}else{
 					this.status = 'success';	
-					// Pending to save on storage, persisting data
+					// Save on storage, persisting data
 					localStorage.setItem('identity', JSON.stringify(this.identity));
-
 					// get token
 					this.getToken();
 				}
@@ -65,11 +64,8 @@ export class LoginComponent implements OnInit{
 					this.status = 'error';
 				}else{
 					this.status = 'success';	
-					// Pending to save on storage, persisting token
+					// Save on storage, persisting token
 					localStorage.setItem('token', this.token);
-
-					// get counters and statistics of user
-
 					this._router.navigate(['/']);
 				}
 			},
@@ -82,5 +78,4 @@ export class LoginComponent implements OnInit{
 			}
 		);
 	}
-
 }

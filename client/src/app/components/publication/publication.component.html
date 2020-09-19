@@ -85,7 +85,7 @@
 			<span *ngFor="let filename of filesToUploadPub_names">{{filename}}, </span>
 		</p>
 
-				<p>
+		<p>
 			<label>Upload pictures of the Building</label>
 			<input type="file" placeholder="Upload picture - Building" (change)="fileChangeEvent($event, 'building')" multiple/>
 			<span *ngFor="let filename of filesToUploadBuilding_names">{{filename}}, </span>

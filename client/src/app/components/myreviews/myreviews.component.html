@@ -25,26 +25,28 @@
 					<div class="publication-image">
 						<!-- Get image from building binded to publication -->
 					</div>
+
 					<div class="building-text pull-left">
 						<p>
 						Rate: {{publication.rate}}
 						</p>
+
 						<a [routerLink]="['/building/'+publication.buildingId]">
 						Address: {{publication.address.street}}, {{publication.address.buildingNumber}}. {{publication.address.country}}.
 						</a>
+
 						<p>
 						Review: {{publication.text}}
 						</p>
 					</div>
 
+					<!-- Delete Review -->
 					<div class="pull-right" *ngIf="publication.user == identity._id">
-
 						&nbsp;
 						<a href="#myModal{{publication._id}}" class="btn btn-lg btn-danger" data-toggle="modal" *ngIf="showImage != publication._id">
 							<span class="glyphicon 	glyphicon-trash"></span>
 						</a>
 
-						<!-- Modal HTML -->
 						<div id="myModal{{publication._id}}" class="modal fade">
 						    <div class="modal-dialog">
 						        <div class="modal-content">
@@ -64,11 +66,7 @@
 						</div>	
 					</div>
 
-
-
-
-
-
+					<!-- Show image -->
 					<div class="pull-right" *ngIf="publication.file[0]">
 						<button class="btn btn-warning" pull-right (click)="showThisImage(publication._id)" *ngIf="showImage != publication._id">
 							<span class="glyphicon 	glyphicon-picture"></span>

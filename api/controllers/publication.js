@@ -1,21 +1,22 @@
 'use strict'
 
+var mongoosePaginate = require('mongoose-pagination');
 var path             = require('path');
 var fs               = require('fs');
 var moment           = require('moment');
-var mongoosePaginate = require('mongoose-pagination');
+var Publication      = require('../models/publication');
+var Building         = require('../models/building');
+var User             = require('../models/user');
 
-var Publication = require('../models/publication');
-var Building = require('../models/building');
-var User        = require('../models/user');
-
-function probando(req, res){
+function testpublication(req, res){
 	res.status(200).send({
-		message: 'Hi from PUBLICATIONS CONTROLLER'
+		message: 'Publications controller testing'
 	});
 }
 
 // This function will save the publication, and if there is no existing building already, then it will create a new building
+// Args: Publication
+// Return: Created publication / created Building
 function savePublication(req, res){
 	var params = req.body;
 	if(!params.address.street || !params.text){
@@ -23,8 +24,8 @@ function savePublication(req, res){
 			message: 'Either address or text is missing'
 		});
 	}
-	var publication = new Publication();
 
+	var publication = new Publication();
 	publication.user       = req.user.sub;
 	publication.buildingId = null;
 	publication.text       = params.text;
@@ -48,11 +49,10 @@ function savePublication(req, res){
 	publication.timeOfInteraction       = params.timeOfInteraction       ? params.timeOfInteraction       : null;
 
 	publication.save((err, publicationStored) =>{
-		console.log(publicationStored);
 		if(err) return res.status(500).send({message: 'Error when saving publication'});
 		if(!publicationStored) return res.status(404).send({message: 'Publication not saved'});
 
-		// Contributions number + 1
+		// User's Contributions number + 1
 		getContributionsNumber(publication.user).then((contributionsNumber) => {
 			User.findByIdAndUpdate(publication.user, {contributionsNumber: contributionsNumber}, (err, countUpdated) =>{
 			});
@@ -79,6 +79,7 @@ function savePublication(req, res){
 						  'address.buildingNumber' : params.address.buildingNumber,
 						  'address.zip'            : params.address.zip}).exec((err, addressExists) => {
 			if(!addressExists){
+
 				// If address doesnt exist, then create new record
 				building.save((err, buildingStored) => {
 					if(err) return res.status(500).send({message: 'Error when creating building'});
@@ -94,7 +95,7 @@ function savePublication(req, res){
 				});
 			}else{
 				// Address exists
-				// Address exists but perhaps aparment dont, Check for apartment as well, if it doesnt exist, then create record
+				// Address exists but perhaps "aparment" dont, Check for apartment as well, if it doesnt exist, then create record
 				Building.findOne({'address.apartment'      : params.address.apartment,
 								  'address.country'        : params.address.country,
 						  		  'address.state'          : params.address.state,
@@ -106,8 +107,8 @@ function savePublication(req, res){
 						building.save((err, buildingStored) => {
 							if(err) return res.status(500).send({message: 'Error when creating building - apartment'});
 							if(buildingStored){
+								// Update "buildingId" field on publication
 								publicationStored.buildingId = buildingStored._id;
-								console.log(publicationStored.buildingId);
 								Publication.findByIdAndUpdate(publication._id, {buildingId: buildingStored._id}, (err, buildingIdUpdated) =>{
 								if(err) return res.status(500).send({message: 'Error when adding building ID to publication'});
 								});
@@ -119,33 +120,31 @@ function savePublication(req, res){
 						// If building and apartment already exist, then just add buildingId to publication
 						Publication.findByIdAndUpdate(publication._id, {buildingId: addressExists._id}, (err, publicationUpdated) =>{
 							if(err) return res.status(500).send({message: 'Error when adding building ID to publication'});
-								// Update global stats
-								// To check if value is returning 0 or digit
-								Building.aggregate([
-    							{
-        							"$group": {
-            						"_id": addressExists._id,
-            						"globalRate": { "$avg": "$globalRate" }
-        							}
-    							}
-								]).exec((err, stats) => {
-									console.log(stats)
-									if(err) console.log(err);
-									var reviewsCounter = addressExists.reviewsCounter+1; 
+							// Find and calculate Building global stats
+							Building.aggregate([
+				    			{ '$match':{ "_id": ObjectId(addressExists._id) } },
+				        		{'$group': {
+				        			 		'_id': null,
+				            				'globalRate': { '$avg': '$globalRate' }
+				        					}
+				        				}
+							], function(err, stats){
+				    			if (err) console.log ("record not found");
+				    			else {
+				    				var reviewsCounter = addressExists.reviewsCounter+1; 
 									var lastAvg = stats[0]["globalRate"].toFixed(2);
 									var newAvg = lastAvg;
 									if (publication.rate){
 										var newAvg = ((lastAvg*(reviewsCounter))+publication.rate)/(reviewsCounter).toFixed(2);
 									}
-									
-									Building.findByIdAndUpdate(addressExists.id, {
-										reviewsCounter: reviewsCounter,
-										globalRate : newAvg,
-									}, (err, updatedStats) =>{
+				    			} 
+				    			// Update stats
+								Building.findByIdAndUpdate(addressExists.id, {
+									reviewsCounter: reviewsCounter,
+									globalRate : newAvg,
+								}, (err, updatedStats) =>{});
 								});
-							});
 						});
-
 						return res.status(200).send({publication: publicationStored});
 					}
 				});
@@ -154,6 +153,7 @@ function savePublication(req, res){
 	});
 }
 
+// Returns number of contribution
 async function getContributionsNumber(userId){
 	var contributionsNumber = await User.findOne({'_id': userId}).exec((err, userInf) => {
 			if(err) return err;
@@ -161,16 +161,22 @@ async function getContributionsNumber(userId){
 		}); 
 }
 
+// Function to get Publication by publicationId
+// Args: publicationId
+// Returns: Publication
 function getPublication(req, res){
 	var publicationId = req.params.id;
 
 	Publication.findById(publicationId, (err, publication) =>{
 		if(err) return res.status(500).send({message: 'Error when retrieving review'});
 		if(!publication) return res.status(404).send({message: 'publication doesnt exist'});
-			return res.status(200).send({publication});
+		return res.status(200).send({publication});
 	});
 }
 
+// Function to get Publications by buildingId
+// Args: buildingId
+// Returns: Publications Json
 function getPublicationsById(req, res){
 	var page = 1;
 
@@ -180,10 +186,8 @@ function getPublicationsById(req, res){
 
 	var buildingId = req.params.buildingId;
 	var itemsPerPage = 4;
-
 	Publication.find({'buildingId': buildingId}).sort('-created_at').paginate(page, itemsPerPage, (err, publications, totalPublications) => {	
 		if (err) return res.status(500).send({message: 'Error when returning publications of user'});
-
 		return res.status(200).send({
 			total: totalPublications,
 			pages: Math.ceil(totalPublications/itemsPerPage),
@@ -193,6 +197,9 @@ function getPublicationsById(req, res){
 	});
 }
 
+// Function to get Publications from specific user
+// Args: usersId
+// Returns: Reviews from User
 function getPublicationsUser(req, res){
 	var page = 1;
 
@@ -202,10 +209,8 @@ function getPublicationsUser(req, res){
 
 	var user = req.user.sub;
 	var itemsPerPage = 4;
-
 	Publication.find({'user': user}).sort('-created_at').paginate(page, itemsPerPage, (err, publications, totalPublications) => {	
 		if (err) return res.status(500).send({message: 'Error when returning publications of user'});
-
 		return res.status(200).send({
 			total: totalPublications,
 			pages: Math.ceil(totalPublications/itemsPerPage),
@@ -215,6 +220,9 @@ function getPublicationsUser(req, res){
 	});
 }
 
+// Function to delete publication by publicationId
+// Args: publicationId
+// Returns: -
 function deletePublication(req, res){
 	var publicationId = req.params.id;
 
@@ -224,6 +232,9 @@ function deletePublication(req, res){
 	});
 }
 
+// Function to upload images of Publication (review)
+// Args: publicationId, Image(s)
+// Returns: -
 function uploadImage(req, res){
 	var publicationId = req.params.publicationId;
 	var filenames_list = [];
@@ -232,7 +243,6 @@ function uploadImage(req, res){
 		if(req.files.image.length){
 			for (var idx=0; idx < req.files.image.length; idx++){
 				var file_path = req.files.image[idx].path;
-				console.log(file_path);
 		    	var file_split = file_path.split('/');
 				var file_name  = file_split[2];
 				var ext_split  = file_name.split('.');
@@ -249,35 +259,36 @@ function uploadImage(req, res){
 			var file_name  = file_split[2];
 			var ext_split  = file_name.split('.');
 			var file_ext   = ext_split[1];
-
 			if (file_ext=='png' || file_ext=='jpg' || file_ext=='jpeg'){
 				filenames_list.push(file_name);
 			}else{
 				return removeFilesOfUploads(res, file_path, 'Extension not valid');
 			}
 		}
-
-
+		// Upload image
 		Publication.findByIdAndUpdate(publicationId, {$push: {file: filenames_list}}, {new: true}, (err, publicationUpdated) =>{
-					if(err) return res.status(500).send({message: 'Error in request'});
-					if(!publicationUpdated) return res.status(404).send({message: 'Couldnot upload image'});
-
-					return res.status(200).send({publication: publicationUpdated});
-				});
+			if(err) return res.status(500).send({message: 'Error in request'});
+			if(!publicationUpdated) return res.status(404).send({message: 'Couldnot upload image'});
+			return res.status(200).send({publication: publicationUpdated});
+		});
 	}else{
 		return res.status(200).send({message: 'Image was not uploaded'});
 	}
 }
 
+// Function to remove files of upload
 function removeFilesOfUploads(res, file_path, message){
 	fs.unlink(file_path, (err) =>{
 		return res.status(200).send({message: message});
 	});
 }
 
+// Function to get image from path
+// Args: Path
+// Returns: Image
 function getImageFile(req, res){
 	var image_file = req.params.imageFile;
-	var path_file = './uploads/publications/'+image_file;
+	var path_file = './uploads/publications/' + image_file;
 
 	fs.exists(path_file, (exists) => {
 		if(exists){
@@ -288,18 +299,20 @@ function getImageFile(req, res){
 	});
 }
 
+// Function to vote up or vote down to specific reviews
+// Not used yet
 function upDownVote(req, res){
 	var vote = req.body.vote;
 	var publicationId = req.params.publicationId;
 	Publication.findOne({'_id':publicationId}).exec((err, publication) => {
 		if(publication){
+			// Calculate vote and update
 			var newVote = publication.votesCounter + parseInt(vote);
-			Publication.findByIdAndUpdate(publicationId, {votesCounter: newVote}, (err, publicationUpdated) =>{
-						
-						if(err) return res.status(500).send({message: 'Error in voting request'});
-						if(!publicationUpdated) return res.status(404).send({message: 'Votes not updated'});
-						return res.status(200).send({publication: publicationUpdated});
-					});
+			Publication.findByIdAndUpdate(publicationId, {votesCounter: newVote}, (err, publicationUpdated) =>{	
+				if(err) return res.status(500).send({message: 'Error in voting request'});
+				if(!publicationUpdated) return res.status(404).send({message: 'Votes not updated'});
+				return res.status(200).send({publication: publicationUpdated});
+			});
 		}else{
 			return res.status(404).send({message: 'Publication not found'});
 		}
@@ -307,7 +320,7 @@ function upDownVote(req, res){
 }
 
 module.exports = {
-	probando,
+	testpublication,
 	savePublication,
 	getPublication,
 	getPublicationsUser,

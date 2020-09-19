@@ -52,7 +52,6 @@ export class PublicationService{
 		return this._http.get(this.url+'review/'+pub_id, {headers: headers});
 	}
 
-	// Pending to implement button
 	deleteReviewUser(token, pub_id):Observable<any>{
 		let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
 		return this._http.delete(this.url+'delete-review/'+pub_id, {headers: headers});

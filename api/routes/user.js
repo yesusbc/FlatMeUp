@@ -1,12 +1,9 @@
 'use strict'
 
-
-var express = require('express');
+var express        = require('express');
 var UserController = require('../controllers/user');
-
-var api = express.Router();
-
-var md_auth = require('../middlewares/authenticated');	// Middleware authentification
+var api            = express.Router();
+var md_auth        = require('../middlewares/authenticated');	// Middleware authentification
 
 api.get('/home', UserController.home);
 api.get('/pruebas', md_auth.ensureAuth, UserController.pruebas);

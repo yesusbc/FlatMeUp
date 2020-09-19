@@ -5,7 +5,6 @@ import  { Building } from '../../models/building';
 import { AddressComponent } from "ngx-google-places-autocomplete/objects/addressComponent";
 import { GLOBAL } from '../../services/global';
 
-
 @Component({ 
     selector: 'search', 
     templateUrl: './search.component.html',
@@ -65,9 +64,6 @@ export class SearchComponent implements OnInit{
 
     actualPage(){
         this._route.params.subscribe( params => {
-            // let user_id = params['id'];
-            // this.userPageId = user_id;
-
             let page = params['page'];
             this.page = page;
 
@@ -96,7 +92,7 @@ export class SearchComponent implements OnInit{
         });
     }
 
-    public getComponentByType(address: any, type: string): AddressComponent {
+    getComponentByType(address: any, type: string): AddressComponent {
         if(!type)
             return null;
 
@@ -116,12 +112,10 @@ export class SearchComponent implements OnInit{
         return null;
     }
 
-    public getBuildingsByPage(page){
+    getBuildingsByPage(page){
         this._publicationService.getBuildingsByPage(page).subscribe(
                 response => {
                     if(response.buildings){
-                        console.log(response);
-                        console.log(this.buildings);
                         this.total = response.total;
                         this.pages = response.pages;
                         this.buildings = response.buildings;
@@ -143,13 +137,11 @@ export class SearchComponent implements OnInit{
             );
     }
 
-    public getBuildingsByAddress(page){
+    getBuildingsByAddress(page){
         this.page = page;
         this._publicationService.getBuildingsByAddress(page, this.building).subscribe(
                 response => {
                     if(response.buildings){
-                        console.log(response);
-                        console.log(this.buildings);
                         this.total = response.total;
                         this.pages = response.pages;
                         this.buildings = response.buildings;
@@ -171,12 +163,11 @@ export class SearchComponent implements OnInit{
             );
     }
 
-    public explicitSearch(buildingId){
+    explicitSearch(buildingId){
         this._router.navigate([ '/building/'+buildingId])
     }
 
     changePage(page, buildings){
-        console.log("search");
         this._router.navigate(['search'], { state: { page: page, buildings: buildings } });
     }
 

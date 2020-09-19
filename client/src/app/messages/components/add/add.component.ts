@@ -5,7 +5,6 @@ import { UserService } from '../../../services/user.service';
 import { MessageService } from '../../../services/message.service';
 import { GLOBAL } from '../../../services/global';
 
-
 @Component({
 	selector: 'add',
 	templateUrl: './add.component.html',
@@ -34,12 +33,10 @@ export class AddComponent implements OnInit {
 		this.message = new Message('','','','','',this.identity._id,'');
 		this.token = this._userService.getToken();
 		this.url = GLOBAL.url;
-		console.log(this._router.getCurrentNavigation().extras);
+
 		if(this._router.getCurrentNavigation().extras.state){
 			this.destUserId = this._router.getCurrentNavigation().extras.state.destUserId;
 			this.refAddress = this._router.getCurrentNavigation().extras.state.refAddress;
-			console.log(this.refAddress);
-			
 		}else{
 			this.destUserId = this.identity._id;
 			this.refAddress = "My Home";
@@ -55,9 +52,6 @@ export class AddComponent implements OnInit {
 	onSubmit(formAdd){
 		this.message.receiver = this.destUserId;
 		this.message.address = this.refAddress;
-		console.log(this.message);
-		console.log(typeof(this.message.emmiter));
-		console.log(typeof(this.message.receiver));
 		this._messageService.addMessage(this.token, this.message).subscribe(
 				response => {
 					if(response.message){
@@ -77,7 +71,6 @@ export class AddComponent implements OnInit {
                 response => {
                     if(response.user){
                         this.destUser = response.user;
-                        console.log(this.destUser);
                     }
                 },
                 error => {

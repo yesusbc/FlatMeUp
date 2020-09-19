@@ -13,7 +13,6 @@ import { GLOBAL } from '../../services/global';
     }) 
 export class BuildingComponent implements OnInit{ 
     public title;
-
     public status;
     public publications: Publication[];
     public page;
@@ -69,12 +68,10 @@ export class BuildingComponent implements OnInit{
         });
     }
 
-    public getBuilding(buildingId){
+    getBuilding(buildingId){
         this._publicationService.getBuildingById(buildingId).subscribe(
                 response => {
                     if(response.building){
-                        console.log("success");
-                        console.log(response);
                         this.building = response.building;
                         this.globalRate = response.globalRate ? response.globalRate : "--";
                         this.globalNoise = response.globalNoise ? response.globalNoise : "--";
@@ -98,7 +95,7 @@ export class BuildingComponent implements OnInit{
             );
     }
 
-    public getPublicationsByBuildingId(page){
+    getPublicationsByBuildingId(page){
         this._publicationService.getPublicationsByBuildingId(this.buildingId, page).subscribe(
                 response => {
                     if(response.publications){
@@ -132,7 +129,6 @@ export class BuildingComponent implements OnInit{
     }
 
     sendMessage(destUserId, refAddress){
-        console.log("navigate");
         this._router.navigate(['profile/messages/send'], { state: { destUserId: destUserId, refAddress: refAddress } });
     }
 

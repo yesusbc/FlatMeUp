@@ -43,9 +43,6 @@ export class SentComponent implements OnInit {
 
 	actualPage(){
 		this._route.params.subscribe( params => {
-			// let user_id = params['id'];
-			// this.userPageId = user_id;
-
 			let page = params['page'];
 			this.page = page;
 
@@ -70,16 +67,11 @@ export class SentComponent implements OnInit {
 	getMessages(token, page){
 		this._messageService.getEmittedMessages(token, page).subscribe(
 				response => {
-					console.log(response);
-					// console.log(response.pages);
 					if(response.messages){
 						this.messages = response.messages;
 						this.total = response.total;
 						this.pages = response.pages;
-
-						console.log(this.messages);
 					}
-
 				},
 				error => {
 					console.log(<any>error);

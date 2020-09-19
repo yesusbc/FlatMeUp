@@ -31,7 +31,6 @@ export class PublicationComponent implements OnInit{
 	public filesToUploadBuilding: Array<any>;
 	public filesToUploadBuilding_names: Array<any>;
 
-
 	constructor(
 		private _route: ActivatedRoute,
 		private _router: Router,
@@ -67,13 +66,10 @@ export class PublicationComponent implements OnInit{
 	}
 
 	onSubmit(ReviewForm){
-		console.log(this.publication);
 		this._publicationService.addPublication(this.token, this.publication).subscribe(
 				response => {
 					if (response.publication){
-						// this.publication = response.publication;
 						this.status = 'success';
-
 						if (this.filesToUploadPub.length > 0){
 							this._uploadService.makeFileRequest(this.url+'upload-image-pub/'+response.publication._id, [], this.filesToUploadPub, this.token, 'image')
 									.then((result: any) => {
@@ -103,7 +99,6 @@ export class PublicationComponent implements OnInit{
 			);
 	}
 
-
 	fileChangeEvent(fileInput: any, reason){
 		if(reason=='pub'){
 			this.filesToUploadPub.push(<Array<File>>fileInput.target.files);
@@ -117,7 +112,7 @@ export class PublicationComponent implements OnInit{
 
 	}
 
-    public AddressChange(address: any) { 
+    AddressChange(address: any) { 
     	//setting address from API to local variable 
         this.publication.address.buildingNumber = this.getComponentByType(address,"street_number") ? this.getComponentByType(address,"street_number").long_name : undefined;
         this.publication.address.street = this.getComponentByType(address,"route") ? this.getComponentByType(address,"route").long_name : undefined;
@@ -136,7 +131,7 @@ export class PublicationComponent implements OnInit{
     }
 
 
-    public getComponentByType(address: any, type: string): AddressComponent {
+    getComponentByType(address: any, type: string): AddressComponent {
         if(!type)
             return null;
 

@@ -1,42 +1,43 @@
 'use strict'
 
-var moment = require('moment');
 var mongoosePaginate = require('mongoose-pagination');
+var moment           = require('moment');
+var User             = require('../models/user');
+var Message          = require('../models/message');
 
-var User = require('../models/user');
-var Message = require('../models/message');
-
-function probando(req, res){
+function tesmessage(req, res){
 	res.status(200).send({
-		message: 'Message test'
+		message: 'Message controller testing'
 	});
 }
 
+// Function to save new message sent
+// Args: Message
+// Returns: -
 function saveMessage(req, res){
 	var params = req.body;
-
 	if(!params.text || !params.receiver) return res.status(200).send({message: 'Missing text or receiver'});
 
-	var message = new Message();
-	message.text = params.text;
-	message.address = params.address;
+	var message        = new Message();
+	message.text       = params.text;
+	message.address    = params.address;
 	message.created_at = moment().unix();
-	message.emitter = req.user.sub;
-	message.receiver = params.receiver;
-	message.viewed = 0;
-	console.log(message);
+	message.emitter    = req.user.sub;
+	message.receiver   = params.receiver;
+	message.viewed     = 0;
 	message.save((err, messageStored) => {
 		if(err) return res.status(500).send({message: 'Error in message'});
 		if(!messageStored) return res.status(500).send({message: 'Message not sent'});
-
 		res.status(200).send({message: messageStored});
 	});
 }
 
+// Function get received messages
+// Args: userId
+// Return: Received Messages
 function getReceivedMessages(req, res){
 	var userId = req.user.sub;
-
-	var page = 1;
+	var page   = 1;
 	if(req.params.page){
 		page = req.params.page;
 	}
@@ -45,7 +46,6 @@ function getReceivedMessages(req, res){
 	Message.find({receiver: userId}).populate('emitter', 'name lastname userName email address _id').sort('-created_at').paginate(page, itemsPerPage, (err, messages, totalMessages) => {	
 		if(err) return res.status(500).send({message: 'Error in messages request'});
 		if(!messages) return res.status(404).send({message: 'No messages'});
-
 		return res.status(200).send({
 			total: totalMessages,
 			pages: Math.ceil(totalMessages/itemsPerPage),
@@ -54,20 +54,20 @@ function getReceivedMessages(req, res){
 	});
 }
 
+// Function get emitted messages
+// Args: userId
+// Return: Sent Messages
 function getEmittedMessages(req, res){
 	var userId = req.user.sub;
-
 	var page = 1;
 	if(req.params.page){
 		page = req.params.page;
 	}
 
 	var itemsPerPage = 4;
-	// emmiter receiver ??
 	Message.find({emitter: userId}).populate('emitter receiver', 'name lastname userName _id').sort('-created_at').paginate(page, itemsPerPage, (err, messages, totalMessages) => {	
 		if(err) return res.status(500).send({message: 'Error in messages request'});
 		if(!messages) return res.status(404).send({message: 'No messages'});
-		console.log(messages);
 		return res.status(200).send({
 			total: totalMessages,
 			pages: Math.ceil(totalMessages/itemsPerPage),
@@ -76,6 +76,9 @@ function getEmittedMessages(req, res){
 	});
 }
 
+// Function get unviewed messages
+// Args: userId
+// Return: Number of unviewed messages
 function getUnviewedMessages(req, res){
 	var userId = req.user.sub;
 
@@ -87,6 +90,10 @@ function getUnviewedMessages(req, res){
 		});
 	});
 }
+
+// Function that sets message's view parameter to true
+// Args: userId
+// Return: -
 function setViewedMessages(req, res){
 	var userId = req.user.sub;
 
@@ -98,9 +105,8 @@ function setViewedMessages(req, res){
 	});
 }
 
-
 module.exports = {
-	probando,
+	tesmessage,
 	saveMessage,
 	getReceivedMessages,
 	getEmittedMessages,

@@ -1,16 +1,17 @@
 'use strict'
-const Building         = require('../models/building');
-const Publication        = require('../models/publication');
-const moment           = require('moment');
+const Building     = require('../models/building');
+const Publication  = require('../models/publication');
+const moment       = require('moment');
 const { ObjectId } = require('mongodb');
 
 function testbuilding(req, res){
 	res.status(200).send({
-		message: 'this is a building'
+		message: 'this is the building route'
 	});
 }
 
-// Maybe it needs to be params.address.xxx
+// Function to create building, may need rework
+// Maybe it needs to be params.adddss.xxx
 function createBuilding(req, res){
 	var params = req.body;
 	var building = new Building();
@@ -92,19 +93,22 @@ function createBuilding(req, res){
 	}
 }
 
+// Function to get Building by buildingId
+// Args: buildingId
+// Returns Building model
 function getBuildingById(req, res){
 	var buildingId = req.params.buildingId;
 
 	Building.findOne({'_id': buildingId}).exec((err, buildingExists) => {
 		if (err) return res.status(500).send({message: 'Error when returning building'});
 		if(buildingExists){
+
 			// Get review counter
 			Publication.count({"buildingId": buildingId}).exec((err, reviewsCounter) => {
+
 				// Get stats
 				Publication.aggregate([
-	    			
 	    			{ '$match':{ "buildingId": ObjectId(buildingId) } },
-
 	        		{'$group': {
 	        			 		'_id': null,
 	            				'globalRate': { '$avg': '$rate' },
@@ -114,15 +118,9 @@ function getBuildingById(req, res){
 	            				'globalMaintenance': { '$avg': '$maintenance' }
 	        					}
 	        				}
-	    			
-
-
-
-
 				], function(err, results){
 	    			if (err) console.log ("record not found");
 	    			else {
-	    				console.log(results[0]);
 	    				var globalRate = results[0]["globalRate"];
     					var globalNoise = results[0]["globalNoise"];
     					var globalPriceBenefit = results[0]["globalPriceBenefit"];
@@ -146,6 +144,9 @@ function getBuildingById(req, res){
 	});
 }
 
+// Function to get Buildings
+// Args: Optional: Page (1)
+// Returns Buildings Json
 function getBuildings(req, res){
 	var page = 1;
 	if(req.params.page){
@@ -153,10 +154,8 @@ function getBuildings(req, res){
 	}
 
 	var itemsPerPage = 4;
-
 	Building.find({}).select('address apartment globalRate file reviewsCounter created_at').paginate(page, itemsPerPage, (err, buildings, totalBuildings) => {	
 		if (err) return res.status(500).send({message: 'Error when returning buildings'});
-
 		return res.status(200).send({
 			total: totalBuildings,
 			pages: Math.ceil(totalBuildings/itemsPerPage),
@@ -166,7 +165,9 @@ function getBuildings(req, res){
 	});
 }
 
-// .sort created at
+// Function to get Buildings by Address
+// Args: Required: Address query.    Optional: Page (1)
+// Returns Buildings Json
 function getBuildingsByAddress(req, res){
 	var page  = 1;
 	var params = req.body;
@@ -207,6 +208,9 @@ function getBuildingsByAddress(req, res){
 	});
 }
 
+// Function to upload image(s) to building 
+// Args: Images
+// Returns -
 function uploadImage(req, res){
 	var buildingId = req.params.buildingId;
 	var filenames_list = [];
@@ -215,7 +219,6 @@ function uploadImage(req, res){
 		if(req.files.image.length){
 			for (var idx=0; idx < req.files.image.length; idx++){
 				var file_path = req.files.image[idx].path;
-				console.log(file_path);
 		    	var file_split = file_path.split('/');
 				var file_name  = file_split[2];
 				var ext_split  = file_name.split('.');
@@ -232,7 +235,6 @@ function uploadImage(req, res){
 			var file_name  = file_split[2];
 			var ext_split  = file_name.split('.');
 			var file_ext   = ext_split[1];
-
 			if (file_ext=='png' || file_ext=='jpg' || file_ext=='jpeg'){
 				filenames_list.push(file_name);
 			}else{
@@ -240,45 +242,15 @@ function uploadImage(req, res){
 			}
 		}
 
-
 		Building.findByIdAndUpdate(buildingId, {$push: {file: filenames_list}}, {new: true}, (err, buildingUpdated) =>{
 					if(err) return res.status(500).send({message: 'Error in request'});
 					if(!buildingUpdated) return res.status(404).send({message: 'Couldnot upload image'});
-
 					return res.status(200).send({building: buildingUpdated});
 				});
 	}else{
 		return res.status(200).send({message: 'Image was not uploaded'});
 	}
 }
-
-
-
-/*
-function getGlobalCounters(req, res){
-	var userId = req.user.sub;
-	if(req.params.id){
-		userId = req.params.id//;
-	}
-
-	getCountFollow(userId).then((value) =>{
-		return res.status(200).send(value);
-	});
-}
-
-async function getCountFollow(user_id){
-	var pubications = await Publication.count({"user": userId}).exec((err, count) => {
-		if(err) return handleError(err);
-		return count;
-	});
-
-	return {
-		publications: publications
-	}
-}
-*/
-
-
 
 module.exports = {
 	testbuilding,

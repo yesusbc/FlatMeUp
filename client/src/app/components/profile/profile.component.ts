@@ -55,7 +55,6 @@ export class ProfileComponent implements OnInit{
 		this._userService.getUser(id).subscribe(
 			response => {
 				if(response.user){
-					// console.log(response.user);
 					this.status = 'success';
 					this.user = response.user;
 					if(response.user.birthday){
@@ -63,8 +62,6 @@ export class ProfileComponent implements OnInit{
 						this.month = response.user.birthday.slice(5,7);
 						this.day = response.user.birthday.slice(8,10);
 					}
-					console.log(response);
-
 				}else{
 					this.status = 'error';
 				}

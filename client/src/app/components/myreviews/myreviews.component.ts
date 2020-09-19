@@ -47,7 +47,6 @@ export class MyReviewsComponent implements OnInit{
         this._publicationService.getReviewsUser(this.token, page).subscribe(
                 response => {
                     if(response.publications){
-                        console.log(response);
                         this.total = response.total;
                         this.pages = response.pages;
                         this.publications = response.publications;
