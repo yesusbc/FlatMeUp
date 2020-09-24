@@ -13,6 +13,10 @@ import { AddComponent } from './components/add/add.component';
 import { ReceivedComponent } from './components/received/received.component';
 import { SentComponent } from './components/sent/sent.component';
 
+// Services
+import { UserService } from '../services/user.service';
+import { UserGuard } from '../services/user.guard';
+
 @NgModule({
 	declarations: [
 	MainComponent,
@@ -32,7 +36,10 @@ import { SentComponent } from './components/sent/sent.component';
 		ReceivedComponent,
 		SentComponent
 	],
-	providers: []
+	providers: [
+	UserService,
+	UserGuard
+	]
 })
 
 export class MessagesModule{}

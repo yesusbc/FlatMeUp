@@ -21,6 +21,10 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { MyReviewsComponent } from './components/myreviews/myreviews.component';
 import { BuildingComponent } from './components/building/building.component';
 
+// Services
+import { UserService } from './services/user.service';
+import { UserGuard } from './services/user.guard';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,7 +48,9 @@ import { BuildingComponent } from './components/building/building.component';
     MomentModule
   ],
   providers: [
-  	appRoutingProviders
+  	appRoutingProviders,
+    UserService,
+    UserGuard
   ],
   bootstrap: [AppComponent]
 })
