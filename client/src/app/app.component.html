@@ -46,7 +46,7 @@
       <ul class="nav navbar-nav navbar-right" *ngIf="!identity">
 
         <div class="navbar-header">
-            <a href="#" class="navbar-brand">{{title}}</a>
+             <a [routerLink]="['/home']" class="navbar-brand">{{title}}</a>
         </div>
 
         <li>

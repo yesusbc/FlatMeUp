@@ -7,6 +7,7 @@ var moment           = require('moment');
 var Publication      = require('../models/publication');
 var Building         = require('../models/building');
 var User             = require('../models/user');
+const { ObjectId }   = require('mongodb');
 
 function testpublication(req, res){
 	res.status(200).send({
@@ -117,6 +118,7 @@ function savePublication(req, res){
 							}
 						});
 					}else{
+						publicationStored.buildingId = addressExists._id;
 						// If building and apartment already exist, then just add buildingId to publication
 						Publication.findByIdAndUpdate(publication._id, {buildingId: addressExists._id}, (err, publicationUpdated) =>{
 							if(err) return res.status(500).send({message: 'Error when adding building ID to publication'});
@@ -131,11 +133,13 @@ function savePublication(req, res){
 							], function(err, stats){
 				    			if (err) console.log ("record not found");
 				    			else {
-				    				var reviewsCounter = addressExists.reviewsCounter+1; 
-									var lastAvg = stats[0]["globalRate"].toFixed(2);
-									var newAvg = lastAvg;
-									if (publication.rate){
-										var newAvg = ((lastAvg*(reviewsCounter))+publication.rate)/(reviewsCounter).toFixed(2);
+				    				if(stats[0]["globalRate"]){
+					    				var reviewsCounter = addressExists.reviewsCounter+1; 
+										var lastAvg = stats[0]["globalRate"].toFixed(2);
+										var newAvg = lastAvg;
+										if (publication.rate){
+											var newAvg = ((lastAvg*(reviewsCounter))+publication.rate)/(reviewsCounter).toFixed(2);
+										}
 									}
 				    			} 
 				    			// Update stats

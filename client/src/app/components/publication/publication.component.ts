@@ -100,15 +100,20 @@ export class PublicationComponent implements OnInit{
 	}
 
 	fileChangeEvent(fileInput: any, reason){
-		if(reason=='pub'){
-			this.filesToUploadPub.push(<Array<File>>fileInput.target.files);
-			this.filesToUploadPub_names.push(fileInput.target.files[0].name);
-			
+
+		for(var idx=0; idx<fileInput.target.files.length; idx++){
+			if(reason=='pub'){
+				this.filesToUploadPub.push(<Array<File>>fileInput.target.files[idx]);
+				this.filesToUploadPub_names.push(fileInput.target.files[idx].name);
+				
+			}
+			if(reason=='building'){
+				this.filesToUploadBuilding.push(<Array<File>>fileInput.target.files[idx]);
+				this.filesToUploadBuilding_names.push(fileInput.target.files[idx].name);
+			}
 		}
-		if(reason=='building'){
-			this.filesToUploadBuilding.push(<Array<File>>fileInput.target.files);
-			this.filesToUploadBuilding_names.push(fileInput.target.files[0].name);
-		}
+
+
 
 	}
 
