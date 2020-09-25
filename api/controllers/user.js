@@ -40,6 +40,7 @@ function saveUser(req, res){
 		user.state               = params.state      ? params.state      : null;
 		user.city                = params.city       ? params.city       : null;
 		user.birthday            = params.birthday   ? params.birthday   : null;
+		user.role                = 'ROLE_USER';
 
 		// Look for repeated userName or repeted Email
 		User.find({ $or: [
@@ -113,6 +114,7 @@ function getUser(req, res){
 	User.findById(userId, (err, user) => {
 		if(err) return res.status(500).send({message: 'Error in request'});
 		if(!user) return res.status(404).send({message: 'User doesnt exist'});
+		delete user.role;
 		return res.status(200).send({user});
 	});
 }
