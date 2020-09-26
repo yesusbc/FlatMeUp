@@ -31,3 +31,9 @@
 .navigation .navbar a:hover{
 	background: #D3D3D3 !important;
 }
+
+.carousel-inner > .item > img {
+	margin: 0 auto;
+	height: 10%;
+	width: auto;
+}
