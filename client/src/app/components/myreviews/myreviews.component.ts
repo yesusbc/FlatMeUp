@@ -24,6 +24,8 @@ export class MyReviewsComponent implements OnInit{
     public total;
     public pages;
     public showImage;
+    public next_page;
+    public prev_page;
 
 	constructor(
 		private _route: ActivatedRoute,
@@ -40,8 +42,31 @@ export class MyReviewsComponent implements OnInit{
 
 	ngOnInit(){
 		console.log('My Reviews component has loaded');
-		this.getReviewsUser(this.page);
+        this.actualPage();
 	}
+
+    actualPage(){
+        this._route.params.subscribe( params => {
+            let page = params['page'];
+            this.page = page;
+
+            if(!params['page']){
+                page = 1;
+            }
+
+            if (!page){
+                page = 1;
+            }else{
+                this.next_page = parseInt(page)+1;
+                this.prev_page = parseInt(page)-1;
+            
+                if(this.prev_page <= 0){
+                    this.prev_page = 1;
+                }
+            }
+            this.getReviewsUser(page);
+        });
+    }
 
 	getReviewsUser(page){
         this._publicationService.getReviewsUser(this.token, page).subscribe(

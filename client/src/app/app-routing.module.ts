@@ -24,6 +24,7 @@ const appRoutes: Routes = [
 	{path: 'search', component: SearchComponent},
 	{path: 'profile/edit', component: UserEditComponent, canActivate:[UserGuard]},
 	{path: 'profile/my-reviews', component: MyReviewsComponent, canActivate:[UserGuard]},
+	{path: 'profile/my-reviews/:page', component: MyReviewsComponent, canActivate:[UserGuard]},
 	{path: 'profile/:id', component: ProfileComponent, canActivate:[UserGuard]},
 	{path: 'building/:buildingId', component: BuildingComponent},
 	{path: 'write-a-review', component: PublicationComponent, canActivate:[UserGuard]}
