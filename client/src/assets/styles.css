@@ -32,6 +32,14 @@
 	background: #D3D3D3 !important;
 }
 
+.btn-group-lg{
+	margin-top: 5px;
+}
+
+.buildings-search {
+	margin-top: 30px;
+}
+
 /* resize images */
 .carousel {
   width:500px; 
@@ -42,5 +50,15 @@
 .carousel-inner > .item > img {
 	width:500px!important; 
 	height:500px !important; 
-	       
-}            
+}  
+
+.building-image .carousel {
+  width:350px; 
+  height:300px; 
+  margin: 0 auto;  
+}          
+
+.building-image .carousel-inner > .item > img {
+	width:350px !important; 
+	height:300px !important; 
+} 

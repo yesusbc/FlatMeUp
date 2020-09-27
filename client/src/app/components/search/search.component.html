@@ -1,23 +1,26 @@
 <div class="col-lg-8 col-lg-offset-2">
   	<div class="google-places-container"> 
     	<h2>{{title}}</h2> 
-  		<input ngx-google-places-autocomplete [options]= 
-   		'options'  (onAddressChange)="AddressChange($event)" class="form-control"/> 
-  		{{ formattedaddress }} 
-  </div>
+    	<div>
+	  		<input ngx-google-places-autocomplete [options]= 
+	   		'options'  (onAddressChange)="AddressChange($event)" class="form-control"/> 
+	  		{{ formattedaddress }}
+	  	</div>
+	  	<div class="btn-group btn-group-lg">
+  			<button (click)="getBuildingsByAddress(1)">Search</button>
+  		</div>
+  	</div>
 
-	<button type="button" (click)="getBuildingsByAddress(1)">Search</button>
-
-  	<div id="buildings">
+  	<div class="buildings-search">
 		<div *ngFor="let building of buildings" class="item-building">
 			<div class="panel panel-default">
 				<div class="panel-body" (click)="explicitSearch(building._id)" style="cursor: pointer;">
 					<div class="building-image">
 						<!-- Image fetching could be more elegant -->
-						<a href="#">
+						<div align="center">
 							<img src="{{url+'get-image/'+building.file[0]}}" *ngIf="building.file[0]" width="300" height="150"/>
 							<img src="assets/building.png" class="building-default" *ngIf="!building.file[0]" width="350" height="200"/>
-						</a>
+						</div>
 					</div>
 					<div class="building-text pull-left">
 						<h4>{{building.address.street + ", " + 
@@ -43,19 +46,22 @@
 	</div>
 
 	<div>
-		<ul class="pagination pull-right" *ngIf="commingFromHome">
+		<ul class="pager pull-left" *ngIf="commingFromHome">
 			<li *ngIf="page > 1"><a [routerLink]="['/home', prev_page]">
 			Previous</a></li>
+		</ul>
+		<ul class="pager pull-right" *ngIf="commingFromHome">
 			<li *ngIf="pages != page"><a [routerLink]="['/home', next_page]">
 			Next</a></li>
 		</ul>
 
-		<ul class="pagination pull-right" *ngIf="!commingFromHome">
+		<ul class="pager pull-left" *ngIf="!commingFromHome">
 			<!-- This must pass buildings, so then search can traverse through it with the page -->
 			<li *ngIf="page > 1">
        			<button type="button" (click)="getBuildingsByAddress(prev_page)" >Previous</button>
    			</li>
-
+   		</ul>
+   		<ul class="pager pull-right" *ngIf="!commingFromHome">
    			<li *ngIf="pages != page">
        			<button type="button" (click)="getBuildingsByAddress(next_page)" >Next</button>
    			</li>
