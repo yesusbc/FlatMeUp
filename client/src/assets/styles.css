@@ -32,8 +32,15 @@
 	background: #D3D3D3 !important;
 }
 
-.carousel-inner > .item > img {
-	margin: 0 auto;
-	height: 10%;
-	width: auto;
+/* resize images */
+.carousel {
+  width:500px; 
+  height:500px; 
+  margin: 0 auto;  
 }
+
+.carousel-inner > .item > img {
+	width:500px!important; 
+	height:500px !important; 
+	       
+}            

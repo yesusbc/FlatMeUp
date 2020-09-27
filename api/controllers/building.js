@@ -98,7 +98,6 @@ function createBuilding(req, res){
 // Returns Building model
 function getBuildingById(req, res){
 	var buildingId = req.params.buildingId;
-
 	Building.findOne({'_id': buildingId}).exec((err, buildingExists) => {
 		if (err) return res.status(500).send({message: 'Error when returning building'});
 		if(buildingExists){
@@ -121,11 +120,18 @@ function getBuildingById(req, res){
 				], function(err, results){
 	    			if (err) console.log ("record not found");
 	    			else {
-	    				var globalRate = results[0]["globalRate"];
-    					var globalNoise = results[0]["globalNoise"];
-    					var globalPriceBenefit = results[0]["globalPriceBenefit"];
-    					var globalLandlordSupport = results[0]["globalLandlordSupport"];
-    					var globalMaintenance = results[0]["globalMaintenance"];
+	    				var globalRate = "--";
+	    				var globalNoise = "--";
+	    				var globalPriceBenefit = "--";
+	    				var globalLandlordSupport = "--";
+	    				var globalMaintenance = "--";
+	    				if (results[0]){
+		    				globalRate = results[0]["globalRate"];
+	    					globalNoise = results[0]["globalNoise"];
+	    					globalPriceBenefit = results[0]["globalPriceBenefit"];
+	    					globalLandlordSupport = results[0]["globalLandlordSupport"];
+	    					globalMaintenance = results[0]["globalMaintenance"];
+	    					}
 	    				res.status(200).send({
 	    					building: buildingExists, 
 	    					globalRate,

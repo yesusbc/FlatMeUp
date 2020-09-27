@@ -56,7 +56,7 @@ export class BuildingComponent implements OnInit{
     }
 
     ngOnInit(){
-        console.log('building.component loaded');    
+        console.log('building.component loaded');   
         this.loadPage(); 
         this.getPublicationsByBuildingId(this.page);
     }
@@ -102,9 +102,12 @@ export class BuildingComponent implements OnInit{
                         this.total = response.total;
                         this.pages = response.pages;
                         this.publications = response.publications;
-
                         if (page > this.pages){
-                            this._router.navigate(['/home']);
+                            if(this.pages != 0){
+                                this._router.navigate(['/home']);
+                            }else{
+                                // No reviews, but building
+                            }
                         }
                     }else{
                         this.status = 'error';
