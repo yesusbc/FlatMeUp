@@ -1,4 +1,4 @@
-<div class="col-lg-4">
+<div class="col-lg-4" style="margin-top: 100px;">
 	<h3>{{title}}</h3>
 
 	<div class="sidebar-admin">
@@ -8,15 +8,15 @@
 			</li>
 
 			<li role="presentation" [routerLinkActive]="['active']">
-				<a [routerLink]="['received']"> Received Messages </a>
+				<a [routerLink]="['received/1']"> Received Messages </a>
 			</li>
 
 			<li role="presentation" [routerLinkActive]="['active']">
-				<a [routerLink]="['sent']"> Sent Messages </a>
+				<a [routerLink]="['sent/1']"> Sent Messages </a>
 			</li>
 
 			<li role="presentation" [routerLinkActive]="['active']">
-				<a [routerLink]="['/home']"> Information </a>
+				<a [routerLink]="['/home']"> Home </a>
 			</li>
 		</ul>
 	</div>

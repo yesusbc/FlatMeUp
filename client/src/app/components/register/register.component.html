@@ -49,16 +49,18 @@
 		</p>
 
 		<h3>Optional</h3>
-
-		<p>
+		
+		<div>
 			<label>Gender: </label>
+		</div>
+		<div style="margin-left: 20px">
 			  <input type="radio" name="gender" value=0 #gender="ngModel" [(ngModel)]="user.gender">
 			  <label for="male">Male</label><br>
 			  <input type="radio" name="gender" value=1 #gender="ngModel" [(ngModel)]="user.gender">
 			  <label for="female">Female</label><br>
 			  <input type="radio" name="gender" value=2 #gender="ngModel" [(ngModel)]="user.gender">
 			  <label for="other">Other</label>
-		</p>
+		</div>
 
 		<p>
 			<label>Occupation: </label>

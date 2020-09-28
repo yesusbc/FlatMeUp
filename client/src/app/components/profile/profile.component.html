@@ -1,24 +1,32 @@
 <div class="col-lg-8 col-lg-offset-2">
 	<h1 class="h1-strong">{{title}}</h1>
 
-	<div>
-	    <a [routerLink]="['/profile/'+user._id]" [routerLinkActive]="['active']">
-			<span class="glyphicon glyphicon-user"></span>
-	        My Profile
-	    </a>
+	<div class="profile-list col-lg-10">
+		<ul class="nav navbar-nav">
+		    <li>
+		    	<a [routerLink]="['/profile/'+user._id]" [routerLinkActive]="['active']">
+				<span class="glyphicon glyphicon-user"></span>
+		        My Profile
+		    	</a>
+		    </li>
 
-	    <a [routerLink]="['/profile/my-reviews']" [routerLinkActive]="['active']">
-			<span class="glyphicon glyphicon-user"></span>
-	        My Reviews
-	    </a>
+		    <li>
+		    	<a [routerLink]="['/profile/my-reviews']" [routerLinkActive]="['active']">
+				<span class="glyphicon glyphicon-pencil"></span>
+		        My Reviews
+		        </a>
+		    </li>
 
-	    <a [routerLink]="['/profile/messages']" [routerLinkActive]="['active']">
-			<span class="glyphicon glyphicon-envelope"></span>
-	        Inbox
-	    </a>
+		    <li>
+		    	<a [routerLink]="['/profile/messages']" [routerLinkActive]="['active']">
+				<span class="glyphicon glyphicon-envelope"></span>
+		        Inbox
+		        </a>
+		    </li>
+		</ul>
 	</div>
 
-	<div class="user-info">
+	<div class="user-info col-lg-10">
 		<div>
 			<a [routerLink]="['/profile/edit']" [routerLinkActive]="['active']">
             	Edit profile

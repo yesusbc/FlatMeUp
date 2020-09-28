@@ -1,125 +1,135 @@
 <div class="col-lg-8 col-lg-offset-2">
 	<h1 class="h1-strong">{{title}}</h1>
 	
-	<div>
-	    <a [routerLink]="['/profile/'+user._id]" [routerLinkActive]="['active']">
-			<span class="glyphicon glyphicon-user"></span>
-	        My Profile
-	    </a>
+	<div class="profile-list col-lg-10">
+		<ul class="nav navbar-nav">
+		    <li>
+		    	<a [routerLink]="['/profile/'+user._id]" [routerLinkActive]="['active']">
+				<span class="glyphicon glyphicon-user"></span>
+		        My Profile
+		    	</a>
+		    </li>
 
-	    <a [routerLink]="['/profile/my-reviews']" [routerLinkActive]="['active']">
-			<span class="glyphicon glyphicon-user"></span>
-	        My Reviews
-	    </a>
+		    <li>
+		    	<a [routerLink]="['/profile/my-reviews']" [routerLinkActive]="['active']">
+				<span class="glyphicon glyphicon-pencil"></span>
+		        My Reviews
+		        </a>
+		    </li>
 
-	    <a [routerLink]="['/profile/messages']" [routerLinkActive]="['active']">
-			<span class="glyphicon glyphicon-envelope"></span>
-	        Inbox
-	    </a>
+		    <li>
+		    	<a [routerLink]="['/profile/messages']" [routerLinkActive]="['active']">
+				<span class="glyphicon glyphicon-envelope"></span>
+		        Inbox
+		        </a>
+		    </li>
+		</ul>
 	</div>
 
-	<div id="reviews">
+	<div class="reviews col-lg-10">
 		<div *ngFor="let publication of publications" class="item-publication">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<div class="publication-image">
-						<!-- Get image from building binded to publication -->
-					</div>
+					<div class="text col-lg-11 pull-left">
+						<div class="building-text">
+							<p>
+							Rate: {{publication.rate}}
+							</p>
 
-					<div class="building-text pull-left">
-						<p>
-						Rate: {{publication.rate}}
-						</p>
+							<a [routerLink]="['/building/'+publication.buildingId]">
+							Address: {{publication.address.street}}, {{publication.address.buildingNumber}}. {{publication.address.country}}.
+							</a>
 
-						<a [routerLink]="['/building/'+publication.buildingId]">
-						Address: {{publication.address.street}}, {{publication.address.buildingNumber}}. {{publication.address.country}}.
-						</a>
-
-						<p>
-						Review: {{publication.text}}
-						</p>
-					</div>
-
-					<!-- Delete Review -->
-					<div class="pull-right" *ngIf="publication.user == identity._id">
-						&nbsp;
-						<a href="#myModal{{publication._id}}" class="btn btn-lg btn-danger" data-toggle="modal" *ngIf="showImage != publication._id">
-							<span class="glyphicon 	glyphicon-trash"></span>
-						</a>
-
-						<div id="myModal{{publication._id}}" class="modal fade">
-						    <div class="modal-dialog">
-						        <div class="modal-content">
-						            <div class="modal-header">
-						                <h5 class="modal-title">Are you sure?</h5>
-						                <button type="button" class="close" data-dismiss="modal">&times;</button>
-						            </div>
-						            <div class="modal-body">
-						                <p>Performing this action will permanently remove review with address: {{publication.address.street}}, {{publication.address.buildingNumber}}.</p>
-						            </div>
-						            <div class="modal-footer">
-						                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-						                <button type="button" class="btn btn-primary" (click)="deleteReview(publication._id)" data-dismiss="modal">Erase Review</button>
-						            </div>
-						        </div>
-						    </div>
-						</div>	
-					</div>
-
-					<!-- Show image -->
-					<div class="pull-right" *ngIf="publication.file[0]">
-						<button class="btn btn-warning" pull-right (click)="showThisImage(publication._id)" *ngIf="showImage != publication._id">
-							<span class="glyphicon 	glyphicon-picture"></span>
-						</button>
-						<button class="btn btn-danger" pull-right (click)="hideThisImage(publication._id)" *ngIf="showImage == publication._id">
-							<span class="glyphicon 	glyphicon-remove-circle"></span>
-						</button>
-					</div>
-
-					<!--<div class="col-lg-12" *ngIf="publication.file[0] != 'null' && showImage == publication._id">
-						<br/>
-						<img src="{{url+'get-image/'+publication.file[0]}}" class="col-lg-12" width="400" height="250"/>
-					</div>-->
-
-					<!--Carousel Wrapper-->
-					<div id="image-gallery" class="carousel slide" data-ride="carousel" *ngIf="publication.file[0] != 'null' && showImage == publication._id">
-						
-					  	<!-- Indicators -->
-						<ol class="carousel-indicators">
-							<li data-target="#image-gallery" data-slide-to="0" class="active"></li>
-							<li data-target="#image-gallery" *ngFor="let image of publication.file.slice(1); let i = index" data-slide-to="{{i+1}}"></li>
-
-						</ol>
-
-						<!-- Wrapper for slides -->
-					  	<div class="carousel-inner" role="listbox" >
-						    <div class="item active">
-						    	<img src="{{url+'get-image/'+publication.file[0]}}" alt="0">
-						    </div>
-							
-							<div class="item" *ngFor="let image of publication.file.slice(1); let i = index">
-								<img src="{{url+'get-image/'+image}}" alt="{{i+1}}" >
-							</div>
+							<p>
+							Review: {{publication.text}}
+							</p>
 						</div>
-						
+					</div>
 
-						<!-- Controls -->
-						<a class="left carousel-control" href="#image-gallery" role="button" data-slide="prev">
-							<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-						    <span class="sr-only">Previous</span>
-						</a>
-						  
-						<a class="right carousel-control" href="#image-gallery" role="button" data-slide="next">
-							<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-							<span class="sr-only">Next</span>
-						</a>
+					<div class="image-and-erase-review col-lg-1">
+
+						<!-- Show image -->
+						<div *ngIf="publication.file[0]">
+							<button class="btn btn-warning" pull-right (click)="showThisImage(publication._id)" *ngIf="showImage != publication._id">
+								<span class="glyphicon 	glyphicon-picture"></span>
+							</button>
+							<button class="btn btn-danger" pull-right (click)="hideThisImage(publication._id)" *ngIf="showImage == publication._id">
+								<span class="glyphicon 	glyphicon-remove-circle"></span>
+							</button>
+						</div>
+						&nbsp;
+						&nbsp;
+						<!-- Delete Review -->
+						<div class="erase" *ngIf="publication.user == identity._id">
+							<a href="#myModal{{publication._id}}" class="btn btn-danger" data-toggle="modal" *ngIf="showImage != publication._id">
+								<span class="glyphicon 	glyphicon-trash"></span>
+							</a>
+
+							<div id="myModal{{publication._id}}" class="modal fade">
+							    <div class="modal-dialog">
+							        <div class="modal-content">
+							            <div class="modal-header">
+							                <h5 class="modal-title">Are you sure?</h5>
+							                <button type="button" class="close" data-dismiss="modal">&times;</button>
+							            </div>
+							            <div class="modal-body">
+							                <p>Performing this action will permanently remove review with address: {{publication.address.street}}, {{publication.address.buildingNumber}}.</p>
+							            </div>
+							            <div class="modal-footer">
+							                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+							                <button type="button" class="btn btn-primary" (click)="deleteReview(publication._id)" data-dismiss="modal">Erase Review</button>
+							            </div>
+							        </div>
+							    </div>
+							</div>	
+						</div>
+					</div>
+
+					<!--Carousel-->
+					<div class="publication-image col-lg-12" *ngIf="publication.file[0] != 'null' && showImage == publication._id"> 
+						<div class="publication-default" *ngIf="publication.file.length == 1" align="center">
+							<img src="{{url+'get-image/'+publication.file[0]}}" width="350" height="200"/>
+						</div>
+
+						<!--Carousel Wrapper-->
+						<div id="publication-image-gallery" class="carousel slide" data-ride="carousel" *ngIf="publication.file.length >1">
+						  	<!-- Indicators -->
+							<ol class="carousel-indicators">
+								<li data-target="#publication-image-gallery" data-slide-to="0" class="active"></li>
+								<li data-target="#publication-image-gallery" *ngFor="let image of publication.file.slice(1); let i = index" data-slide-to="{{i+1}}"></li>
+
+							</ol>
+
+							<!-- Wrapper for slides -->
+						  	<div class="carousel-inner" role="listbox" >
+							    <div class="item active">
+							    	<img src="{{url+'get-image/'+publication.file[0]}}" alt="0">
+							    </div>
+								
+								<div class="item" *ngFor="let image of publication.file.slice(1); let i = index">
+									<img src="{{url+'get-image/'+image}}" alt="{{i+1}}">
+								</div>
+							</div>
+							
+
+							<!-- Controls -->
+							<a class="left carousel-control" href="#publication-image-gallery" role="button" data-slide="prev">
+								<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+							    <span class="sr-only">Previous</span>
+							</a>
+							  
+							<a class="right carousel-control" href="#publication-image-gallery" role="button" data-slide="next">
+								<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+								<span class="sr-only">Next</span>
+							</a>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
 		<div>
-			<ul class="pagination pull-right">
+			<ul class="pager pull-right">
 				<li *ngIf="page > 1"><a [routerLink]="['/profile/my-reviews', prev_page]">
 				Previous</a></li>
 				<li *ngIf="pages != page"><a [routerLink]="['/profile/my-reviews', next_page]">

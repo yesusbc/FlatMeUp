@@ -1,33 +1,60 @@
 <div class="col-lg-8">
-	<h3>{{title}}</h3>
+	<h1 class="h1-strong">{{title}}</h1>
+	
+	<div class="profile-list">
+		<ul class="nav navbar-nav">
+		    <li>
+		    	<a [routerLink]="['/profile/'+identity._id]" [routerLinkActive]="['active']">
+				<span class="glyphicon glyphicon-user"></span>
+		        My Profile
+		    	</a>
+		    </li>
 
-	<!-- formulario envio mensajes -->
-	<div class="alert alert-success" *ngIf="status == 'success'">
-		Message Sent successfully, <a [routerLink]="['/profile/messages/sent']">Sent messages </a> 
+		    <li>
+		    	<a [routerLink]="['/profile/my-reviews']" [routerLinkActive]="['active']">
+				<span class="glyphicon glyphicon-pencil"></span>
+		        My Reviews
+		        </a>
+		    </li>
+
+		    <li>
+		    	<a [routerLink]="['/profile/messages']" [routerLinkActive]="['active']">
+				<span class="glyphicon glyphicon-envelope"></span>
+		        Inbox
+		        </a>
+		    </li>
+		</ul>
 	</div>
 
-	<div class="alert alert-danger" *ngIf="status == 'error'">
-		Message failed, try again
+	<div class="col-lg-10">
+		<!-- formulario envio mensajes -->
+		<div class="alert alert-success" *ngIf="status == 'success'">
+			Message Sent successfully, <a [routerLink]="['/profile/messages/sent']">Sent messages </a> 
+		</div>
+
+		<div class="alert alert-danger" *ngIf="status == 'error'">
+			Message failed, try again
+		</div>
+
+		<form #formAdd="ngForm" (ngSubmit)="onSubmit(formAdd)">
+			<p *ngIf="destUser">
+				<label>For: </label>
+				{{destUser.lastname}},{{destUser.name}} 
+			</p>
+			
+			<p> 
+				Reference: {{refAddress}}
+			</p>
+
+			<p>
+				<label>Message: </label>
+				<textarea name="text" #text="ngModel" [(ngModel)]="message.text" class="form-control" required></textarea>
+				<span *ngIf="!text.valid && text.touched">
+					Message is obligatory
+				</span>
+			</p>
+
+			<input type="submit" value="{{title}}" class="btn btn-success" [disabled]="!formAdd.form.valid"/>
+		</form>
 	</div>
-
-	<form #formAdd="ngForm" (ngSubmit)="onSubmit(formAdd)">
-		<p *ngIf="destUser">
-			<label>For: </label>
-			{{destUser.lastname}},{{destUser.name}} 
-		</p>
-		
-		<p> 
-			Reference: {{refAddress}}
-		</p>
-
-		<p>
-			<label>Message: </label>
-			<textarea name="text" #text="ngModel" [(ngModel)]="message.text" class="form-control" required></textarea>
-			<span *ngIf="!text.valid && text.touched">
-				Message is obligatory
-			</span>
-		</p>
-
-		<input type="submit" value="{{title}}" class="btn btn-success" [disabled]="!formAdd.form.valid"/>
-	</form>
 </div>

@@ -10,12 +10,12 @@
 				{{building.address.state + ", " + 
 				building.address.country}}
 				</h4>
-
-				<p>
+				
+				<h2>
 				Global Rate: {{globalRate}}
-				</p>
+				</h2>
 
-				<b>Average Rating</b>
+				<b>Average Rate</b>
 
 				<p>
 				Noise: {{globalNoise}} <br>
@@ -28,7 +28,7 @@
 				Number of reviews: {{reviewsCounter}}
 				</p>
 
-				<span class="date">
+				<span class="date" class="text-muted">
 					{{ (building.created_at | amFromUnix) | amLocale:'en' | amTimeAgo}}
 				</span>
 			</div>
@@ -39,11 +39,11 @@
 				</div>
 
 				<!--Carousel Wrapper-->
-				<div id="image-gallery" class="carousel slide" data-ride="carousel" *ngIf="building.file.length >1">
+				<div id="building-image-gallery" class="carousel slide" data-ride="carousel" *ngIf="building.file.length >1">
 				  	<!-- Indicators -->
 					<ol class="carousel-indicators">
-						<li data-target="#image-gallery" data-slide-to="0" class="active"></li>
-						<li data-target="#image-gallery" *ngFor="let image of building.file.slice(1); let i = index" data-slide-to="{{i+1}}"></li>
+						<li data-target="#building-image-gallery" data-slide-to="0" class="active"></li>
+						<li data-target="#building-image-gallery" *ngFor="let image of building.file.slice(1); let i = index" data-slide-to="{{i+1}}"></li>
 
 					</ol>
 
@@ -60,12 +60,12 @@
 					
 
 					<!-- Controls -->
-					<a class="left carousel-control" href="#image-gallery" role="button" data-slide="prev">
+					<a class="left carousel-control" href="#building-image-gallery" role="button" data-slide="prev">
 						<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 					    <span class="sr-only">Previous</span>
 					</a>
 					  
-					<a class="right carousel-control" href="#image-gallery" role="button" data-slide="next">
+					<a class="right carousel-control" href="#building-image-gallery" role="button" data-slide="next">
 						<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 						<span class="sr-only">Next</span>
 					</a>
@@ -81,52 +81,53 @@
 		<div *ngFor="let publication of publications" class="item-publication">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<div class="publication-text pull-left">
-						<h4>Review's Rate: {{publication.rate}}</h4>
+					<div class="publication-text">
+						<h4 *ngIf="publication.rate">Review's Rate: {{publication.rate}}</h4>
+						<h4 *ngIf="!publication.rate">Review's Rate: --</h4>
+
 						<p>
 						{{publication.text}}
 						</p>
 
-						<p>
-						Can be contacted: 
-						<span *ngIf="publication.canBeContacted">Yes</span>
-						<span *ngIf="!publication.canBeContacted">No</span>
-						</p>
-
-						<span class="date">
-							{{ (publication.created_at | amFromUnix) | amLocale:'en' | amTimeAgo}}
-						</span>
-
 						<div>
-							<button class="btn btn-success" pull-left (click)="sendMessage(publication.user, refAddress)" *ngIf="publication.canBeContacted == 1">
+							Can be contacted: 
+							<span *ngIf="publication.canBeContacted">Yes</span>
+							<span *ngIf="!publication.canBeContacted">No</span>
+							<button class="btn btn-success" pull-left (click)="sendMessage(publication.user, refAddress)" *ngIf="publication.canBeContacted == 1" style="margin:5px;">
 								<span class="glyphicon 	glyphicon-envelope"></span>
 							</button>
 							<button class="btn btn-danger" pull-left *ngIf="publication.canBeContacted == 0">
-								<span class="glyphicon 	glyphicon-envelope"></span>
+								<span class="glyphicon 	glyphicon-envelope" style="margin:5px;"></span>
 							</button> 
 						</div>
-					</div>
 
-					<div class="col-lg-12" *ngIf="publication.file[0]">
-						<button class="btn btn-warning" pull-right (click)="showThisImage(publication._id)" *ngIf="showImage != publication._id">
-							<span class="glyphicon 	glyphicon-picture"></span>
-						</button>
-						<button class="btn btn-danger" pull-right (click)="hideThisImage(publication._id)" *ngIf="showImage == publication._id">
-							<span class="glyphicon 	glyphicon-remove-circle"></span>
-						</button>
+						<div *ngIf="publication.file[0]">
+							Images:
+							<button class="btn btn-warning" pull-right (click)="showThisImage(publication._id)" *ngIf="showImage != publication._id" style="margin:5px;">
+								<span class="glyphicon 	glyphicon-picture"></span>
+							</button>
+							<button class="btn btn-danger" pull-right (click)="hideThisImage(publication._id)" *ngIf="showImage == publication._id" style="margin:5px;">
+								<span class="glyphicon 	glyphicon-remove-circle"></span>
+							</button>
+						</div>
+
+						<span class="date" class="text-muted">
+							{{ (publication.created_at | amFromUnix) | amLocale:'en' | amTimeAgo}}
+						</span>
 					</div>
-					<!--<div class="col-lg-12" *ngIf="publication.file[0] != 'null' && showImage == publication._id">
-						<img src="{{url+'get-image/'+publication.file[0]}}" class="col-lg-12" width="400" height="250"/>
-					</div>-->
 				</div>
 
+				<div class="publication-default" *ngIf="publication.file.length == 1 && showImage == publication._id" align="center">
+					<img src="{{url+'get-image/'+publication.file[0]}}" width="350" height="200"/>
+				</div>
+				
 				<!--Carousel Wrapper-->
-				<div id="image-gallery" class="carousel slide" data-ride="carousel" *ngIf="publication.file[0] != 'null' && showImage == publication._id">
+				<div id="pub-image-gallery" class="carousel slide" data-ride="carousel" *ngIf="publication.file.length>1 && showImage == publication._id">
 
 				  	<!-- Indicators -->
 					<ol class="carousel-indicators">
-						<li data-target="#image-gallery" data-slide-to="0" class="active"></li>
-						<li data-target="#image-gallery" *ngFor="let image of publication.file.slice(1); let i = index" data-slide-to="{{i+1}}"></li>
+						<li data-target="#pub-image-gallery" data-slide-to="0" class="active"></li>
+						<li data-target="#pub-image-gallery" *ngFor="let image of publication.file.slice(1); let i = index" data-slide-to="{{i+1}}"></li>
 
 					</ol>
 
@@ -143,12 +144,12 @@
 					
 
 					<!-- Controls -->
-					<a class="left carousel-control" href="#image-gallery" role="button" data-slide="prev">
+					<a class="left carousel-control" href="#pub-image-gallery" role="button" data-slide="prev">
 						<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 					    <span class="sr-only">Previous</span>
 					</a>
 					  
-					<a class="right carousel-control" href="#image-gallery" role="button" data-slide="next">
+					<a class="right carousel-control" href="#pub-image-gallery" role="button" data-slide="next">
 						<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 						<span class="sr-only">Next</span>
 					</a>
