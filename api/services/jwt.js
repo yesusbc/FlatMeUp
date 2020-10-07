@@ -1,11 +1,13 @@
 'use strict'
 
-var jwt = require('jwt-simple');
-var moment = require('moment');
-var secret = 'clave_secreta_FlatMeUp';
+require('dotenv').config();
 
-exports.createToken = function (user){
-	var payload = {
+const jwt = require('jwt-simple');
+const moment = require('moment');
+const secret = process.env.SECRET_KEY;
+
+exports.createToken = function (user) {
+	const payload = {
 		sub: user._id,
 		name: user.name,
 		userName: user.userName,

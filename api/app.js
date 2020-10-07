@@ -1,15 +1,15 @@
 'use strict'
 
-var express    = require('express');
-var bodyParser = require("body-parser");
+const express    = require('express');
+const bodyParser = require('body-parser');
 
-var app = express();
+const app = express();
 
 // Load Routes
-var user_routes        = require('./routes/user');
-var publication_routes = require('./routes/publication');
-var building_routes    = require('./routes/building');
-var message_routes     = require('./routes/message');
+const user_routes        = require('./routes/user');
+const publication_routes = require('./routes/publication');
+const building_routes    = require('./routes/building');
+const message_routes     = require('./routes/message');
 
 // Middlewares
 app.use(bodyParser.urlencoded({extended:false}));

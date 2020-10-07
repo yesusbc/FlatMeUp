@@ -1,10 +1,10 @@
 'use strict'
 
-var mongoosePaginate = require('mongoose-pagination');
-var bcrypt           = require('bcrypt-nodejs');
-var User             = require('../models/user');
-var Publication      = require('../models/publication');
-var jwt              = require('../services/jwt');
+const mongoosePaginate = require('mongoose-pagination');
+const bcrypt           = require('bcrypt-nodejs');
+const User             = require('../models/user');
+const Publication      = require('../models/publication');
+const jwt              = require('../services/jwt');
 
 // Test Method
 function home(req, res){
@@ -25,7 +25,7 @@ function pruebas(req, res){
 // Args: User
 // Returns: -
 function saveUser(req, res){
-	var params = req.body;
+	const params = req.body;
 	var user = new User();
 
 	if (params.name && params.userName && params.email && params.password){
@@ -76,9 +76,9 @@ function saveUser(req, res){
 // Args: Users
 // Return: 
 function loginUser(req, res){
-	var params   = req.body;
-	var email    = params.email;
-	var password = params.password;
+	const params   = req.body;
+	const email    = params.email;
+	const password = params.password;
 	User.findOne({email: email}, (err, user) => {
 		if(err) return res.status(500).send({message: 'Error in request'});
 
@@ -110,7 +110,7 @@ function loginUser(req, res){
 // Args: userId
 // Returns: User
 function getUser(req, res){
-	var userId = req.params.id;
+	const userId = req.params.id;
 	User.findById(userId, (err, user) => {
 		if(err) return res.status(500).send({message: 'Error in request'});
 		if(!user) return res.status(404).send({message: 'User doesnt exist'});
@@ -124,14 +124,14 @@ function getUser(req, res){
 // Args: Optional: Page(1)
 // Return: Users 
 function getUsers(req, res){
-	var identity_user_id = req.user.sub;
+	const identity_user_id = req.user.sub;
 	var page = 1;
 
 	if(req.params.page){
 		page = req.params.page;
 	}
 
-	var itemsPerPage = 5;
+	const itemsPerPage = 5;
 	User.find().sort('_id').paginate(page, itemsPerPage, (err, users, total) => {
 		if(err) return res.status(500).send({message: 'Error in request'});
 		if(!users) return res.status(404).send({message: 'No users available'});
@@ -147,8 +147,8 @@ function getUsers(req, res){
 // Args: userId
 // Return:
 function updateUser(req, res){
-	var userId = req.params.id;
-	var update = req.body;
+	const userId = req.params.id;
+	const update = req.body;
 
 	// Erase password property
 	delete update.password;
@@ -160,7 +160,7 @@ function updateUser(req, res){
 				{email: update.email.toLowerCase()},
 				{userName: update.userName.toLowerCase()}
 				]}).exec((err, users) => {
-					var user_isset = false;
+					const user_isset = false;
 					users.forEach((user) => {
 						if(user && user._id != userId) user_isset = true;
 					});
@@ -180,7 +180,7 @@ function updateUser(req, res){
 // Args: userId
 // Returns: User's public data
 function getUserPublicData(req, res){
-	var userId = req.params.destUserId;
+	const userId = req.params.destUserId;
 	User.findById({'_id':userId},{name:1, lastname:1}, (err, user) => {
 		if(err) return res.status(500).send({message: 'Error in request'});
 		if(!user) return res.status(404).send({message: 'User doesnt exist'});

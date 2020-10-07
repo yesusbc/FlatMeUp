@@ -83,7 +83,7 @@ function createBuilding(req, res){
 							}
 						});
 					}else{
-						return res.status(200).send({message: "Building already exists"});
+						return res.status(200).send({message: 'Building already exists'});
 					}
 				});
 			}
@@ -103,11 +103,11 @@ function getBuildingById(req, res){
 		if(buildingExists){
 
 			// Get review counter
-			Publication.count({"buildingId": buildingId}).exec((err, reviewsCounter) => {
+			Publication.count({'buildingId': buildingId}).exec((err, reviewsCounter) => {
 
 				// Get stats
 				Publication.aggregate([
-	    			{ '$match':{ "buildingId": ObjectId(buildingId) } },
+	    			{ '$match':{ 'buildingId': ObjectId(buildingId) } },
 	        		{'$group': {
 	        			 		'_id': null,
 	            				'globalRate': { '$avg': '$rate' },
@@ -118,19 +118,19 @@ function getBuildingById(req, res){
 	        					}
 	        				}
 				], function(err, results){
-	    			if (err) console.log ("record not found");
+	    			if (err) console.log ('record not found');
 	    			else {
-	    				var globalRate = "--";
-	    				var globalNoise = "--";
-	    				var globalPriceBenefit = "--";
-	    				var globalLandlordSupport = "--";
-	    				var globalMaintenance = "--";
+	    				var globalRate = '--';
+	    				var globalNoise = '--';
+	    				var globalPriceBenefit = '--';
+	    				var globalLandlordSupport = '--';
+	    				var globalMaintenance = '--';
 	    				if (results[0]){
-		    				globalRate = results[0]["globalRate"];
-	    					globalNoise = results[0]["globalNoise"];
-	    					globalPriceBenefit = results[0]["globalPriceBenefit"];
-	    					globalLandlordSupport = results[0]["globalLandlordSupport"];
-	    					globalMaintenance = results[0]["globalMaintenance"];
+		    				globalRate = results[0]['globalRate'];
+	    					globalNoise = results[0]['globalNoise'];
+	    					globalPriceBenefit = results[0]['globalPriceBenefit'];
+	    					globalLandlordSupport = results[0]['globalLandlordSupport'];
+	    					globalMaintenance = results[0]['globalMaintenance'];
 	    					}
 	    				res.status(200).send({
 	    					building: buildingExists, 
@@ -145,7 +145,7 @@ function getBuildingById(req, res){
 			});
 			
 		}else{
-			res.status(404).send({message: "Building doesnt exists"});
+			res.status(404).send({message: 'Building doesnt exists'});
 		}
 	});
 }

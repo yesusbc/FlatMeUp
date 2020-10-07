@@ -1,12 +1,12 @@
 'use strict'
 
-var mongoosePaginate = require('mongoose-pagination');
-var path             = require('path');
-var fs               = require('fs');
-var moment           = require('moment');
-var Publication      = require('../models/publication');
-var Building         = require('../models/building');
-var User             = require('../models/user');
+const mongoosePaginate = require('mongoose-pagination');
+const path             = require('path');
+const fs               = require('fs');
+const moment           = require('moment');
+const Publication      = require('../models/publication');
+const Building         = require('../models/building');
+const User             = require('../models/user');
 const { ObjectId }   = require('mongodb');
 
 function testpublication(req, res){
@@ -19,7 +19,7 @@ function testpublication(req, res){
 // Args: Publication
 // Return: Created publication / created Building
 function savePublication(req, res){
-	var params = req.body;
+	const params = req.body;
 	if(!params.address.street || !params.text){
 		return res.status(200).send({
 			message: 'Either address or text is missing'
@@ -36,7 +36,7 @@ function savePublication(req, res){
 	publication.address.city            = params.address.city            ? params.address.city                    : null;
 	publication.address.street          = params.address.street          ? params.address.street                  : null;
 	publication.address.buildingNumber  = params.address.buildingNumber  ? params.address.buildingNumber          : null;
-	publication.address.apartment       = params.address.apartment       ? params.address.apartment               : "";
+	publication.address.apartment       = params.address.apartment       ? params.address.apartment               : '';
 	publication.address.zip             = params.address.zip             ? params.address.zip                     : null;
 	publication.typeOfBuilding          = params.typeOfBuilding          ? params.typeOfBuilding          : null;
 	publication.rate                    = params.rate                    ? params.rate                    : null;
@@ -66,7 +66,7 @@ function savePublication(req, res){
 		building.address.street         = params.address.street;
 		building.address.buildingNumber = params.address.buildingNumber;
 		building.address.zip            = params.address.zip;
-		building.address.apartment      = params.address.apartment ? params.address.apartment : "";
+		building.address.apartment      = params.address.apartment ? params.address.apartment : '';
 		building.typeOfBuilding         = publication.typeOfBuilding;
 		building.globalRate             = publication.rate;
 		building.reviewsCounter         = 1;
@@ -96,7 +96,7 @@ function savePublication(req, res){
 				});
 			}else{
 				// Address exists
-				// Address exists but perhaps "aparment" dont, Check for apartment as well, if it doesnt exist, then create record
+				// Address exists but perhaps 'aparment' dont, Check for apartment as well, if it doesnt exist, then create record
 				Building.findOne({'address.apartment'      : params.address.apartment,
 								  'address.country'        : params.address.country,
 						  		  'address.state'          : params.address.state,
@@ -108,7 +108,7 @@ function savePublication(req, res){
 						building.save((err, buildingStored) => {
 							if(err) return res.status(500).send({message: 'Error when creating building - apartment'});
 							if(buildingStored){
-								// Update "buildingId" field on publication
+								// Update 'buildingId' field on publication
 								publicationStored.buildingId = buildingStored._id;
 								Publication.findByIdAndUpdate(publication._id, {buildingId: buildingStored._id}, (err, buildingIdUpdated) =>{
 								if(err) return res.status(500).send({message: 'Error when adding building ID to publication'});
@@ -124,18 +124,18 @@ function savePublication(req, res){
 							if(err) return res.status(500).send({message: 'Error when adding building ID to publication'});
 							// Find and calculate Building global stats
 							Building.aggregate([
-				    			{ '$match':{ "_id": ObjectId(addressExists._id) } },
+				    			{ '$match':{ '_id': ObjectId(addressExists._id) } },
 				        		{'$group': {
 				        			 		'_id': null,
 				            				'globalRate': { '$avg': '$globalRate' }
 				        					}
 				        				}
 							], function(err, stats){
-				    			if (err) console.log ("record not found");
+				    			if (err) console.log ('record not found');
 				    			else {
-				    				if(stats[0]["globalRate"]){
+				    				if(stats[0]['globalRate']){
 					    				var reviewsCounter = addressExists.reviewsCounter+1; 
-										var lastAvg = stats[0]["globalRate"].toFixed(2);
+										var lastAvg = stats[0]['globalRate'].toFixed(2);
 										var newAvg = lastAvg;
 										if (publication.rate){
 											var newAvg = ((lastAvg*(reviewsCounter))+publication.rate)/(reviewsCounter).toFixed(2);
@@ -159,7 +159,7 @@ function savePublication(req, res){
 
 // Returns number of contribution
 async function getContributionsNumber(userId){
-	var contributionsNumber = await User.findOne({'_id': userId}).exec((err, userInf) => {
+	const contributionsNumber = await User.findOne({'_id': userId}).exec((err, userInf) => {
 			if(err) return err;
 			return userInf.contributionsNumber;
 		}); 
@@ -169,7 +169,7 @@ async function getContributionsNumber(userId){
 // Args: publicationId
 // Returns: Publication
 function getPublication(req, res){
-	var publicationId = req.params.id;
+	const publicationId = req.params.id;
 
 	Publication.findById(publicationId, (err, publication) =>{
 		if(err) return res.status(500).send({message: 'Error when retrieving review'});
@@ -188,8 +188,8 @@ function getPublicationsById(req, res){
 		page = req.params.page;
 	}
 
-	var buildingId = req.params.buildingId;
-	var itemsPerPage = 4;
+	const buildingId = req.params.buildingId;
+	const itemsPerPage = 4;
 	Publication.find({'buildingId': buildingId}).sort('-created_at').paginate(page, itemsPerPage, (err, publications, totalPublications) => {	
 		if (err) return res.status(500).send({message: 'Error when returning publications of user'});
 		return res.status(200).send({
@@ -211,8 +211,8 @@ function getPublicationsUser(req, res){
 		page = req.params.page;
 	}
 
-	var user = req.user.sub;
-	var itemsPerPage = 4;
+	const user = req.user.sub;
+	const itemsPerPage = 4;
 	Publication.find({'user': user}).sort('-created_at').paginate(page, itemsPerPage, (err, publications, totalPublications) => {	
 		if (err) return res.status(500).send({message: 'Error when returning publications of user'});
 		return res.status(200).send({
@@ -228,7 +228,7 @@ function getPublicationsUser(req, res){
 // Args: publicationId
 // Returns: -
 function deletePublication(req, res){
-	var publicationId = req.params.id;
+	const publicationId = req.params.id;
 
 	Publication.find({'user': req.user.sub, '_id': publicationId}).remove((err, publicationRemoved)=> {
 		if(err) return res.status(500).send({message: 'Error when deleting review'});
@@ -240,7 +240,7 @@ function deletePublication(req, res){
 // Args: publicationId, Image(s)
 // Returns: -
 function uploadImage(req, res){
-	var publicationId = req.params.publicationId;
+	const publicationId = req.params.publicationId;
 	var filenames_list = [];
 
 	if(req.files){
@@ -291,8 +291,8 @@ function removeFilesOfUploads(res, file_path, message){
 // Args: Path
 // Returns: Image
 function getImageFile(req, res){
-	var image_file = req.params.imageFile;
-	var path_file = './uploads/publications/' + image_file;
+	const image_file = req.params.imageFile;
+	const path_file = './uploads/publications/' + image_file;
 
 	fs.exists(path_file, (exists) => {
 		if(exists){
@@ -306,8 +306,8 @@ function getImageFile(req, res){
 // Function to vote up or vote down to specific reviews
 // Not used yet
 function upDownVote(req, res){
-	var vote = req.body.vote;
-	var publicationId = req.params.publicationId;
+	const vote = req.body.vote;
+	const publicationId = req.params.publicationId;
 	Publication.findOne({'_id':publicationId}).exec((err, publication) => {
 		if(publication){
 			// Calculate vote and update

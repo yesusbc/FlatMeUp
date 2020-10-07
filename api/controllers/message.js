@@ -1,9 +1,9 @@
 'use strict'
 
-var mongoosePaginate = require('mongoose-pagination');
-var moment           = require('moment');
-var User             = require('../models/user');
-var Message          = require('../models/message');
+const mongoosePaginate = require('mongoose-pagination');
+const moment           = require('moment');
+const User             = require('../models/user');
+const Message          = require('../models/message');
 
 function tesmessage(req, res){
 	res.status(200).send({
@@ -15,7 +15,7 @@ function tesmessage(req, res){
 // Args: Message
 // Returns: -
 function saveMessage(req, res){
-	var params = req.body;
+	const params = req.body;
 	if(!params.text || !params.receiver) return res.status(200).send({message: 'Missing text or receiver'});
 
 	var message        = new Message();
@@ -36,7 +36,7 @@ function saveMessage(req, res){
 // Args: userId
 // Return: Received Messages
 function getReceivedMessages(req, res){
-	var userId = req.user.sub;
+	const userId = req.user.sub;
 	var page   = 1;
 	if(req.params.page){
 		page = req.params.page;
@@ -58,7 +58,7 @@ function getReceivedMessages(req, res){
 // Args: userId
 // Return: Sent Messages
 function getEmittedMessages(req, res){
-	var userId = req.user.sub;
+	const userId = req.user.sub;
 	var page = 1;
 	if(req.params.page){
 		page = req.params.page;
@@ -80,7 +80,7 @@ function getEmittedMessages(req, res){
 // Args: userId
 // Return: Number of unviewed messages
 function getUnviewedMessages(req, res){
-	var userId = req.user.sub;
+	const userId = req.user.sub;
 
 	Message.count({receiver: userId, viewed: 0}).exec((err, messagesCount) =>{
 		if(err) return res.status(500).send({message: 'Error in messages unviewed request'});
@@ -95,7 +95,7 @@ function getUnviewedMessages(req, res){
 // Args: userId
 // Return: -
 function setViewedMessages(req, res){
-	var userId = req.user.sub;
+	const userId = req.user.sub;
 
 	Message.update({receiver: userId, viewed: 0}, {viewed: 1}, {"multi":true}, (err, messagesUpdated) =>{
 		if(err) return res.status(500).send({message: 'Error in messages viewed request'});
