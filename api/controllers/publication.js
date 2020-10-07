@@ -26,7 +26,7 @@ function savePublication(req, res){
 		});
 	}
 
-	var publication = new Publication();
+	let publication = new Publication();
 	publication.user       = req.user.sub;
 	publication.buildingId = null;
 	publication.text       = params.text;
@@ -49,7 +49,7 @@ function savePublication(req, res){
 	publication.interactionWithBuilding = params.interactionWithBuilding ? params.interactionWithBuilding : null;
 	publication.timeOfInteraction       = params.timeOfInteraction       ? params.timeOfInteraction       : null;
 
-	publication.save((err, publicationStored) =>{
+	publication.save((err, publicationStored) => {
 		if(err) return res.status(500).send({message: 'Error when saving publication'});
 		if(!publicationStored) return res.status(404).send({message: 'Publication not saved'});
 
@@ -59,7 +59,7 @@ function savePublication(req, res){
 			});
 		}); 
 
-		var building                    = new Building();
+		let building                    = new Building();
 		building.address.country        = params.address.country;
 		building.address.state          = params.address.state;
 		building.address.city           = params.address.city;
@@ -104,7 +104,7 @@ function savePublication(req, res){
 						  		  'address.street'         : params.address.street,
 						  		  'address.buildingNumber' : params.address.buildingNumber,
 						  		  'address.zip'            : params.address.zip}).exec((err, addressExists) => { 
-					if(!addressExists){
+					if(!addressExists) {
 						building.save((err, buildingStored) => {
 							if(err) return res.status(500).send({message: 'Error when creating building - apartment'});
 							if(buildingStored){
@@ -134,11 +134,11 @@ function savePublication(req, res){
 				    			if (err) console.log ('record not found');
 				    			else {
 				    				if(stats[0]['globalRate']){
-					    				var reviewsCounter = addressExists.reviewsCounter+1; 
-										var lastAvg = stats[0]['globalRate'].toFixed(2);
-										var newAvg = lastAvg;
+					    				let reviewsCounter = addressExists.reviewsCounter+1; 
+										let lastAvg = stats[0]['globalRate'].toFixed(2);
+										let newAvg = lastAvg;
 										if (publication.rate){
-											var newAvg = ((lastAvg*(reviewsCounter))+publication.rate)/(reviewsCounter).toFixed(2);
+											let newAvg = ((lastAvg*(reviewsCounter))+publication.rate)/(reviewsCounter).toFixed(2);
 										}
 									}
 				    			} 
@@ -159,7 +159,7 @@ function savePublication(req, res){
 
 // Returns number of contribution
 async function getContributionsNumber(userId){
-	const contributionsNumber = await User.findOne({'_id': userId}).exec((err, userInf) => {
+	const contributionsNumber = await User.findOne({ '_id': userId }).exec((err, userInf) => {
 			if(err) return err;
 			return userInf.contributionsNumber;
 		}); 
@@ -171,9 +171,9 @@ async function getContributionsNumber(userId){
 function getPublication(req, res){
 	const publicationId = req.params.id;
 
-	Publication.findById(publicationId, (err, publication) =>{
+	Publication.findById(publicationId, (err, publication) => {
 		if(err) return res.status(500).send({message: 'Error when retrieving review'});
-		if(!publication) return res.status(404).send({message: 'publication doesnt exist'});
+		if(!publication) return res.status(404).send({ message: 'publication doesnt exist' });
 		return res.status(200).send({publication});
 	});
 }
@@ -182,7 +182,7 @@ function getPublication(req, res){
 // Args: buildingId
 // Returns: Publications Json
 function getPublicationsById(req, res){
-	var page = 1;
+	let page = 1;
 
 	if(req.params.page){
 		page = req.params.page;
@@ -205,14 +205,10 @@ function getPublicationsById(req, res){
 // Args: usersId
 // Returns: Reviews from User
 function getPublicationsUser(req, res){
-	var page = 1;
-
-	if(req.params.page){
-		page = req.params.page;
-	}
-
+	const page = req.params.page ? req.params.page : 1;
 	const user = req.user.sub;
 	const itemsPerPage = 4;
+	
 	Publication.find({'user': user}).sort('-created_at').paginate(page, itemsPerPage, (err, publications, totalPublications) => {	
 		if (err) return res.status(500).send({message: 'Error when returning publications of user'});
 		return res.status(200).send({
@@ -241,16 +237,16 @@ function deletePublication(req, res){
 // Returns: -
 function uploadImage(req, res){
 	const publicationId = req.params.publicationId;
-	var filenames_list = [];
+	let filenames_list = [];
 
 	if(req.files){
 		if(req.files.image.length){
-			for (var idx=0; idx < req.files.image.length; idx++){
-				var file_path = req.files.image[idx].path;
-		    	var file_split = file_path.split('/');
-				var file_name  = file_split[2];
-				var ext_split  = file_name.split('.');
-				var file_ext   = ext_split[1];
+			for (let idx=0; idx < req.files.image.length; idx++){
+				let file_path = req.files.image[idx].path;
+		    	let file_split = file_path.split('/');
+				let file_name  = file_split[2];
+				let ext_split  = file_name.split('.');
+				let file_ext   = ext_split[1];
 				if (file_ext=='png' || file_ext=='jpg' || file_ext=='jpeg'){
 					filenames_list.push(file_name);
 				}else{
@@ -258,11 +254,11 @@ function uploadImage(req, res){
 				}
 			}
 		}else{
-			var file_path  = req.files.image.path;
-			var file_split = file_path.split('/');
-			var file_name  = file_split[2];
-			var ext_split  = file_name.split('.');
-			var file_ext   = ext_split[1];
+			let file_path  = req.files.image.path;
+			let file_split = file_path.split('/');
+			let file_name  = file_split[2];
+			let ext_split  = file_name.split('.');
+			let file_ext   = ext_split[1];
 			if (file_ext=='png' || file_ext=='jpg' || file_ext=='jpeg'){
 				filenames_list.push(file_name);
 			}else{
@@ -311,7 +307,7 @@ function upDownVote(req, res){
 	Publication.findOne({'_id':publicationId}).exec((err, publication) => {
 		if(publication){
 			// Calculate vote and update
-			var newVote = publication.votesCounter + parseInt(vote);
+			let newVote = publication.votesCounter + parseInt(vote);
 			Publication.findByIdAndUpdate(publicationId, {votesCounter: newVote}, (err, publicationUpdated) =>{	
 				if(err) return res.status(500).send({message: 'Error in voting request'});
 				if(!publicationUpdated) return res.status(404).send({message: 'Votes not updated'});

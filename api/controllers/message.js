@@ -18,7 +18,7 @@ function saveMessage(req, res){
 	const params = req.body;
 	if(!params.text || !params.receiver) return res.status(200).send({message: 'Missing text or receiver'});
 
-	var message        = new Message();
+	let message        = new Message();
 	message.text       = params.text;
 	message.address    = params.address;
 	message.created_at = moment().unix();
@@ -37,12 +37,12 @@ function saveMessage(req, res){
 // Return: Received Messages
 function getReceivedMessages(req, res){
 	const userId = req.user.sub;
-	var page   = 1;
+	let page   = 1;
 	if(req.params.page){
 		page = req.params.page;
 	}
 
-	var itemsPerPage = 4;
+	let itemsPerPage = 4;
 	Message.find({receiver: userId}).populate('emitter', 'name lastname userName email address _id').sort('-created_at').paginate(page, itemsPerPage, (err, messages, totalMessages) => {	
 		if(err) return res.status(500).send({message: 'Error in messages request'});
 		if(!messages) return res.status(404).send({message: 'No messages'});
@@ -59,12 +59,12 @@ function getReceivedMessages(req, res){
 // Return: Sent Messages
 function getEmittedMessages(req, res){
 	const userId = req.user.sub;
-	var page = 1;
+	let page = 1;
 	if(req.params.page){
 		page = req.params.page;
 	}
 
-	var itemsPerPage = 4;
+	let itemsPerPage = 4;
 	Message.find({emitter: userId}).populate('emitter receiver', 'name lastname userName _id').sort('-created_at').paginate(page, itemsPerPage, (err, messages, totalMessages) => {	
 		if(err) return res.status(500).send({message: 'Error in messages request'});
 		if(!messages) return res.status(404).send({message: 'No messages'});

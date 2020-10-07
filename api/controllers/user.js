@@ -125,13 +125,9 @@ function getUser(req, res){
 // Return: Users 
 function getUsers(req, res){
 	const identity_user_id = req.user.sub;
-	var page = 1;
-
-	if(req.params.page){
-		page = req.params.page;
-	}
-
+	const page = req.params.page ? req.params.page : 1;
 	const itemsPerPage = 5;
+
 	User.find().sort('_id').paginate(page, itemsPerPage, (err, users, total) => {
 		if(err) return res.status(500).send({message: 'Error in request'});
 		if(!users) return res.status(404).send({message: 'No users available'});
@@ -153,12 +149,12 @@ function updateUser(req, res){
 	// Erase password property
 	delete update.password;
 
-	if(userId != req.user.sub) return res.status(500).send({message: 'You are not allowed to acces to this user'});
+	if(userId != req.user.sub) return res.status(500).send({ message: 'You are not allowed to acces to this user' });
 
 	// Look for repeated userName or repeted Email
 	User.find({ $or:[
-				{email: update.email.toLowerCase()},
-				{userName: update.userName.toLowerCase()}
+				{ email: update.email.toLowerCase() },
+				{ userName: update.userName.toLowerCase() }
 				]}).exec((err, users) => {
 					const user_isset = false;
 					users.forEach((user) => {
