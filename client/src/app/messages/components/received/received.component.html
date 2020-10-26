@@ -65,7 +65,7 @@
 		<ul class="pager pull-right">
 			<li *ngIf="page > 1"><a [routerLink]="['/profile/messages/received', prev_page]">
 			Previous</a></li>
-			<li *ngIf="pages != page"><a [routerLink]="['/profile/messages/received', next_page]">
+			<li *ngIf="pages!=page && pages!=0"><a [routerLink]="['/profile/messages/received', next_page]">
 			Next</a></li>
 		</ul>
 	</div>
