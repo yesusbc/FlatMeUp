@@ -51,7 +51,7 @@
 			Previous</a></li>
 		</ul>
 		<ul class="pager pull-right" *ngIf="commingFromHome">
-			<li *ngIf="pages != page"><a [routerLink]="['/home', next_page]">
+			<li *ngIf="pages!=page && pages!=0"><a [routerLink]="['/home', next_page]">
 			Next</a></li>
 		</ul>
 
