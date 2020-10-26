@@ -1,12 +1,17 @@
 'use strict'
 
-var mongoose = require('mongoose')
-var app      = require('./app')
-var PORT     = 3800;
+const mongoose = require('mongoose')
+const app      = require('./app')
+const PORT     = 3800;
 
-// Database connection
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/FlatMeUp', {useMongoClient : true})
+
+const uri = "mongodb+srv://admin:contraseña@cluster0.fp9nw.gcp.mongodb.net/FlatMeUp_development_DB?retryWrites=true&w=majority";
+
+mongoose.connect(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
         .then(() =>{
             console.log("Database connection successfully...");
 
