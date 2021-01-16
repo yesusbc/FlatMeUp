@@ -51,7 +51,7 @@
 
 /****************************** Profile Styles Start*********************/
 .profile-list {
-	margin-bottom: 20px;
+	margin-bottom: 20px!important; 
 }
 
 .profile-list ul {

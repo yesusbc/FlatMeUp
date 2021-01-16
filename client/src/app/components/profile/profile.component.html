@@ -1,7 +1,7 @@
-<div class="col-lg-8 col-lg-offset-2">
+<div class="col-12 col-md-4 col-md-offset-4">
 	<h1 class="h1-strong">{{title}}</h1>
 
-	<div class="profile-list col-lg-10">
+	<div class="profile-list col-lg-12">
 		<ul class="nav navbar-nav">
 		    <li>
 		    	<a [routerLink]="['/profile/'+user._id]" [routerLinkActive]="['active']">
@@ -26,48 +26,84 @@
 		</ul>
 	</div>
 
-	<div class="user-info col-lg-10">
-		<div>
-			<a [routerLink]="['/profile/edit']" [routerLinkActive]="['active']">
-            	Edit profile
-        	</a>
-    	</div>
+	<div class="user-info form-horizontal">
+		<div class="form-group">
+			<label for="name" class="col-sm-3 control-label">Name</label>
+			<div class="col-sm-9">
+				<label id="name" class="form-control">{{user.name}}</label>
+			</div>
+		</div>
 
-		<p>
-			<label class="form-control">Name: {{user.name}}</label>
-		</p>
+		<div class="form-group">
+			<label for="lastname" class="col-sm-3 control-label">Lastname</label>
+			<div class="col-sm-9">
+				<label id="lastname" class="form-control">{{user.lastname}}</label>
+			</div>
+		</div>
 
-		<p>
-			<label class="form-control">Lastname: {{user.lastname}}</label>
-		</p>
+		<div class="form-group">
+			<label for="userName" class="col-sm-3 control-label">Username</label>
+			<div class="col-sm-9">
+				<label id="userName" class="form-control">{{user.userName}}</label>
+			</div>
+		</div>
 
-		<p>
-			<label class="form-control">Username: {{user.userName}}</label>
-		</p>
+		<div class="form-group">
+			<label for="email" class="col-sm-3 control-label">Email</label>
+			<div class="col-sm-9">
+				<label id="email" class="form-control">{{user.email}}</label>
+			</div>
+		</div>
 
-		<p>
-			<label class="form-control">Email: {{user.email}}</label>
-		</p>
-		
-		<p>
-			  <label *ngIf="user.gender==0" class="form-control">Gender: Male</label>
-			  <label *ngIf="user.gender==1" class="form-control">Gender: Female</label>
-			  <label *ngIf="user.gender==2" class="form-control">Gender: Other</label>
-		</p>
+		<div class="form-group">
+			<label for="gender" class="col-sm-3 control-label">Gender</label>
+			<div class="col-sm-9">
+			 	<label id="gender" *ngIf="user.gender==0" class="form-control">Male</label>
+			 	<label id="gender" *ngIf="user.gender==1" class="form-control">Female</label>
+			 	<label id="gender" *ngIf="user.gender==2" class="form-control">Other</label>
+			</div>
+		</div>
 
-		<p>
-			<label class="form-control">Occupation: {{user.occupation}}</label>
-		</p>
+		<div class="form-group">
+			<label for="occupation" class="col-sm-3 control-label">Occupation</label>
+			<div class="col-sm-9">
+				<label id="occupation" class="form-control">{{user.occupation}}</label>
+			</div>
+		</div>
 
-		<!-- Missing: Address dropdown list-->
-		<p>
-			<label class="form-control">Country: {{user.country}}</label>
-			<label class="form-control">State: {{user.state}}</label>
-			<label class="form-control">City: {{user.city}}</label>
-		</p>
+		<div class="form-group">
+			<label for="country" class="col-sm-3 control-label">Country</label>
+			<div class="col-sm-9">
+				<label id="country" class="form-control">{{user.country}}</label>
+			</div>
+		</div>
 
-		<p>
-			<label class="form-control">Birthday: {{day}}/{{month}}/{{year}}</label>
-		</p>
+		<div class="form-group">
+			<label for="state" class="col-sm-3 control-label">State</label>
+			<div class="col-sm-9">
+				<label id="state" class="form-control">{{user.state}}</label>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="city" class="col-sm-3 control-label">City</label>
+			<div class="col-sm-9">
+				<label id="city" class="form-control">{{user.city}}</label>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="birthday" class="col-sm-3 control-label">Birthday</label>
+			<div class="col-sm-9">
+				<label id="birthday" class="form-control">{{day}}/{{month}}/{{year}}</label>
+			</div>
+		</div>		
+
+		<div class="col-sm-3">
+ 			<a [routerLink]="['/profile/edit']" >
+ 				<button class="btn btn-primary pull-right">Edit profile</button>
+ 			</a>
+ 		</div>   	
+
 	</div>
 </div>

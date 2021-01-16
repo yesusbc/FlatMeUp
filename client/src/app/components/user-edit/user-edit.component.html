@@ -1,4 +1,4 @@
-<div class="col-lg-8 col-lg-offset-2">
+<div class="col-12 col-md-4 col-md-offset-4">
 	<h1 class="h1-strong">{{title}}</h1>
 
 	<div class="alert alert-success" *ngIf="status == 'success'">
@@ -9,74 +9,109 @@
 		Error, data not actualized
 	</div>
 
-	<div>
-		<a [routerLink]="['/profile/'+user._id]" [routerLinkActive]="['active']">
-            Cancel
-        </a>
-    </div>
 
-	<form #userEditForm="ngForm" (ngSubmit)="onSubmit()" class="col-lg-12">
-
-		<p>
-			<label>Name</label>
-			<input type="text" name="name" #name="ngModel" [(ngModel)]="user.name" required class="form-control"/>
-			<span *ngIf="!name.value && name.touche">Name is obligatory
-			</span>
-		</p>
-
-		<p>
-			<label>Lastname</label>
-			<input type="text" name="lastname" #lastname="ngModel" [(ngModel)]="user.lastname"  class="form-control"/>
-		</p>
-
-		<p>
-			<label>Username</label>
-			<input type="text" name="userName" #userName="ngModel" [(ngModel)]="user.userName" required class="form-control"/>
-			<span *ngIf="!userName.value && userName.touche">Username is obligatory
-			</span>
-		</p>
-
-		<p>
-			<label>Email</label>
-			<input type="text" name="email" #email="ngModel" [(ngModel)]="user.email" required class="form-control"/>
-			<span *ngIf="!email.value && email.touche">Email is obligatory
-			</span>
-		</p>
+	<form #userEditForm="ngForm" (ngSubmit)="onSubmit()" class="form-horizontal">
 		
-		<div>
-			<label>Gender: </label>
-		</div>
-		<div style="margin-left: 20px">
-			  <input type="radio" name="gender" value=0 #gender="ngModel" [(ngModel)]="user.gender">
-			  <label for="male">Male</label><br>
-			  <input type="radio" name="gender" value=1 #gender="ngModel" [(ngModel)]="user.gender">
-			  <label for="female">Female</label><br>
-			  <input type="radio" name="gender" value=2 #gender="ngModel" [(ngModel)]="user.gender">
-			  <label for="other">Other</label>
+		<div class="form-group">
+			<label for="name" class="col-sm-3 control-label">Name</label>
+			<div class="col-sm-9">
+				<input type="text" id="name" name="name" #name="ngModel" [(ngModel)]="user.name" required placeholder="Name" class="form-control" autofocus>
+				<span *ngIf="!name.value && name.touch">Name is obligatory</span>
+			</div>
 		</div>
 
-		<p>
-			<label>Occupation: </label>
-			<input type="text" name="occupation" #occupation="ngModel" [(ngModel)]="user.occupation" class="form-control"/>
-		</p>
+		<div class="form-group">
+			<label for="lastname" class="col-sm-3 control-label">Lastname</label>
+			<div class="col-sm-9">
+				<input type="text" id="lastname" name="lastname" #lastname="ngModel" [(ngModel)]="user.lastname" placeholder="Lastname" class="form-control" autofocus>
+			</div>
+		</div>
 
-		<!-- Missing: Address in form of list-->
-		<p>
-			<label>Country: </label>
-			<input type="text" name="country" #country="ngModel" [(ngModel)]="user.country" class="form-control"/>
-			<label>State: </label>
-			<input type="text" name="state" #state="ngModel" [(ngModel)]="user.state" class="form-control"/>
-			<label>City: </label>
-			<input type="text" name="city" #city="ngModel" [(ngModel)]="user.city" class="form-control"/>
-		</p>
+		<div class="form-group">
+			<label for="userName" class="col-sm-3 control-label">Username</label>
+			<div class="col-sm-3">
+				<input type="text" id="userName" name="userName" #userName="ngModel" [(ngModel)]="user.userName" required placeholder="Username" class="form-control" autofocus>
+				<span *ngIf="!userName.value && userName.touch">Username is obligatory</span>
+			</div>
+		</div>
 
-		<p>
-			<label>Birthday:</label>
-			<input type="date" name="birthday" #birthday="ngModel" [(ngModel)]="user.birthday" class="form-control">
-		</p>
+		<div class="form-group">
+			<label for="email" class="col-sm-3 control-label">Email</label>
+			<div class="col-sm-9">
+				<input type="text" id="email" name="email" #email="ngModel" [(ngModel)]="user.email" required placeholder="Email" class="form-control" autofocus>
+				<span *ngIf="!email.value && email.touch">Email is obligatory</span>
+			</div>
+		</div>
 
 
-		<input type="submit" value="{{title}}" class="btn btn-warning"[disabled]="!userEditForm.form.valid"/>
+		<div class="form-group">
+			<label class="control-label col-sm-3">Gender</label>
+			<div class="col-sm-6">
+				<div class="row">
+					<div class="col-sm-4">
+						<label class="radio-inline">
+							<input type="radio" name="gender" value=0 #gender="ngModel" [(ngModel)]="user.gender">Male
+						</label>
+					</div>
+					<div class="col-sm-4">
+						<label class="radio-inline">
+							<input type="radio" name="gender" value=1 #gender="ngModel" [(ngModel)]="user.gender">Female
+						</label>
+					</div>
+					<div class="col-sm-4">
+						<label class="radio-inline">
+							<input type="radio" name="gender" value=2 #gender="ngModel" [(ngModel)]="user.gender">Other
+						</label>
+					</div>
+				</div>
+			</div>
+		</div> 
 
+		<div class="form-group">
+			<label for="occupation" class="col-sm-3 control-label">Occupation</label>
+			<div class="col-sm-9">
+				<input type="text" id="occupation" name="occupation" #occupation="ngModel" [(ngModel)]="user.occupation" placeholder="Occupation" class="form-control" autofocus>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="birthday" class="col-sm-3 control-label">Date of Birth</label>
+			<div class="col-sm-9">
+				<input type="date" id="birthday" name="birthday" #birthday="ngModel" [(ngModel)]="user.birthday" class="form-control" autofocus>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="country" class="col-sm-3 control-label">Country</label>
+			<div class="col-sm-3">
+				<input type="text" id="country" name="country" #country="ngModel" [(ngModel)]="user.country" placeholder="Country" class="form-control" autofocus>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="state" class="col-sm-3 control-label">State</label>
+			<div class="col-sm-3">
+				<input type="text" id="state" name="state" #state="ngModel" [(ngModel)]="user.state"  placeholder="state" class="form-control" autofocus>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="city" class="col-sm-3 control-label">Username</label>
+			<div class="col-sm-3">
+				<input type="text" id="city" name="city" #city="ngModel" [(ngModel)]="user.city" required placeholder="City" class="form-control" autofocus>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-3">
+	 			<a [routerLink]="['/profile/'+user._id]" >
+	 				<button class="btn btn-danger pull-right">Return</button>
+	 			</a>
+	 		</div>
+
+	 		<div class="col-sm-9">
+ 				<input type="submit" value="{{title}}" class="btn btn-primary btn-block" [disabled]="!userEditForm.form.valid"/>
+ 			</div>
+ 		</div>
 	</form>
 </div>
