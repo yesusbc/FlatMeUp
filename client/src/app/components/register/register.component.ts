@@ -14,6 +14,7 @@ export class RegisterComponent implements OnInit{
 	public user: User;
 	public status: string;
 	public birthday: Date;
+	public confirm_password:string;
 
 	constructor(
 		private _route: ActivatedRoute,
@@ -36,6 +37,7 @@ export class RegisterComponent implements OnInit{
 			"",
 			this.birthday);
 	}
+
 	ngOnInit(){
 		console.log('Componente de register cargado...');
 	}

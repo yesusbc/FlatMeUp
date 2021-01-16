@@ -48,6 +48,7 @@ export class MyReviewsComponent implements OnInit{
     actualPage(){
         this._route.params.subscribe( params => {
             let page = params['page'];
+            console.log(page);
             this.page = page;
 
             if(!params['page']){
@@ -115,4 +116,10 @@ export class MyReviewsComponent implements OnInit{
             }
         );
     }
+
+
+    //function to return list of numbers from 0 to n-1 
+    numSequence(n: number): Array<number> { 
+        return Array(n); 
+    } 
 }
