@@ -1,39 +1,44 @@
-<div class="col-lg-8 col-lg-offset-2">
+<div class="col-md-6 col-md-offset-3">
 	<h1 class="h1-strong">{{title}}</h1>
 	
 		<div class="panel-body">
-			<div class="building-text pull-left">
-				<h4>{{building.address.street + ", " + 
-					building.address.buildingNumber}}
-				<span *ngIf="building.address.apartment">, {{building.address.apartment}}</span>
-				. 
-				{{building.address.state + ", " + 
-				building.address.country}}
-				</h4>
-				
-				<h2>
-				Global Rate: {{globalRate}}
-				</h2>
+			<div class="building-text col-md-6 pull-left">
+				<div>
+					<h1 style="display: inline;">
+					Global Rate: 
+							<li style="display: inline-block; margin: 2px;" *ngFor="let n of numSequence(globalRate)" class="list-inline">
+							<span class="fa fa-star" style="color: orange;"></span>
+							</li>
+							<li style="display: inline-block; margin: 2px;" *ngFor="let n of numSequence(5-globalRate)" class="list-inline">
+								<span class="fa fa-star"></span>
+							</li>
+						<br><small>
+						{{building.address.street + ", " + 
+						building.address.buildingNumber}}
+						<span *ngIf="building.address.apartment">, {{building.address.apartment}}</span>
+						. 
+						{{building.address.state + ", " + 
+						building.address.country}}
+				    </small></h1>
+				</div>
 
-				<b>Average Rate</b>
+				<div>
+					<h4><b>Average Rate</b></h4>
 
-				<p>
-				Noise: {{globalNoise}} <br>
-				Price-Benefit: {{globalPriceBenefit}} <br>
-				Landlord Support: {{globalLandlordSupport}} <br>
-				Maintenance: {{globalMaintenance}}
-				</p>
+					<p>
+					Noise: {{globalNoise}} <br>
+					Price-Benefit: {{globalPriceBenefit}} <br>
+					Landlord Support: {{globalLandlordSupport}} <br>
+					Maintenance: {{globalMaintenance}} <br>
+					</p>
 
-				<p>
-				Number of reviews: {{reviewsCounter}}
-				</p>
-
-				<span class="date" class="text-muted">
-					{{ (building.created_at | amFromUnix) | amLocale:'en' | amTimeAgo}}
-				</span>
+				    <span class="date" class="text-muted">
+						{{ (building.created_at | amFromUnix) | amLocale:'en' | amTimeAgo}}
+					</span>
+				</div>
 			</div>
 
-			<div class="building-image pull-right"> 
+			<div class="building-image col-md-6 pull-right"> 
 				<div class="building-default" *ngIf="building.file.length == 1" align="center">
 					<img src="{{url+'get-image/'+building.file[0]}}" width="350" height="200"/>
 				</div>
@@ -77,43 +82,66 @@
 			</div>
 		</div>
 
-  	<div id="publications">
+  	<div id="publications" class="col-md-11">
+  		<hr>
+  		<h4>
+			Number of reviews: {{reviewsCounter}}
+		</h4>
 		<div *ngFor="let publication of publications" class="item-publication">
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<div class="publication-text">
-						<h4 *ngIf="publication.rate">Review's Rate: {{publication.rate}}</h4>
-						<h4 *ngIf="!publication.rate">Review's Rate: --</h4>
+						<div class="row" *ngIf="publication.rate">
+							<h4 style="display: inline;">Review's Rate:</h4>
+								<li style="display: inline-block; margin: 2px;" *ngFor="let n of numSequence(publication.rate)" class="list-inline">
+									<span class="fa fa-star" style="color: orange;"></span>
+								</li>
 
-						<p>
-						{{publication.text}}
-						</p>
+								<li style="display: inline-block; margin: 2px;" *ngFor="let n of numSequence(5-publication.rate)" class="list-inline">
+									<span class="fa fa-star"></span>
+								</li>
+						</div>
+						<div class="row" *ngIf="!publication.rate">				
+							<h4>Review's Rate: --</h4>
+						</div>
+
+						<div class="row">
+							<blockquote style="font-size:16px;">
+								<p>
+									{{publication.text}}
+								</p>
+							</blockquote>
+						</div>
 
 						<div>
-							Can be contacted: 
-							<span *ngIf="publication.canBeContacted">Yes</span>
-							<span *ngIf="!publication.canBeContacted">No</span>
-							<button class="btn btn-success" pull-left (click)="sendMessage(publication.user, refAddress)" *ngIf="publication.canBeContacted == 1" style="margin:5px;">
-								<span class="glyphicon 	glyphicon-envelope"></span>
-							</button>
-							<button class="btn btn-danger" pull-left *ngIf="publication.canBeContacted == 0">
-								<span class="glyphicon 	glyphicon-envelope" style="margin:5px;"></span>
-							</button> 
+							<div class="pull-left">
+								<button class="btn btn-success" (click)="sendMessage(publication.user, refAddress)" *ngIf="publication.canBeContacted == 1" style="margin:5px;">
+									Can be contacted
+									<span class="glyphicon 	glyphicon-envelope"></span>
+								</button>
+
+								<button class="btn btn-danger" pull-left *ngIf="publication.canBeContacted == 0">
+									Cannot be contacted
+									<span class="glyphicon 	glyphicon-envelope" style="margin:5px;"></span>
+								</button> 
+							</div>
+
+							<div *ngIf="publication.file[0]" class="pull-right">
+								<button class="btn btn-warning" pull-right (click)="showThisImage(publication._id)" *ngIf="showImage != publication._id" style="margin:5px;">
+									Images
+									<span class="glyphicon 	glyphicon-picture"></span>
+								</button>
+								<button class="btn btn-danger" pull-right (click)="hideThisImage(publication._id)" *ngIf="showImage == publication._id" style="margin:5px;">
+									<span class="glyphicon 	glyphicon-remove-circle"></span>
+								</button>
+							</div>
 						</div>
 
-						<div *ngIf="publication.file[0]">
-							Images:
-							<button class="btn btn-warning" pull-right (click)="showThisImage(publication._id)" *ngIf="showImage != publication._id" style="margin:5px;">
-								<span class="glyphicon 	glyphicon-picture"></span>
-							</button>
-							<button class="btn btn-danger" pull-right (click)="hideThisImage(publication._id)" *ngIf="showImage == publication._id" style="margin:5px;">
-								<span class="glyphicon 	glyphicon-remove-circle"></span>
-							</button>
+						<div class="col-md-12">
+							<span class="date" class="text-muted">
+								{{ (publication.created_at | amFromUnix) | amLocale:'en' | amTimeAgo}}
+							</span>
 						</div>
-
-						<span class="date" class="text-muted">
-							{{ (publication.created_at | amFromUnix) | amLocale:'en' | amTimeAgo}}
-						</span>
 					</div>
 				</div>
 
