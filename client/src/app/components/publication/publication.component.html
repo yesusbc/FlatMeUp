@@ -97,12 +97,13 @@
 					    <input type="radio" id="star1-rate" name="rating-rate" value=1 #rate="ngModel" [(ngModel)]="publication.rate"/>
 					    <label class = "full" for="star1-rate" title="Terrible - 1 star"></label>
 					</div>
+					<br>
 				</div>
 			</div>
 
 			<div>
 				<div>
-					<div class="col-md-4 col-md-offset-2">
+					<div class="col-md-4 col-md-offset-2 pull-left">
 						<div>
 							<label>Noise:</label>
 						</div>
@@ -122,6 +123,7 @@
 						    <input type="radio" id="star1-noise" name="rating-noise" value=1 #noise="ngModel" [(ngModel)]="publication.noise"/>
 						    <label class = "full" for="star1-noise" title="Terrible - 1 star"></label>
 						</div>
+						<br>
 					</div>
 
 					<div class="col-md-4">
@@ -144,11 +146,12 @@
 						    <input type="radio" id="star1-priceBenefit" name="rating-priceBenefit" value=1 #priceBenefit="ngModel" [(ngModel)]="publication.priceBenefit"/>
 						    <label class = "full" for="star1-priceBenefit" title="Terrible - 1 star"></label>
 						</div>
+						<br>
 					</div>
 				</div>
 
 				<div>
-					<div class="col-md-4 col-md-offset-2">
+					<div class="col-md-4 col-md-offset-2 pull-left">
 						<div>
 							<label>Landlord Support:</label>
 						</div>
@@ -168,6 +171,7 @@
 						    <input type="radio" id="star1-landlordSupport" name="rating-landlordSupport" value=1 #landlordSupport="ngModel" [(ngModel)]="publication.landlordSupport"/>
 						    <label class = "full" for="star1-landlordSupport" title="Terrible - 1 star"></label>
 						</div>
+						<br>
 					</div>
 
 					<div class="col-md-4">
@@ -190,11 +194,12 @@
 						    <input type="radio" id="star1-maintenance" name="rating-maintenance" value=1 #maintenance="ngModel" [(ngModel)]="publication.maintenance"/>
 						    <label class = "full" for="star1-maintenance" title="Terrible - 1 star"></label>
 						</div>
+						<br>
 					</div>
 				</div>
 			</div>
 
-			<div class="col-md-8 col-md-offset-2">
+			<div class="col-md-8 col-md-offset-2 pull-left">
 				<label>Review:</label>
 				<textarea  type="text" name="text" #text="ngModel" [(ngModel)]="publication.text" class="form-control" rows="4" cols="50" placeholder="The apartment was great, the building was... the landlord was... the zone neighborhood was..." required>
 				Type here the review.
