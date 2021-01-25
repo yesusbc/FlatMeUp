@@ -1,0 +1,160 @@
+{
+	"home": 
+	{
+		"title": "Bienvenido a FlatMeUp",
+		"language": "Lenguaje",
+		"register": "Registro",
+		"writeAReview": "Escribir una reseña",
+		"search": "Buscar",
+		"logout": "Salir",
+		"myProfile": "Mi Perfile",
+		"myReviews": "Mis Reseñas",
+		"myInbox": "Mensajes"
+	},
+
+	"general":
+	{
+		"images": "Imágenes",
+		"next": "Siguiente",
+		"previous": "Anterior",
+		"currentLanguage": "es"
+	},
+
+	"building": 
+	{
+		"title": "Reseñas & Evaluaciones",
+		"headerGlobal": "Global",
+		"headerAverage": "Calificaciones Promedio",
+		"infoNoise": "Ruido",
+		"infoPriceBenefit": "Relacion Precio-Beneficio",
+		"infoLandlordSupport": "Apoyo del Rentero",
+		"infoMaintenance": "Cuidado",
+		"numberOfReviews": "Numero de Reseñas",
+		"reviewsRate": "Calificación de Reseñas",
+		"canBeContacted": "Puede ser contactado",
+		"cannotBeContacted": "No puede ser contactado"
+	},
+
+	"login":
+	{
+		"login": "Iniciar Sesíon",
+		"logSuccessful": "Inicio de Sesión Exitoso",
+		"logFailed": "Falló inicio de sesión. Intente de nuevo",
+		"email": "Correo Electrónico",
+		"emailInvalid": "Correo Electrónico inválido",
+		"password": "Contraseña",
+		"passwordRequired": "La contraseña es obligatoria"
+	},
+
+
+	"register":
+	{
+		"registerSuccessful": "Registro Exitoso",
+		"registerFailed": "Registro fallido, intente otra vez",
+		"nameObligatory": "El nombre es obligatorio ",
+		"usernameObligatory": "El nombre de usuario es obligatorio ",
+		"passwordObligatory": "La contraseña es obligatoria ",
+		"emailInvalid": "Ingrese un correo electrónico válido",
+		"emailObligatory": "El correo electrónico es obligatorio",
+		"passwordConfirm": "Confirme la contraseña",
+		"passwordInvalid": "Las contraseñas no son iguales",
+		"passwordOk": "Contraseñas iguales",
+		"placeholderName": "Nombre",
+		"placeholderUsername": "Nombre de usuario",
+		"placeholderLastname": "Apellido"
+	},
+
+		"myReviews":
+	{
+		"rate": "Calificación",
+		"address": "Dirección",
+		"review": "Reseña",
+		"modalTitle": "¿Estás seguro?",
+		"modalBody": "Esta acción va a remover permanentemente la reseña de la dirección",
+		"cancel": "Cancelar",
+		"eraseReview": "Borrar Reseña"
+
+	},
+
+	"profile":
+	{
+		"title": "Perfil",
+		"name": "Nombre",
+		"lastname": "Apellido",
+		"username": "Nombre de usuario",
+		"email": "Correo electrónico",
+		"gender": "Género",
+		"male": "Masculino",
+		"female": "Femenino",
+		"other": "Otro",
+		"occupation": "Ocupación",
+		"country": "País",
+		"state": "Estado",
+		"city": "Ciudad",
+		"birthday": "Fecha de nacimiento",
+		"editProfile": "Editar Perfil",
+		"return": "Regresar",
+		"dataSuccessful": "Perfil actualizado exitosamente",
+		"dataError": "Error, el perfil no se actualizó"
+	},
+
+	"search":
+	{
+		"title": "Buscar",
+		"searchForAnAddress": "Busca una dirección",
+		"search": "Buscar",
+		"helpModalLabel": "¿Cómo buscar una dirección",
+		"modalBody": "Escribe la dirección deseas buscar. Puedes buscar por ciudades, estados, paises, calles, o una dirección especifica (calle, número, colonia, etc.).",
+		"modalBody2": "Solamente asegúrate que la dirección que buscas aparezca en la lista, y dale click.",
+		"modalFooter": "Cerrar"
+	},
+
+	"writeAReview":
+	{
+		"title": "Escribir una Reseña",
+		"publicationSuccessful": "Publicacíon completada exitosamente",
+		"publicationFailed": "Publicación fallida, intente otra vez",
+		"enterAnAddress": "Ingrese una dirección",
+		"addressCorrect": "La dirección es correcta",
+		"addressIncorrect": "La dirección es incorrecta, revisa que esté escribiendo una calle y un número de edificio correctamente.",
+		"helpModalLabel": "¿Por qué mi dirección es incorrecta?",
+		"modalBody": "Asegurese que la dirección que está ingresando cuente con almenos",
+		"modalBodyStreet": "Un nombre de calle",
+		"modalBodyStreetNumber": "Un número de domicilio",
+		"modalFooter": "Cerrar",
+		"typeOfBuilding": "Tipo de Edificio",
+		"review": "Reseña",
+		"reviewExample": "El apartamento era genial, el edificio era... el rentero era... el vecindario era...",
+		"reviewPlaceholder": "Escriba aquí una reseña.",
+		"reviewObligatory": "La reseña es obligatoria ",
+		"canBeContacted": "¿Puedo ser contactado?",
+		"uploadPublication": "Subir fotos relacionadas a la publicación",
+		"uploadPublication2": "Upload picture - Publication",
+		"uploadBuilding": "Subir fotos relacionadas al edificio",
+		"uploadBuilding2": "Upload picture - Building"
+	},
+
+	"message":
+	{
+		"addTitle": "Enviar Mensaje",
+		"sentSuccessful": "Mensaje Enviado Exitosamente",
+		"sentMessages": "Mensajes Enviados",
+		"sentFailed": "Mensaje fallido, intente otra vez",
+		"for": "Para",
+		"reference": "Referencia",
+		"message": "Mensaje",
+		"messageObligatory": "El mensaje es obligatorio",
+
+		"mainTitle": "Mensajes",
+		"sendMessage": "Enviar Mensaje",
+		"receivedMessages": "Mensajes Recividos",
+		"home": "Inicio",
+
+		"receivedTitle": "Mensajes Recividos",
+		"from": "De",
+		"reply": "Responder?",
+
+		"sentTitle": "Mensajes Enviados",
+		"to": "Para"
+	}
+}

@@ -1,60 +1,61 @@
-<div class="col-lg-8">
-	<h1 class="h1-strong">{{title}}</h1>
-	
-	<div class="profile-list">
+<div class="col-12 col-md-6">
+	<h1 class="h1-strong">{{ 'message.addTitle' | translate }}</h1>
+
+	<div class="profile-list col-lg-12">
 		<ul class="nav navbar-nav">
 		    <li>
 		    	<a [routerLink]="['/profile/'+identity._id]" [routerLinkActive]="['active']">
 				<span class="glyphicon glyphicon-user"></span>
-		        My Profile
+		        {{ 'home.myProfile' | translate }}
 		    	</a>
 		    </li>
 
 		    <li>
 		    	<a [routerLink]="['/profile/my-reviews']" [routerLinkActive]="['active']">
 				<span class="glyphicon glyphicon-pencil"></span>
-		        My Reviews
+		        {{ 'home.myReviews' | translate }}
 		        </a>
 		    </li>
 
 		    <li>
 		    	<a [routerLink]="['/profile/messages']" [routerLinkActive]="['active']">
 				<span class="glyphicon glyphicon-envelope"></span>
-		        Inbox
+		        {{ 'home.myInbox' | translate }}
 		        </a>
 		    </li>
 		</ul>
 	</div>
 
-	<div class="col-lg-10">
+
+  	<div class="col-lg-12" id="messages">
 		<!-- formulario envio mensajes -->
 		<div class="alert alert-success" *ngIf="status == 'success'">
-			Message Sent successfully, <a [routerLink]="['/profile/messages/sent']">Sent messages </a> 
+			{{ 'message.sentMessages' | translate }}, <a [routerLink]="['/profile/messages/sent']"></a> 
 		</div>
 
 		<div class="alert alert-danger" *ngIf="status == 'error'">
-			Message failed, try again
+			{{ 'message.sentFailed' | translate }}
 		</div>
 
 		<form #formAdd="ngForm" (ngSubmit)="onSubmit(formAdd)">
 			<p *ngIf="destUser">
-				<label>For: </label>
+				<label>{{ 'message.for' | translate }}: </label>
 				{{destUser.lastname}},{{destUser.name}} 
 			</p>
 			
 			<p> 
-				Reference: {{refAddress}}
+				{{ 'message.reference' | translate }}: {{refAddress}}
 			</p>
 
 			<p>
-				<label>Message: </label>
+				<label>{{ 'message.message' | translate }}: </label>
 				<textarea name="text" #text="ngModel" [(ngModel)]="message.text" class="form-control" required></textarea>
 				<span *ngIf="!text.valid && text.touched">
-					Message is obligatory
+					{{ 'message.messageObligatory' | translate }}
 				</span>
 			</p>
 
-			<input type="submit" value="{{title}}" class="btn btn-success" [disabled]="!formAdd.form.valid"/>
+			<input type="submit" value="{{ 'message.addTitle' | translate }}" class="btn btn-primary" [disabled]="!formAdd.form.valid"/>
 		</form>
 	</div>
 </div>

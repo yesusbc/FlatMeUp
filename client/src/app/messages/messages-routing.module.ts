@@ -10,6 +10,10 @@ import { SentComponent } from './components/sent/sent.component';
 // Services
 import { UserGuard } from '../services/user.guard';
 
+// Translate
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {HttpClient} from '@angular/common/http';
+
 const messagesRoutes: Routes = [
 	{
 		path: 'profile/messages',
@@ -35,3 +39,7 @@ const messagesRoutes: Routes = [
 })
 
 export class MessagesRoutingModule{}
+
+export function createTranslateLoader(http: HttpClient) {
+	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}

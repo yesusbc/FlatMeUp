@@ -1,97 +1,238 @@
-<div class="col-lg-5">
-	<h1 class="h1-strong">{{title}}</h1>
+<div class="col-md-6 col-md-offset-3">
+	<h1 class="h1-strong">{{ 'writeAReview.title' | translate }}</h1>
 
-	<div class="alert alert-success" *ngIf="status == 'success'">
-		Publication completed successfully
-	</div>
+	<form #ReviewForm="ngForm" (ngSubmit)="onSubmit(ReviewForm)">
+		<div class="col-md-12 review-form">
 
-	<div class="alert alert-danger" *ngIf="status == 'error'">
-		Publication failed, try again
-	</div>
+			<div class="col-md-8 col-md-offset-2">
+				<div class="alert alert-success" *ngIf="status == 'success'">
+					{{ 'writeAReview.publicationSuccessful' | translate }}
+				</div>
 
-	<form #ReviewForm="ngForm" (ngSubmit)="onSubmit(ReviewForm)" class="col-lg-12">
-		<p>
-			<label>Address: </label>
-			<input ngx-google-places-autocomplete [options]= 
-   				'options'  (onAddressChange)="AddressChange($event)" class="form-control" required/> 
-  				{{ formattedaddress }} 
-  		</p>
-
-  		<p>
-			<label>Apt: </label>
-			<input type="text" name="apartment" #address.apartment="ngModel" [(ngModel)]="publication.address.apartment"/> 
-  		</p>
-
-  		<div>
-  			<div class="alert alert-success" *ngIf="addressCorrect == 'success'">
-				Address is correct
+				<div class="alert alert-danger" *ngIf="status == 'error'">
+					{{ 'writeAReview.publicationFailed' | translate }}
+				</div>
 			</div>
-  			<div class="alert alert-danger" *ngIf="addressCorrect == 'error'">
-				Address is incorrect, check if you're typing building number and street name correctly.
+
+			<div class="col-md-8 col-md-offset-2">
+				<div class="input-group">
+					<input ngx-google-places-autocomplete [options]= 
+				   		'options'  (onAddressChange)="AddressChange($event)" placeholder="{{ 'writeAReview.enterAnAddress' | translate }}" aria-label="Search" class="form-control" required/> 
+				  		{{ formattedaddress }}
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-default" aria-label="Left Align" data-toggle="modal" data-target="#helpModal">
+							<span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+						</button>
+					</div>
+				</div>
+
+	  			<div class="alert alert-success" *ngIf="addressCorrect == 'success'">
+					{{ 'writeAReview.addressCorrect' | translate }}
+				</div>
+	  			<div class="alert alert-danger" *ngIf="addressCorrect == 'error'">
+					{{ 'writeAReview.addressIncorrect' | translate }}
+				</div>
+			</div>
+
+
+			<!-- Modal -->
+			<div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="helpModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h3 class="modal-title" id="helpModalLabel">{{ 'writeAReview.helpModalLabel' | translate }}</h3>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							{{ 'writeAReview.modalBody' | translate }}<br/>
+							<ul>
+								<li>{{ 'writeAReview.modalBodyStreet' | translate }}</li>
+								<li>{{ 'writeAReview.modalBodyStreetNumber' | translate }}</li>
+							</ul>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'writeAReview.modalFooter' | translate }}</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+	  		<div class="col-md-8 col-md-offset-2">
+				<div>
+					<label>{{ 'writeAReview.typeOfBuilding' | translate }}: </label>
+					<select name="typeOfBuilding" [(ngModel)]="publication.typeOfBuilding">
+						<option [value]="type.id" *ngFor="let type of typeOfBuildings">{{type.name}}</option>
+					</select>
+				</div> 
+				<div *ngIf="(publication.typeOfBuilding==1 || publication.typeOfBuilding==2 || publication.typeOfBuilding==4)">
+					<label>Apt: </label>
+					<input type="text" name="apartment" #address.apartment="ngModel" [(ngModel)]="publication.address.apartment" placeholder="Ex. 400B"/> 
+				</div>
+			</div>
+
+			<div>
+				<div class="col-md-4 col-md-offset-2">
+
+					<div>
+						<label style="font-size: 2em;">{{ 'building.headerGlobal' | translate }}:</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="rating">
+					    <input type="radio" id="star5-rate" name="rating-rate" value=5 #rate="ngModel" [(ngModel)]="publication.rate"/>
+					    <label class = "full" for="star5-rate" title="Excellent - 5 stars"></label>
+
+					    <input type="radio" id="star4-rate" name="rating-rate" value=4 #rate="ngModel" [(ngModel)]="publication.rate"/>
+					    <label class = "full" for="star4-rate" title="Good - 4 stars"></label>
+
+					    <input type="radio" id="star3-rate" name="rating-rate" value=3 #rate="ngModel" [(ngModel)]="publication.rate"/>
+					    <label class = "full" for="star3-rate" title="Average - 3 stars"></label>
+
+					    <input type="radio" id="star2-rate" name="rating-rate" value=2 #rate="ngModel" [(ngModel)]="publication.rate"/>
+					    <label class = "full" for="star2-rate" title="Dislike - 2 stars"></label>
+
+					    <input type="radio" id="star1-rate" name="rating-rate" value=1 #rate="ngModel" [(ngModel)]="publication.rate"/>
+					    <label class = "full" for="star1-rate" title="Terrible - 1 star"></label>
+					</div>
+					<br>
+				</div>
+			</div>
+
+			<div>
+				<div>
+					<div class="col-md-4 col-md-offset-2 pull-left">
+						<div>
+							<label>{{ 'building.infoNoise' | translate }}:</label>
+						</div>
+						<div class="rating">
+						    <input type="radio" id="star5-noise" name="rating-noise" value=5 #noise="ngModel" [(ngModel)]="publication.noise"/>
+						    <label class = "full" for="star5-noise" title="Excellent - 5 stars"></label>
+
+						    <input type="radio" id="star4-noise" name="rating-noise" value=4 #noise="ngModel" [(ngModel)]="publication.noise"/>
+						    <label class = "full" for="star4-noise" title="Good - 4 stars"></label>
+
+						    <input type="radio" id="star3-noise" name="rating-noise" value=3 #noise="ngModel" [(ngModel)]="publication.noise"/>
+						    <label class = "full" for="star3-noise" title="Average - 3 stars"></label>
+
+						    <input type="radio" id="star2-noise" name="rating-noise" value=2 #noise="ngModel" [(ngModel)]="publication.noise"/>
+						    <label class = "full" for="star2-noise" title="Dislike - 2 stars"></label>
+
+						    <input type="radio" id="star1-noise" name="rating-noise" value=1 #noise="ngModel" [(ngModel)]="publication.noise"/>
+						    <label class = "full" for="star1-noise" title="Terrible - 1 star"></label>
+						</div>
+						<br>
+					</div>
+
+					<div class="col-md-4">
+						<div>
+							<label>{{ 'building.infoPriceBenefit' | translate }}:</label>
+						</div>
+						<div class="rating">
+						    <input type="radio" id="star5-priceBenefit" name="rating-priceBenefit" value=5 #priceBenefit="ngModel" [(ngModel)]="publication.priceBenefit"/>
+						    <label class = "full" for="star5-priceBenefit" title="Excellent - 5 stars"></label>
+
+						    <input type="radio" id="star4-priceBenefit" name="rating-priceBenefit" value=4 #priceBenefit="ngModel" [(ngModel)]="publication.priceBenefit"/>
+						    <label class = "full" for="star4-priceBenefit" title="Good - 4 stars"></label>
+
+						    <input type="radio" id="star3-priceBenefit" name="rating-priceBenefit" value=3 #priceBenefit="ngModel" [(ngModel)]="publication.priceBenefit"/>
+						    <label class = "full" for="star3-priceBenefit" title="Average - 3 stars"></label>
+
+						    <input type="radio" id="star2-priceBenefit" name="rating-priceBenefit" value=2 #priceBenefit="ngModel" [(ngModel)]="publication.priceBenefit"/>
+						    <label class = "full" for="star2-priceBenefit" title="Dislike - 2 stars"></label>
+
+						    <input type="radio" id="star1-priceBenefit" name="rating-priceBenefit" value=1 #priceBenefit="ngModel" [(ngModel)]="publication.priceBenefit"/>
+						    <label class = "full" for="star1-priceBenefit" title="Terrible - 1 star"></label>
+						</div>
+						<br>
+					</div>
+				</div>
+
+				<div>
+					<div class="col-md-4 col-md-offset-2 pull-left">
+						<div>
+							<label>{{ 'building.infoLandlordSupport' | translate }}:</label>
+						</div>
+						<div class="rating">
+						    <input type="radio" id="star5-landlordSupport" name="rating-landlordSupport" value=5 #landlordSupport="ngModel" [(ngModel)]="publication.landlordSupport"/>
+						    <label class = "full" for="star5-landlordSupport" title="Excellent - 5 stars"></label>
+
+						    <input type="radio" id="star4-landlordSupport" name="rating-landlordSupport" value=4 #landlordSupport="ngModel" [(ngModel)]="publication.landlordSupport"/>
+						    <label class = "full" for="star4-landlordSupport" title="Good - 4 stars"></label>
+
+						    <input type="radio" id="star3-landlordSupport" name="rating-landlordSupport" value=3 #landlordSupport="ngModel" [(ngModel)]="publication.landlordSupport"/>
+						    <label class = "full" for="star3-landlordSupport" title="Average - 3 stars"></label>
+
+						    <input type="radio" id="star2-landlordSupport" name="rating-landlordSupport" value=2 #landlordSupport="ngModel" [(ngModel)]="publication.landlordSupport"/>
+						    <label class = "full" for="star2-landlordSupport" title="Dislike - 2 stars"></label>
+
+						    <input type="radio" id="star1-landlordSupport" name="rating-landlordSupport" value=1 #landlordSupport="ngModel" [(ngModel)]="publication.landlordSupport"/>
+						    <label class = "full" for="star1-landlordSupport" title="Terrible - 1 star"></label>
+						</div>
+						<br>
+					</div>
+
+					<div class="col-md-4">
+						<div>
+							<label>{{ 'building.infoMaintenance' | translate }}:</label>
+						</div>
+						<div class="rating">
+						    <input type="radio" id="star5-maintenance" name="rating-maintenance" value=5 #maintenance="ngModel" [(ngModel)]="publication.maintenance"/>
+						    <label class = "full" for="star5-maintenance" title="Excellent - 5 stars"></label>
+
+						    <input type="radio" id="star4-maintenance" name="rating-maintenance" value=4 #maintenance="ngModel" [(ngModel)]="publication.maintenance"/>
+						    <label class = "full" for="star4-maintenance" title="Good - 4 stars"></label>
+
+						    <input type="radio" id="star3-maintenance" name="rating-maintenance" value=3 #maintenance="ngModel" [(ngModel)]="publication.maintenance"/>
+						    <label class = "full" for="star3-maintenance" title="Average - 3 stars"></label>
+
+						    <input type="radio" id="star2-maintenance" name="rating-maintenance" value=2 #maintenance="ngModel" [(ngModel)]="publication.maintenance"/>
+						    <label class = "full" for="star2-maintenance" title="Dislike - 2 stars"></label>
+
+						    <input type="radio" id="star1-maintenance" name="rating-maintenance" value=1 #maintenance="ngModel" [(ngModel)]="publication.maintenance"/>
+						    <label class = "full" for="star1-maintenance" title="Terrible - 1 star"></label>
+						</div>
+						<br>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-8 col-md-offset-2 pull-left">
+				<label>{{ 'writeAReview.review' | translate }}:</label>
+				<textarea  type="text" name="text" #text="ngModel" [(ngModel)]="publication.text" class="form-control" rows="4" cols="50" placeholder="{{ 'writeAReview.reviewExample' | translate }}" required>
+				{{ 'writeAReview.reviewPlaceholder' | translate }}
+				</textarea>
+				<span *ngIf="!text.valid && text.touched">
+					{{ 'writeAReview.reviewObligatory' | translate }}
+				</span>
+
+			</div>
+
+			<div class="col-md-8 col-md-offset-2">
+				<input type="checkbox" name="canBeContacted" #canBeContacted="ngModel" [(ngModel)]="publication.canBeContacted" value="canBeContacted">
+				<label for="canBeContacted">{{ 'writeAReview.canBeContacted' | translate }}</label><br>
+			</div>
+
+			<div class="col-md-8 col-md-offset-2">
+				<p>
+					<label>{{ 'writeAReview.uploadPublication' | translate }}</label>
+					<input type="file" placeholder="{{ 'writeAReview.uploadPublication2' | translate }}" (change)="fileChangeEvent($event, 'pub')" multiple/>
+					<span *ngFor="let filename of filesToUploadPub_names">{{filename}}, </span>
+				</p>
+
+				<p>
+					<label>{{ 'writeAReview.uploadBuilding' | translate }}</label>
+					<input type="file" placeholder="{{ 'writeAReview.uploadBuilding2' | translate }" (change)="fileChangeEvent($event, 'building')" multiple/>
+					<span *ngFor="let filename of filesToUploadBuilding_names">{{filename}}, </span>
+				</p>
+			</div>
+
+			<div class="col-md-8 col-md-offset-2">
+				<input type="submit" value="{{ 'writeAReview.title' | translate }}" class="btn btn-primary btn-lg btn-block" [disabled]="!ReviewForm.form.valid || addressCorrect!='success'"/>
 			</div>
 		</div>
-
-		<p>
-			<label>Type Of Building:</label>
-			<select name="typeOfBuilding" >
-			  <option value="any">-</option>
-			  <option value="office">Office</option>
-			  <option value="flat">Flat</option>
-			  <option value="house">House</option>
-			  <option value="tower">Tower</option>
-			</select>
-		</p>
-
-		<p>
-			<label>Global Rate:</label>
-  			<input type="number" name="rate" #rate="ngModel" [(ngModel)]="publication.rate" class="form-control" min="1" max="5">
-
-			<label>Noise:</label>
-  			<input type="number" name="noise" #noise="ngModel" [(ngModel)]="publication.noise" class="form-control" min="1" max="5">
-		</p>
-
-		<p>
-			<label>Price-Benefit:</label>
-  			<input type="number" name="priceBenefit" #priceBenefit="ngModel" [(ngModel)]="publication.priceBenefit" class="form-control" min="1" max="5">
-
-			<label>Landlord Support:</label>
-  			<input type="number" name="landlordSupport" #safety="ngModel" [(ngModel)]="publication.landlordSupport" class="form-control" min="1" max="5">
-		</p>
-
-		<p>
-			<label>Maintenance:</label>
-  			<input type="number" name="maintenance" #globalRating="ngModel" [(ngModel)]="publication.maintenance" class="form-control"min="1" max="5">
-		</p>
-
-		<p>
-			<label>Review:</label>
-			<textarea  type="text" name="text" #text="ngModel" [(ngModel)]="publication.text" class="form-control" rows="4" cols="50" required>
-			Type here the review.
-			</textarea>
-			<span *ngIf="!text.valid && text.touched">
-				Review is obligatory 
-			</span>
-
-		</p>
-
-		<p>
-			<input type="checkbox" name="canBeContacted" #canBeContacted="ngModel" [(ngModel)]="publication.canBeContacted" value="canBeContacted">
-			<label for="canBeContacted"> Can I be Contacted?</label><br>
-		</p>
-
-		<p>
-			<label>Upload pictures about your publication</label>
-			<input type="file" placeholder="Upload picture - Publication" (change)="fileChangeEvent($event, 'pub')" multiple/>
-			<span *ngFor="let filename of filesToUploadPub_names">{{filename}}, </span>
-		</p>
-
-		<p>
-			<label>Upload pictures of the Building</label>
-			<input type="file" placeholder="Upload picture - Building" (change)="fileChangeEvent($event, 'building')" multiple/>
-			<span *ngFor="let filename of filesToUploadBuilding_names">{{filename}}, </span>
-		</p>
-
-		<input type="submit" value="{{title}}" class="btn btn-success"[disabled]="!ReviewForm.form.valid || addressCorrect!='success'"/>
 	</form>
 </div>
 

@@ -53,8 +53,8 @@ export class SentComponent implements OnInit {
 			if (!page){
 				page = 1;
 			}else{
-				this.next_page = page+1;
-				this.prev_page = page-1;
+				this.next_page = parseInt(page)+1;
+                this.prev_page = parseInt(page)-1;
 			
 				if(this.prev_page <= 0){
 					this.prev_page = 1;

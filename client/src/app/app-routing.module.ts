@@ -15,6 +15,10 @@ import { BuildingComponent } from './components/building/building.component';
 // Services
 import { UserGuard } from './services/user.guard';
 
+// Translate
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {HttpClient} from '@angular/common/http';
+
 const appRoutes: Routes = [
 	{path: '', component: HomeComponent},
 	{path: 'home', component: HomeComponent},
@@ -32,3 +36,7 @@ const appRoutes: Routes = [
 
 export const appRoutingProviders: any[] = [];
 export const routing: ModuleWithProviders<any> = RouterModule.forRoot(appRoutes);
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}

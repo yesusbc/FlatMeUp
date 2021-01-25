@@ -1,28 +1,14 @@
-<div class="col-lg-4" style="margin-top: 100px;">
-	<h3>{{title}}</h3>
+<div class="col-lg-3" style="margin-top: 100px;">
+	<h2>{{ 'message.mainTitle' | translate }}</h2>
 
-	<div class="sidebar-admin">
-		<ul class="nav-pills nav-stacked nav-pills-stacked-example">
-			<li role="presentation" [routerLinkActive]="['active']">
-				<a [routerLink]="['send']"> Send Message </a>
-			</li>
-
-			<li role="presentation" [routerLinkActive]="['active']">
-				<a [routerLink]="['received/1']"> Received Messages </a>
-			</li>
-
-			<li role="presentation" [routerLinkActive]="['active']">
-				<a [routerLink]="['sent/1']"> Sent Messages </a>
-			</li>
-
-			<li role="presentation" [routerLinkActive]="['active']">
-				<a [routerLink]="['/home']"> Home </a>
-			</li>
-		</ul>
+	<div class="list-group sidebar-admin">
+		<a [routerLink]="['send']" [routerLinkActive]="['active']" class="list-group-item">{{ 'message.sendMessage' | translate }}</a>
+		<a [routerLink]="['received/1']" [routerLinkActive]="['active']" class="list-group-item">{{ 'message.receivedMessages' | translate }}</a>
+		<a [routerLink]="['sent/1']" [routerLinkActive]="['active']" class="list-group-item">{{ 'message.sentMessages' | translate }}</a>
+		<a [routerLink]="['/home']" [routerLinkActive]="['active']" class="list-group-item">{{ 'message.home' | translate }}</a>
 	</div>
-
 </div>
 
-<div class="col-lg-8">
+<div class="col-lg-8 col-lg-offset-1">
 	<router-outlet></router-outlet>
 </div>

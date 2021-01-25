@@ -31,6 +31,14 @@ export class PublicationComponent implements OnInit{
 	public filesToUploadBuilding: Array<any>;
 	public filesToUploadBuilding_names: Array<any>;
 
+	typeOfBuildings: any[] = [
+	    { id: 0, name: '--' },
+	    { id: 1, name: 'Office - Oficina' },
+	    { id: 2, name: 'Flat - Departamento' },
+	    { id: 3, name: 'House - Casa' },
+	    { id: 4, name: 'Tower - Torre' }
+  	];
+
 	constructor(
 		private _route: ActivatedRoute,
 		private _router: Router,

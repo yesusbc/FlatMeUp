@@ -135,4 +135,8 @@ export class BuildingComponent implements OnInit{
         this._router.navigate(['profile/messages/send'], { state: { destUserId: destUserId, refAddress: refAddress } });
     }
 
+    //function to return list of numbers from 0 to n-1 
+    numSequence(n: number): Array<number> { 
+        return Array(n); 
+    } 
 }

@@ -6,6 +6,7 @@
 	margin-bottom: 15px;
 	padding-bottom: 15px;
 	border-bottom: 1px solid #eee;
+  text-align: center;
 }
 
 .active{
@@ -17,7 +18,7 @@
 }
 
 
-/*HEADER*/
+/****************************** HEADER Start*********************/
 .navigation {
 	padding: 0px !important;
 	border-radius: 0px !important;
@@ -31,10 +32,26 @@
 .navigation .navbar a:hover{
 	background: #D3D3D3 !important;
 }
+/****************************** HEADER End *********************/
 
-/* Profile styles */
+/****************************** Publication Start*********************/
+.review-form {
+  text-align: left;
+  margin-bottom: 200px !important;
+}
+
+.review-form label{
+  font-size: 1.2em;
+}
+
+.review-form div{
+  margin-bottom: 0.8em;
+}
+/****************************** Publication End*********************/
+
+/****************************** Profile Styles Start*********************/
 .profile-list {
-	margin-bottom: 20px;
+	margin-bottom: 20px!important; 
 }
 
 .profile-list ul {
@@ -65,8 +82,9 @@
 .buildings-search {
 	margin-top: 30px;
 }
+/****************************** Profile Styles End*********************/
 
-/* Building carousel */
+/****************************** Building Carousel Start*********************/
 .carousel {
   width:500px; 
   height:500px; 
@@ -88,8 +106,9 @@
 	width:350px !important; 
 	height:300px !important; 
 } 
+/****************************** Building Carousel End*********************/
 
-/* Publication carousel */
+/****************************** Publication Carousel Start*********************/
 .publication-image .carousel {
   width:350px; 
   height:300px; 
@@ -104,3 +123,38 @@
 .image-and-erase-review{
     float:right;    
 }
+/****************************** Publication Carousel End*********************/
+
+/****************************** Style Star Rating Widget Start*********************/
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+.rating { 
+  border: none;
+  float: left;
+}
+
+.rating > input { display: none; } 
+.rating > label:before { 
+  margin: 5px;
+  font-size: 1.25em;
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f005";
+}
+
+.rating > label { 
+  color: #ddd; 
+  float: right; 
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.rating > input:checked ~ label, /* show gold star when clicked */
+.rating:not(:checked) > label:hover, /* hover current star */
+.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+
+.rating > input:checked + label:hover, /* hover current star when changing rating */
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+.rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 
+/****************************** Style Star Rating Widget End *********************/
