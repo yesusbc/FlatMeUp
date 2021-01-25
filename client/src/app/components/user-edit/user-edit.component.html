@@ -1,66 +1,66 @@
 <div class="col-12 col-md-4 col-md-offset-4">
-	<h1 class="h1-strong">{{title}}</h1>
+	<h1 class="h1-strong">{{ 'profile.editProfile' | translate }}</h1>
 
 	<div class="alert alert-success" *ngIf="status == 'success'">
-		Data actualized successfully
+		{{ 'profile.dataSuccessful' | translate }}
 	</div>
 
 	<div class="alert alert-danger" *ngIf="status == 'error'">
-		Error, data not actualized
+		{{ 'profile.dataError' | translate }}
 	</div>
 
 
 	<form #userEditForm="ngForm" (ngSubmit)="onSubmit()" class="form-horizontal">
 		
 		<div class="form-group">
-			<label for="name" class="col-sm-3 control-label">Name</label>
+			<label for="name" class="col-sm-3 control-label">{{ 'profile.name' | translate }}</label>
 			<div class="col-sm-9">
-				<input type="text" id="name" name="name" #name="ngModel" [(ngModel)]="user.name" required placeholder="Name" class="form-control" autofocus>
-				<span *ngIf="!name.value && name.touch">Name is obligatory</span>
+				<input type="text" id="name" name="name" #name="ngModel" [(ngModel)]="user.name" required placeholder="{{ 'profile.name' | translate }}" class="form-control" autofocus>
+				<span *ngIf="!name.value && name.touch">{{ 'register.nameObligatory' | translate }}</span>
 			</div>
 		</div>
 
 		<div class="form-group">
-			<label for="lastname" class="col-sm-3 control-label">Lastname</label>
+			<label for="lastname" class="col-sm-3 control-label">{{ 'profile.lastname' | translate }}</label>
 			<div class="col-sm-9">
-				<input type="text" id="lastname" name="lastname" #lastname="ngModel" [(ngModel)]="user.lastname" placeholder="Lastname" class="form-control" autofocus>
+				<input type="text" id="lastname" name="lastname" #lastname="ngModel" [(ngModel)]="user.lastname" placeholder="{{ 'profile.lastname' | translate }}" class="form-control" autofocus>
 			</div>
 		</div>
 
 		<div class="form-group">
-			<label for="userName" class="col-sm-3 control-label">Username</label>
+			<label for="userName" class="col-sm-3 control-label">{{ 'profile.username' | translate }}</label>
 			<div class="col-sm-3">
-				<input type="text" id="userName" name="userName" #userName="ngModel" [(ngModel)]="user.userName" required placeholder="Username" class="form-control" autofocus>
-				<span *ngIf="!userName.value && userName.touch">Username is obligatory</span>
+				<input type="text" id="userName" name="userName" #userName="ngModel" [(ngModel)]="user.userName" required placeholder="{{ 'profile.username' | translate }}" class="form-control" autofocus>
+				<span *ngIf="!userName.value && userName.touch">{{ 'register.usernameObligatory' | translate }}</span>
 			</div>
 		</div>
 
 		<div class="form-group">
-			<label for="email" class="col-sm-3 control-label">Email</label>
+			<label for="email" class="col-sm-3 control-label">{{ 'profile.email' | translate }}</label>
 			<div class="col-sm-9">
-				<input type="text" id="email" name="email" #email="ngModel" [(ngModel)]="user.email" required placeholder="Email" class="form-control" autofocus>
-				<span *ngIf="!email.value && email.touch">Email is obligatory</span>
+				<input type="text" id="email" name="email" #email="ngModel" [(ngModel)]="user.email" required placeholder="{{ 'profile.email' | translate }}" class="form-control" autofocus>
+				<span *ngIf="!email.value && email.touch">{{ 'profile.emailObligatory' | translate }}</span>
 			</div>
 		</div>
 
 
 		<div class="form-group">
-			<label class="control-label col-sm-3">Gender</label>
+			<label class="control-label col-sm-3">{{ 'profile.gender' | translate }}</label>
 			<div class="col-sm-6">
 				<div class="row">
 					<div class="col-sm-4">
 						<label class="radio-inline">
-							<input type="radio" name="gender" value=0 #gender="ngModel" [(ngModel)]="user.gender">Male
+							<input type="radio" name="gender" value=0 #gender="ngModel" [(ngModel)]="user.gender">{{ 'profile.male' | translate }}
 						</label>
 					</div>
 					<div class="col-sm-4">
 						<label class="radio-inline">
-							<input type="radio" name="gender" value=1 #gender="ngModel" [(ngModel)]="user.gender">Female
+							<input type="radio" name="gender" value=1 #gender="ngModel" [(ngModel)]="user.gender">{{ 'profile.female' | translate }}
 						</label>
 					</div>
 					<div class="col-sm-4">
 						<label class="radio-inline">
-							<input type="radio" name="gender" value=2 #gender="ngModel" [(ngModel)]="user.gender">Other
+							<input type="radio" name="gender" value=2 #gender="ngModel" [(ngModel)]="user.gender">{{ 'profile.other' | translate }}
 						</label>
 					</div>
 				</div>
@@ -68,49 +68,49 @@
 		</div> 
 
 		<div class="form-group">
-			<label for="occupation" class="col-sm-3 control-label">Occupation</label>
+			<label for="occupation" class="col-sm-3 control-label">{{ 'profile.occupation' | translate }}</label>
 			<div class="col-sm-9">
-				<input type="text" id="occupation" name="occupation" #occupation="ngModel" [(ngModel)]="user.occupation" placeholder="Occupation" class="form-control" autofocus>
+				<input type="text" id="occupation" name="occupation" #occupation="ngModel" [(ngModel)]="user.occupation" placeholder="{{ 'profile.occupation' | translate }}" class="form-control" autofocus>
 			</div>
 		</div>
 
 		<div class="form-group">
-			<label for="birthday" class="col-sm-3 control-label">Date of Birth</label>
+			<label for="birthday" class="col-sm-3 control-label">{{ 'profile.birthday' | translate }}</label>
 			<div class="col-sm-9">
 				<input type="date" id="birthday" name="birthday" #birthday="ngModel" [(ngModel)]="user.birthday" class="form-control" autofocus>
 			</div>
 		</div>
 
 		<div class="form-group">
-			<label for="country" class="col-sm-3 control-label">Country</label>
+			<label for="country" class="col-sm-3 control-label">{{ 'profile.country' | translate }}</label>
 			<div class="col-sm-3">
-				<input type="text" id="country" name="country" #country="ngModel" [(ngModel)]="user.country" placeholder="Country" class="form-control" autofocus>
+				<input type="text" id="country" name="country" #country="ngModel" [(ngModel)]="user.country" placeholder="{{ 'profile.country' | translate }}" class="form-control" autofocus>
 			</div>
 		</div>
 
 		<div class="form-group">
-			<label for="state" class="col-sm-3 control-label">State</label>
+			<label for="state" class="col-sm-3 control-label">{{ 'profile.state' | translate }}</label>
 			<div class="col-sm-3">
-				<input type="text" id="state" name="state" #state="ngModel" [(ngModel)]="user.state"  placeholder="state" class="form-control" autofocus>
+				<input type="text" id="state" name="state" #state="ngModel" [(ngModel)]="user.state"  placeholder="{{ 'profile.state' | translate }}" class="form-control" autofocus>
 			</div>
 		</div>
 
 		<div class="form-group">
-			<label for="city" class="col-sm-3 control-label">Username</label>
+			<label for="city" class="col-sm-3 control-label">{{ 'profile.city' | translate }}</label>
 			<div class="col-sm-3">
-				<input type="text" id="city" name="city" #city="ngModel" [(ngModel)]="user.city" required placeholder="City" class="form-control" autofocus>
+				<input type="text" id="city" name="city" #city="ngModel" [(ngModel)]="user.city" required placeholder="{{ 'profile.city' | translate }}" class="form-control" autofocus>
 			</div>
 		</div>
 
 		<div class="row">
 			<div class="col-sm-3">
 	 			<a [routerLink]="['/profile/'+user._id]" >
-	 				<button class="btn btn-danger pull-right">Return</button>
+	 				<button class="btn btn-danger pull-right">{{ 'profile.return' | translate }}</button>
 	 			</a>
 	 		</div>
 
 	 		<div class="col-sm-9">
- 				<input type="submit" value="{{title}}" class="btn btn-primary btn-block" [disabled]="!userEditForm.form.valid"/>
+ 				<input type="submit" value="{{ 'profile.editProfile' | translate }}" class="btn btn-primary btn-block" [disabled]="!userEditForm.form.valid"/>
  			</div>
  		</div>
 	</form>

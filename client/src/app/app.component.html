@@ -5,14 +5,14 @@
         <li>
           <a [routerLink]="['/write-a-review']" [routerLinkActive]="['active']">
             <span class="glyphicon glyphicon-pencil"></span>
-            Write A Review
+            {{ 'home.writeAReview' | translate }}
           </a>
         </li>
 
         <li>
           <a [routerLink]="['/search']" [routerLinkActive]="['active']">
             <span class="glyphicon glyphicon-search"></span>
-            Search
+            {{ 'home.search' | translate }}
           </a>
         </li>
       </ul>
@@ -34,9 +34,22 @@
         <li>
           <a class="pointer" (click)="logout()">
             <span class="glyphicon glyphicon-log-out"></span>
-            Log out
+            {{ 'home.logout' | translate }}
           </a>
         </li>
+
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-globe"></span>{{ 'home.language' | translate }}: {{this.translate.currentLang}}
+            <span class="caret"></span>
+          </a>
+
+          <ul class="dropdown-menu">
+            <li><button  class="btn btn-default btn-block" (click)="useLanguage('en')">English</button></li>
+            <li><button class="btn btn-default btn-block" (click)="useLanguage('es')">Español</button></li>
+          </ul>
+        </li>
+
       </ul>
 
       <ul class="nav navbar-nav navbar-right" *ngIf="!identity">
@@ -55,9 +68,22 @@
         <li>
           <a [routerLink]="['/register']" [routerLinkActive]="['active']">
             <span class="glyphicon glyphicon-user"></span>
-            Register
+            {{ 'home.register' | translate }}
           </a>
         </li>
+
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-globe"></span>{{ 'home.language' | translate }}: {{this.translate.currentLang}}
+            <span class="caret"></span>
+          </a>
+
+          <ul class="dropdown-menu">
+            <li><button  class="btn btn-default btn-block" (click)="useLanguage('en')">English</button></li>
+            <li><button class="btn btn-default btn-block" (click)="useLanguage('es')">Español</button></li>
+          </ul>
+        </li>
+
       </ul>
     </div>
 

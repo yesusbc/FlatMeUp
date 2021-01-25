@@ -1,16 +1,16 @@
 <div class="col-md-4 col-md-offset-4">
   	<div class="google-places-container"> 
-    	<h2>{{title}}</h2> 
+    	<h2>{{ 'search.title' | translate }}</h2> 
 
 	<div class="input-group">
 		<input ngx-google-places-autocomplete [options]= 
-	   		'options'  (onAddressChange)="AddressChange($event)" placeholder="Search for an address" aria-label="Search" class="form-control"/> 
+	   		'options'  (onAddressChange)="AddressChange($event)" placeholder="{{ 'search.searchForAnAddress' | translate }}" aria-label="Search" class="form-control"/> 
 	  		{{ formattedaddress }}
 		<div class="input-group-btn">
 			<button type="button" class="btn btn-default" aria-label="Left Align" data-toggle="modal" data-target="#helpModal">
 				<span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
 			</button>
-			<button class="btn btn-primary" type="submit" (click)="getBuildingsByAddress(1)">Search</button>
+			<button class="btn btn-primary" type="submit" (click)="getBuildingsByAddress(1)">{{ 'search.search' | translate }}</button>
 		</div>
 	</div>
 
@@ -19,17 +19,17 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h3 class="modal-title" id="helpModalLabel">How to search for an address?</h3>
+					<h3 class="modal-title" id="helpModalLabel">{{ 'search.helpModalLabel' | translate }}</h3>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
-					Type in the address you'd like to search on. You may look for cities, states, countries, or an specific address (street and street number).<br/><br/>
-					Just make sure the address you're looking for appears on the dropdown list.
+					{{ 'search.modalBody' | translate }}<br/><br/>
+					{{ 'search.modalBody2' | translate }}
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'search.modalFooter' | translate }}</button>
 				</div>
 			</div>
 		</div>
@@ -55,13 +55,13 @@
 							building.address.country}}
 						</h4>
 						<p>
-						Global Rate: {{building.globalRate}}
+						{{ 'building.headerGlobal' | translate }}: {{building.globalRate}}
 						</p>
 						<p>
-						Number of reviews: {{building.reviewsCounter}}
+						{{ 'building.numberOfReviews' | translate }}: {{building.reviewsCounter}}
 						</p>
 						<span class="date" class="text-muted">
-							{{ (building.created_at | amFromUnix) | amLocale:'en' | amTimeAgo}}
+							{{ (building.created_at | amFromUnix) | amTimeAgo}}
 						</span>
 					</div>
 				</div>
@@ -72,22 +72,22 @@
 	<div>
 		<ul class="pager pull-left" *ngIf="commingFromHome">
 			<li *ngIf="page > 1"><a [routerLink]="['/home', prev_page]">
-			Previous</a></li>
+			{{ 'general.previous' | translate }}</a></li>
 		</ul>
 		<ul class="pager pull-right" *ngIf="commingFromHome">
 			<li *ngIf="pages!=page && pages!=0"><a [routerLink]="['/home', next_page]">
-			Next</a></li>
+			{{ 'general.next' | translate }}</a></li>
 		</ul>
 
 		<ul class="pager pull-left" *ngIf="!commingFromHome">
 			<!-- This must pass buildings, so then search can traverse through it with the page -->
 			<li *ngIf="page > 1">
-       			<button type="button" (click)="getBuildingsByAddress(prev_page)" >Previous</button>
+       			<button type="button" (click)="getBuildingsByAddress(prev_page)" >{{ 'general.previous' | translate }}</button>
    			</li>
    		</ul>
    		<ul class="pager pull-right" *ngIf="!commingFromHome">
    			<li *ngIf="pages != page">
-       			<button type="button" (click)="getBuildingsByAddress(next_page)" >Next</button>
+       			<button type="button" (click)="getBuildingsByAddress(next_page)" >{{ 'general.next' | translate }}</button>
    			</li>
 		</ul>
 	</div>

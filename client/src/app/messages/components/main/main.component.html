@@ -1,11 +1,11 @@
 <div class="col-lg-3" style="margin-top: 100px;">
-	<h2>{{title}}</h2>
+	<h2>{{ 'message.mainTitle' | translate }}</h2>
 
 	<div class="list-group sidebar-admin">
-		<a [routerLink]="['send']" [routerLinkActive]="['active']" class="list-group-item"> Send Message </a>
-		<a [routerLink]="['received/1']" [routerLinkActive]="['active']" class="list-group-item">Received Messages</a>
-		<a [routerLink]="['sent/1']" [routerLinkActive]="['active']" class="list-group-item">Sent Messages</a>
-		<a [routerLink]="['/home']" [routerLinkActive]="['active']" class="list-group-item">Home</a>
+		<a [routerLink]="['send']" [routerLinkActive]="['active']" class="list-group-item">{{ 'message.sendMessage' | translate }}</a>
+		<a [routerLink]="['received/1']" [routerLinkActive]="['active']" class="list-group-item">{{ 'message.receivedMessages' | translate }}</a>
+		<a [routerLink]="['sent/1']" [routerLinkActive]="['active']" class="list-group-item">{{ 'message.sentMessages' | translate }}</a>
+		<a [routerLink]="['/home']" [routerLinkActive]="['active']" class="list-group-item">{{ 'message.home' | translate }}</a>
 	</div>
 </div>
 

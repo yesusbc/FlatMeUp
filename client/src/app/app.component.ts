@@ -1,6 +1,8 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
 import { Router, ActivatedRoute, Params } from  '@angular/router';
 import { UserService } from './services/user.service';
+import {TranslateService} from '@ngx-translate/core';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-root',
@@ -16,9 +18,11 @@ export class AppComponent implements OnInit, DoCheck{
   constructor(
   	private _route: ActivatedRoute,
   	private _router: Router,
-  	private _userService:UserService
+  	private _userService:UserService,
+    private translate: TranslateService
   ){
-  	this.title = "Flat me Up"
+  	this.title = "Flat me Up";
+    this.translate.use('en');
   }
 
   ngOnInit(){
@@ -33,6 +37,11 @@ export class AppComponent implements OnInit, DoCheck{
   	localStorage.clear();
   	this.identity = null;
   	this._router.navigate(['/']);
+  }
+
+  useLanguage(language: string) {
+    this.translate.use(language);
+    moment.locale(language);
   }
 
 }

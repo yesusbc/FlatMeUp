@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 import { routing, appRoutingProviders } from './app-routing.module';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { MomentModule } from 'angular2-moment';
@@ -25,6 +25,10 @@ import { BuildingComponent } from './components/building/building.component';
 import { UserService } from './services/user.service';
 import { UserGuard } from './services/user.guard';
 
+// import ngx-translate and the http loader
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +49,14 @@ import { UserGuard } from './services/user.guard';
     routing,
     HttpClientModule,
     MessagesModule,
-    MomentModule
+    MomentModule,
+    TranslateModule.forRoot({
+            loader: {
+              provide: TranslateLoader,
+              useFactory: HttpLoaderFactory,
+              deps: [HttpClient]
+            }
+        })
   ],
   providers: [
   	appRoutingProviders,
@@ -55,3 +66,8 @@ import { UserGuard } from './services/user.guard';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+// required for AOT compilation
+export function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http);
+}

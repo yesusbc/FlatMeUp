@@ -1,23 +1,23 @@
 <div class="col-md-6 col-md-offset-3">
-	<h1 class="h1-strong">{{title}}</h1>
+	<h1 class="h1-strong">{{ 'writeAReview.title' | translate }}</h1>
 
 	<form #ReviewForm="ngForm" (ngSubmit)="onSubmit(ReviewForm)">
 		<div class="col-md-12 review-form">
 
 			<div class="col-md-8 col-md-offset-2">
 				<div class="alert alert-success" *ngIf="status == 'success'">
-					Publication completed successfully
+					{{ 'writeAReview.publicationSuccessful' | translate }}
 				</div>
 
 				<div class="alert alert-danger" *ngIf="status == 'error'">
-					Publication failed, try again
+					{{ 'writeAReview.publicationFailed' | translate }}
 				</div>
 			</div>
 
 			<div class="col-md-8 col-md-offset-2">
 				<div class="input-group">
 					<input ngx-google-places-autocomplete [options]= 
-				   		'options'  (onAddressChange)="AddressChange($event)" placeholder="Enter an address" aria-label="Search" class="form-control" required/> 
+				   		'options'  (onAddressChange)="AddressChange($event)" placeholder="{{ 'writeAReview.enterAnAddress' | translate }}" aria-label="Search" class="form-control" required/> 
 				  		{{ formattedaddress }}
 					<div class="input-group-btn">
 						<button type="button" class="btn btn-default" aria-label="Left Align" data-toggle="modal" data-target="#helpModal">
@@ -27,10 +27,10 @@
 				</div>
 
 	  			<div class="alert alert-success" *ngIf="addressCorrect == 'success'">
-					Address is correct
+					{{ 'writeAReview.addressCorrect' | translate }}
 				</div>
 	  			<div class="alert alert-danger" *ngIf="addressCorrect == 'error'">
-					Address is incorrect, check if you're typing building number and street name correctly.
+					{{ 'writeAReview.addressIncorrect' | translate }}
 				</div>
 			</div>
 
@@ -40,20 +40,20 @@
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h3 class="modal-title" id="helpModalLabel">Why my address is incorrect?</h3>
+							<h3 class="modal-title" id="helpModalLabel">{{ 'writeAReview.helpModalLabel' | translate }}</h3>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
 						<div class="modal-body">
-							Be sure the address you're entering counts with at least a<br/>
+							{{ 'writeAReview.modalBody' | translate }}<br/>
 							<ul>
-								<li>Street</li>
-								<li>Street Number</li>
+								<li>{{ 'writeAReview.modalBodyStreet' | translate }}</li>
+								<li>{{ 'writeAReview.modalBodyStreetNumber' | translate }}</li>
 							</ul>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'writeAReview.modalFooter' | translate }}</button>
 						</div>
 					</div>
 				</div>
@@ -62,7 +62,7 @@
 
 	  		<div class="col-md-8 col-md-offset-2">
 				<div>
-					<label>Type Of Building: </label>
+					<label>{{ 'writeAReview.typeOfBuilding' | translate }}: </label>
 					<select name="typeOfBuilding" [(ngModel)]="publication.typeOfBuilding">
 						<option [value]="type.id" *ngFor="let type of typeOfBuildings">{{type.name}}</option>
 					</select>
@@ -77,7 +77,7 @@
 				<div class="col-md-4 col-md-offset-2">
 
 					<div>
-						<label style="font-size: 2em;">Global Rate:</label>
+						<label style="font-size: 2em;">{{ 'building.headerGlobal' | translate }}:</label>
 					</div>
 				</div>
 				<div class="col-md-4">
@@ -105,7 +105,7 @@
 				<div>
 					<div class="col-md-4 col-md-offset-2 pull-left">
 						<div>
-							<label>Noise:</label>
+							<label>{{ 'building.infoNoise' | translate }}:</label>
 						</div>
 						<div class="rating">
 						    <input type="radio" id="star5-noise" name="rating-noise" value=5 #noise="ngModel" [(ngModel)]="publication.noise"/>
@@ -128,7 +128,7 @@
 
 					<div class="col-md-4">
 						<div>
-							<label>Price-Benefit:</label>
+							<label>{{ 'building.infoPriceBenefit' | translate }}:</label>
 						</div>
 						<div class="rating">
 						    <input type="radio" id="star5-priceBenefit" name="rating-priceBenefit" value=5 #priceBenefit="ngModel" [(ngModel)]="publication.priceBenefit"/>
@@ -153,7 +153,7 @@
 				<div>
 					<div class="col-md-4 col-md-offset-2 pull-left">
 						<div>
-							<label>Landlord Support:</label>
+							<label>{{ 'building.infoLandlordSupport' | translate }}:</label>
 						</div>
 						<div class="rating">
 						    <input type="radio" id="star5-landlordSupport" name="rating-landlordSupport" value=5 #landlordSupport="ngModel" [(ngModel)]="publication.landlordSupport"/>
@@ -176,7 +176,7 @@
 
 					<div class="col-md-4">
 						<div>
-							<label>Maintenance:</label>
+							<label>{{ 'building.infoMaintenance' | translate }}:</label>
 						</div>
 						<div class="rating">
 						    <input type="radio" id="star5-maintenance" name="rating-maintenance" value=5 #maintenance="ngModel" [(ngModel)]="publication.maintenance"/>
@@ -200,37 +200,37 @@
 			</div>
 
 			<div class="col-md-8 col-md-offset-2 pull-left">
-				<label>Review:</label>
-				<textarea  type="text" name="text" #text="ngModel" [(ngModel)]="publication.text" class="form-control" rows="4" cols="50" placeholder="The apartment was great, the building was... the landlord was... the zone neighborhood was..." required>
-				Type here the review.
+				<label>{{ 'writeAReview.review' | translate }}:</label>
+				<textarea  type="text" name="text" #text="ngModel" [(ngModel)]="publication.text" class="form-control" rows="4" cols="50" placeholder="{{ 'writeAReview.reviewExample' | translate }}" required>
+				{{ 'writeAReview.reviewPlaceholder' | translate }}
 				</textarea>
 				<span *ngIf="!text.valid && text.touched">
-					Review is obligatory 
+					{{ 'writeAReview.reviewObligatory' | translate }}
 				</span>
 
 			</div>
 
 			<div class="col-md-8 col-md-offset-2">
 				<input type="checkbox" name="canBeContacted" #canBeContacted="ngModel" [(ngModel)]="publication.canBeContacted" value="canBeContacted">
-				<label for="canBeContacted"> Can I be Contacted?</label><br>
+				<label for="canBeContacted">{{ 'writeAReview.canBeContacted' | translate }}</label><br>
 			</div>
 
 			<div class="col-md-8 col-md-offset-2">
 				<p>
-					<label>Upload pictures about your publication</label>
-					<input type="file" placeholder="Upload picture - Publication" (change)="fileChangeEvent($event, 'pub')" multiple/>
+					<label>{{ 'writeAReview.uploadPublication' | translate }}</label>
+					<input type="file" placeholder="{{ 'writeAReview.uploadPublication2' | translate }}" (change)="fileChangeEvent($event, 'pub')" multiple/>
 					<span *ngFor="let filename of filesToUploadPub_names">{{filename}}, </span>
 				</p>
 
 				<p>
-					<label>Upload pictures of the Building</label>
-					<input type="file" placeholder="Upload picture - Building" (change)="fileChangeEvent($event, 'building')" multiple/>
+					<label>{{ 'writeAReview.uploadBuilding' | translate }}</label>
+					<input type="file" placeholder="{{ 'writeAReview.uploadBuilding2' | translate }" (change)="fileChangeEvent($event, 'building')" multiple/>
 					<span *ngFor="let filename of filesToUploadBuilding_names">{{filename}}, </span>
 				</p>
 			</div>
 
 			<div class="col-md-8 col-md-offset-2">
-				<input type="submit" value="{{title}}" class="btn btn-primary btn-lg btn-block" [disabled]="!ReviewForm.form.valid || addressCorrect!='success'"/>
+				<input type="submit" value="{{ 'writeAReview.title' | translate }}" class="btn btn-primary btn-lg btn-block" [disabled]="!ReviewForm.form.valid || addressCorrect!='success'"/>
 			</div>
 		</div>
 	</form>

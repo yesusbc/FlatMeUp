@@ -33,10 +33,10 @@ export class PublicationComponent implements OnInit{
 
 	typeOfBuildings: any[] = [
 	    { id: 0, name: '--' },
-	    { id: 1, name: 'Office' },
-	    { id: 2, name: 'Flat' },
-	    { id: 3, name: 'House' },
-	    { id: 4, name: 'Tower' }
+	    { id: 1, name: 'Office - Oficina' },
+	    { id: 2, name: 'Flat - Departamento' },
+	    { id: 3, name: 'House - Casa' },
+	    { id: 4, name: 'Tower - Torre' }
   	];
 
 	constructor(

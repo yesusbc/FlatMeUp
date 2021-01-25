@@ -1,11 +1,11 @@
 <div class="col-md-6 col-md-offset-3">
-	<h1 class="h1-strong">{{title}}</h1>
+	<h1 class="h1-strong">{{ 'building.title' | translate }}</h1>
 	
 		<div class="panel-body">
 			<div class="building-text col-md-6 pull-left">
 				<div>
 					<h1 style="display: inline;">
-					Global Rate: 
+					{{ 'building.headerGlobal' | translate }}: 
 							<li style="display: inline-block; margin: 2px;" *ngFor="let n of numSequence(globalRate)" class="list-inline">
 							<span class="fa fa-star" style="color: orange;"></span>
 							</li>
@@ -23,17 +23,18 @@
 				</div>
 
 				<div>
-					<h4><b>Average Rate</b></h4>
+					<h4><b>{{ 'building.headerAverage' | translate }}</b></h4>
 
 					<p>
-					Noise: {{globalNoise}} <br>
-					Price-Benefit: {{globalPriceBenefit}} <br>
-					Landlord Support: {{globalLandlordSupport}} <br>
-					Maintenance: {{globalMaintenance}} <br>
+					{{ 'building.infoNoise' | translate }}: {{globalNoise}} <br>
+					{{ 'building.infoPriceBenefit' | translate }}: {{globalPriceBenefit}} <br>
+					{{ 'building.infoLandlordSupport' | translate }}: {{globalLandlordSupport}} <br>
+					{{ 'building.infoMaintenance' | translate }}: {{globalMaintenance}} <br>
 					</p>
 
 				    <span class="date" class="text-muted">
-						{{ (building.created_at | amFromUnix) | amLocale:'en' | amTimeAgo}}
+						{{ (building.created_at | amFromUnix) | amTimeAgo}}
+				    	
 					</span>
 				</div>
 			</div>
@@ -67,12 +68,12 @@
 					<!-- Controls -->
 					<a class="left carousel-control" href="#building-image-gallery" role="button" data-slide="prev">
 						<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-					    <span class="sr-only">Previous</span>
+					    <span class="sr-only">{{ 'general.previous' | translate }}</span>
 					</a>
 					  
 					<a class="right carousel-control" href="#building-image-gallery" role="button" data-slide="next">
 						<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-						<span class="sr-only">Next</span>
+						<span class="sr-only">{{ 'general.next' | translate }}</span>
 					</a>
 				</div>
 
@@ -85,14 +86,14 @@
   	<div id="publications" class="col-md-11">
   		<hr>
   		<h4>
-			Number of reviews: {{reviewsCounter}}
+			{{ 'building.numberOfReviews' | translate }}: {{reviewsCounter}}
 		</h4>
 		<div *ngFor="let publication of publications" class="item-publication">
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<div class="publication-text">
 						<div class="row" *ngIf="publication.rate">
-							<h4 style="display: inline;">Review's Rate:</h4>
+							<h4 style="display: inline;">{{ 'building.reviewsRate' | translate }}:</h4>
 								<li style="display: inline-block; margin: 2px;" *ngFor="let n of numSequence(publication.rate)" class="list-inline">
 									<span class="fa fa-star" style="color: orange;"></span>
 								</li>
@@ -102,7 +103,7 @@
 								</li>
 						</div>
 						<div class="row" *ngIf="!publication.rate">				
-							<h4>Review's Rate: --</h4>
+							<h4>{{ 'building.reviewsRate' | translate }}: --</h4>
 						</div>
 
 						<div class="row">
@@ -116,19 +117,19 @@
 						<div>
 							<div class="pull-left">
 								<button class="btn btn-success" (click)="sendMessage(publication.user, refAddress)" *ngIf="publication.canBeContacted == 1" style="margin:5px;">
-									Can be contacted
+									{{ 'building.canBeContacted' | translate }}
 									<span class="glyphicon 	glyphicon-envelope"></span>
 								</button>
 
 								<button class="btn btn-danger" pull-left *ngIf="publication.canBeContacted == 0">
-									Cannot be contacted
+									{{ 'building.cannotBeContacted' | translate }}
 									<span class="glyphicon 	glyphicon-envelope" style="margin:5px;"></span>
 								</button> 
 							</div>
 
 							<div *ngIf="publication.file[0]" class="pull-right">
 								<button class="btn btn-warning" pull-right (click)="showThisImage(publication._id)" *ngIf="showImage != publication._id" style="margin:5px;">
-									Images
+									{{ 'general.images' | translate }}
 									<span class="glyphicon 	glyphicon-picture"></span>
 								</button>
 								<button class="btn btn-danger" pull-right (click)="hideThisImage(publication._id)" *ngIf="showImage == publication._id" style="margin:5px;">
@@ -139,7 +140,7 @@
 
 						<div class="col-md-12">
 							<span class="date" class="text-muted">
-								{{ (publication.created_at | amFromUnix) | amLocale:'en' | amTimeAgo}}
+								{{ (publication.created_at | amFromUnix) | amTimeAgo}}
 							</span>
 						</div>
 					</div>
@@ -174,12 +175,12 @@
 					<!-- Controls -->
 					<a class="left carousel-control" href="#pub-image-gallery" role="button" data-slide="prev">
 						<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-					    <span class="sr-only">Previous</span>
+					    <span class="sr-only">{{ 'general.previous' | translate }}</span>
 					</a>
 					  
 					<a class="right carousel-control" href="#pub-image-gallery" role="button" data-slide="next">
 						<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-						<span class="sr-only">Next</span>
+						<span class="sr-only">{{ 'general.next' | translate }}</span>
 					</a>
 				</div>
 			</div>
