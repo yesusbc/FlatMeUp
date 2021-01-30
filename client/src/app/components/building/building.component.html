@@ -3,26 +3,36 @@
 	
 		<div class="panel-body">
 			<div class="building-text col-md-6 pull-left">
-				<div>
+				<div class="row">
 					<h1 style="display: inline;">
 					{{ 'building.headerGlobal' | translate }}: 
+						<span *ngIf="hasGlobalRate == false">
+							{{globalRate}}
+						</span>
+
+						<div *ngIf="hasGlobalRate == true">
 							<li style="display: inline-block; margin: 2px;" *ngFor="let n of numSequence(globalRate)" class="list-inline">
 							<span class="fa fa-star" style="color: orange;"></span>
 							</li>
 							<li style="display: inline-block; margin: 2px;" *ngFor="let n of numSequence(5-globalRate)" class="list-inline">
 								<span class="fa fa-star"></span>
 							</li>
-						<br><small>
+						</div>
+					</h1>
+				</div>
+
+				<div class="row">
+					<h3 style="color:gray">
 						{{building.address.street + ", " + 
 						building.address.buildingNumber}}
 						<span *ngIf="building.address.apartment">, {{building.address.apartment}}</span>
 						. 
 						{{building.address.state + ", " + 
 						building.address.country}}
-				    </small></h1>
+				    </h3>
 				</div>
-
-				<div>
+			
+				<div class="row">
 					<h4><b>{{ 'building.headerAverage' | translate }}</b></h4>
 
 					<p>
@@ -39,7 +49,7 @@
 				</div>
 			</div>
 
-			<div class="building-image col-md-6 pull-right"> 
+			<div class="building-image col-md-6 pull-left"> 
 				<div class="building-default" *ngIf="building.file.length == 1" align="center">
 					<img src="{{url+'get-image/'+building.file[0]}}" width="350" height="200"/>
 				</div>
@@ -83,7 +93,7 @@
 			</div>
 		</div>
 
-  	<div id="publications" class="col-md-11">
+  	<div id="publications" class="col-md-12">
   		<hr>
   		<h4>
 			{{ 'building.numberOfReviews' | translate }}: {{reviewsCounter}}
@@ -92,8 +102,11 @@
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<div class="publication-text">
-						<div class="row" *ngIf="publication.rate">
+
+						<div class="row">
 							<h4 style="display: inline;">{{ 'building.reviewsRate' | translate }}:</h4>
+
+							<span *ngIf="publication.rate">
 								<li style="display: inline-block; margin: 2px;" *ngFor="let n of numSequence(publication.rate)" class="list-inline">
 									<span class="fa fa-star" style="color: orange;"></span>
 								</li>
@@ -101,7 +114,13 @@
 								<li style="display: inline-block; margin: 2px;" *ngFor="let n of numSequence(5-publication.rate)" class="list-inline">
 									<span class="fa fa-star"></span>
 								</li>
+							</span>
+
+							<span *ngIf="!publication.rate">
+									---
+							</span>
 						</div>
+
 						<div class="row" *ngIf="!publication.rate">				
 							<h4>{{ 'building.reviewsRate' | translate }}: --</h4>
 						</div>
@@ -114,7 +133,7 @@
 							</blockquote>
 						</div>
 
-						<div>
+						<div class="row">
 							<div class="pull-left">
 								<button class="btn btn-success" (click)="sendMessage(publication.user, refAddress)" *ngIf="publication.canBeContacted == 1" style="margin:5px;">
 									{{ 'building.canBeContacted' | translate }}

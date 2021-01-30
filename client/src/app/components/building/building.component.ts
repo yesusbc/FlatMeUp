@@ -24,6 +24,7 @@ export class BuildingComponent implements OnInit{
     public showImage;
     public stats;
     public globalRate;
+    public hasGlobalRate;
     public globalNoise;
     public globalPriceBenefit;
     public globalLandlordSupport;
@@ -47,6 +48,7 @@ export class BuildingComponent implements OnInit{
                                                     apartment:"",
                                                     zip:""},0,[],"",0);
         this.globalRate = "-";
+        this.hasGlobalRate = false;
         this.globalNoise = "-";
         this.globalPriceBenefit = "-";
         this.globalLandlordSupport = "-";
@@ -74,6 +76,7 @@ export class BuildingComponent implements OnInit{
                     if(response.building){
                         this.building = response.building;
                         this.globalRate = response.globalRate ? response.globalRate : "--";
+                        this.hasGlobalRate = response.globalRate ? true : false;
                         this.globalNoise = response.globalNoise ? response.globalNoise : "--";
                         this.globalPriceBenefit = response.globalPriceBenefit ? response.globalPriceBenefit : "--";
                         this.globalLandlordSupport = response.globalLandlordSupport ? response.globalLandlordSupport : "--";
@@ -136,7 +139,8 @@ export class BuildingComponent implements OnInit{
     }
 
     //function to return list of numbers from 0 to n-1 
-    numSequence(n: number): Array<number> { 
+    numSequence(n: number){
         return Array(n); 
-    } 
+    }
+
 }

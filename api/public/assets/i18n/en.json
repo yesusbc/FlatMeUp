@@ -1,0 +1,159 @@
+{
+	"home": 
+	{
+		"title": "Welcome to FlatMeUp",
+		"language": "Language",
+		"register": "Register",
+		"writeAReview": "Write A Review",
+		"search": "Search",
+		"logout": "Log Out",
+		"myProfile": "My Profile",
+		"myReviews": "My Reviews",
+		"myInbox": "Inbox"
+	},
+
+	"general":
+	{
+		"images": "Images",
+		"next": "Next",
+		"previous": "Previous",
+		"currentLanguage": "en"
+	},
+
+	"building": 
+	{
+		"title": "Ratings & Reviews",
+		"headerGlobal": "Global Rate",
+		"headerAverage": "Average Rate",
+		"infoNoise": "Noise",
+		"infoPriceBenefit": "Price-Benefit",
+		"infoLandlordSupport": "Landlord Support",
+		"infoMaintenance": "Maintenance",
+		"numberOfReviews": "Number of reviews",
+		"reviewsRate": "Review's Rate",
+		"canBeContacted": "Can be contacted",
+		"cannotBeContacted": "Cannot be contacted"
+	},
+
+	"login":
+	{
+		"login": "login",
+		"logSuccessful": "Logged In successfully",
+		"logFailed": "Login failed. Please try again",
+		"email": "Email",
+		"emailInvalid": "Invalid Email",
+		"password": "Password",
+		"passwordRequired": "Password is required"
+	},
+
+	"register":
+	{
+		"registerSuccessful": "Register completed successfully",
+		"registerFailed": "Register failed, try again",
+		"nameObligatory": "Name is obligatory ",
+		"usernameObligatory": "Username is obligatory ",
+		"passwordObligatory": "Password is obligatory ",
+		"emailInvalid": "Type valid email",
+		"emailObligatory": "Email is obligatory",
+		"passwordConfirm": "Confirm Password",
+		"passwordInvalid": "Password doesn't match",
+		"passwordOk": "Password Ok",
+		"placeholderName": "Name",
+		"placeholderUsername": "Username",
+		"placeholderLastname": "Lastname"
+	},
+
+	"myReviews":
+	{
+		"rate": "Rate",
+		"address": "Address",
+		"review": "Review",
+		"modalTitle": "Are you sure?",
+		"modalBody": "Performing this action will permanently remove review with address",
+		"cancel": "Cancel",
+		"eraseReview": "Erase Review"
+
+	},
+
+	"profile":
+	{
+		"title": "Profile",
+		"name": "Name",
+		"lastname": "Lastname",
+		"username": "Username",
+		"email": "Email",
+		"gender": "Gender",
+		"male": "Male",
+		"female": "Female",
+		"other": "Other",
+		"occupation": "Occupation",
+		"country": "Country",
+		"state": "State",
+		"city": "City",
+		"birthday": "Birthday",
+		"editProfile": "Edit profile",
+		"return": "Return",
+		"dataSuccessful": "Data actualized successfully",
+		"dataError": "Error, data not actualized"
+	},
+
+	"search":
+	{
+		"title": "Search",
+		"searchForAnAddress": "Search for an address",
+		"search": "Search",
+		"helpModalLabel": "How to search for an address?",
+		"modalBody": "Type in the address you'd like to search on. You may look for cities, states, countries, or an specific address (street and street number).",
+		"modalBody2": "Just make sure the address you're looking for appears on the dropdown list.",
+		"modalFooter": "Close"
+	},
+
+	"writeAReview":
+	{
+		"title": "Write A Review",
+		"publicationSuccessful": "Publication completed successfully",
+		"publicationFailed": "Publication failed, try again",
+		"enterAnAddress": "Enter an address",
+		"addressCorrect": "Address is correct",
+		"addressIncorrect": "Address is incorrect, check if you're typing building number and street name correctly.",
+		"helpModalLabel": "Why my address is incorrect?",
+		"modalBody": "Be sure the address you're entering counts with at least a",
+		"modalBodyStreet": "Street",
+		"modalBodyStreetNumber": "Street Number",
+		"modalFooter": "Close",
+		"typeOfBuilding": "Type Of Building",
+		"review": "Review",
+		"reviewExample": "The apartment was great, the building was... the landlord was... the zone neighborhood was...",
+		"reviewPlaceholder": "Type here the review.",
+		"reviewObligatory": "Review is obligatory ",
+		"canBeContacted": "Can I be Contacted?",
+		"uploadPublication": "Upload pictures about your publication",
+		"uploadPublication2": "Upload picture - Publication",
+		"uploadBuilding": "Upload pictures of the Building",
+		"uploadBuilding2": "Upload picture - Building"
+	},
+
+	"message":
+	{
+		"addTitle": "Send Message",
+		"sentSuccessful": "Message Sent successfully",
+		"sentMessages": "Sent messages ",
+		"sentFailed": "Message failed, try again",
+		"for": "For",
+		"reference": "Reference",
+		"message": "Message",
+		"messageObligatory": "Message is obligatory",
+
+		"mainTitle": "Inbox",
+		"sendMessage": "Send Message",
+		"receivedMessages": "Received Messages",
+		"home": "Home",
+
+		"receivedTitle": "Received Messages",
+		"from": "From",
+		"reply": "Reply?",
+
+		"sentTitle": "Sent Messages",
+		"to": "To"
+	}
+}

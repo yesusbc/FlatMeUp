@@ -77,6 +77,7 @@ export class MyReviewsComponent implements OnInit{
                         this.pages = response.pages;
                         this.publications = response.publications;
 
+
                         if (page > this.pages){
                             this._router.navigate(['/home']);
                         }

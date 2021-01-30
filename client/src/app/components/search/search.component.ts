@@ -171,4 +171,9 @@ export class SearchComponent implements OnInit{
         this._router.navigate(['search'], { state: { page: page, buildings: buildings } });
     }
 
+    //function to return list of numbers from 0 to n-1 
+    numSequence(n: number){
+        return Array(n); 
+    }
+
 }

@@ -103,13 +103,13 @@
 		</div>
 
 		<div class="row">
-			<div class="col-sm-3">
+			<div class="row col-sm-3 pull-right">
 	 			<a [routerLink]="['/profile/'+user._id]" >
 	 				<button class="btn btn-danger pull-right">{{ 'profile.return' | translate }}</button>
 	 			</a>
 	 		</div>
 
-	 		<div class="col-sm-9">
+	 		<div class="row col-sm-9 pull-right">
  				<input type="submit" value="{{ 'profile.editProfile' | translate }}" class="btn btn-primary btn-block" [disabled]="!userEditForm.form.valid"/>
  			</div>
  		</div>

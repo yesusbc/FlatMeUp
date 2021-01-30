@@ -1,0 +1,160 @@
+/*General*/
+.h1-strong{
+	font-size: 35px;
+	font-weight: bold;
+	margin-left: 13px;
+	margin-bottom: 15px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #eee;
+  text-align: center;
+}
+
+.active{
+	background: #D3D3D3;
+}
+
+.pointer{
+	cursor: pointer;
+}
+
+
+/****************************** HEADER Start*********************/
+.navigation {
+	padding: 0px !important;
+	border-radius: 0px !important;
+}
+
+.navigation .navbar {
+	border-radius: 0px !important;
+	border: none;
+}
+
+.navigation .navbar a:hover{
+	background: #D3D3D3 !important;
+}
+/****************************** HEADER End *********************/
+
+/****************************** Publication Start*********************/
+.review-form {
+  text-align: left;
+  margin-bottom: 200px !important;
+}
+
+.review-form label{
+  font-size: 1.2em;
+}
+
+.review-form div{
+  margin-bottom: 0.8em;
+}
+/****************************** Publication End*********************/
+
+/****************************** Profile Styles Start*********************/
+.profile-list {
+	margin-bottom: 20px!important; 
+}
+
+.profile-list ul {
+    display: flex;
+    align-items: stretch; /* Default */
+    justify-content: space-between;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+.profile-list li{
+    display: block;
+    flex: 0 1 auto; /* Default */
+    list-style-type: none;
+}
+.profile-list span{
+    color: black;
+}
+.profile-list a{
+    color: black;
+}
+  
+
+.btn-group-lg{
+	margin-top: 5px;
+}
+
+.buildings-search {
+	margin-top: 30px;
+}
+/****************************** Profile Styles End*********************/
+
+/****************************** Building Carousel Start*********************/
+.carousel {
+  width:500px; 
+  height:500px; 
+  margin: 0 auto;  
+}
+
+.carousel-inner > .item > img {
+	width:500px!important; 
+	height:500px !important; 
+}  
+
+.building-image .carousel {
+  width:350px; 
+  height:300px; 
+  margin: 0 auto;  
+}          
+
+.building-image .carousel-inner > .item > img {
+	width:350px !important; 
+	height:300px !important; 
+} 
+/****************************** Building Carousel End*********************/
+
+/****************************** Publication Carousel Start*********************/
+.publication-image .carousel {
+  width:350px; 
+  height:300px; 
+  margin: 0 auto;  
+}          
+
+.publication-image .carousel-inner > .item > img {
+	width:350px !important; 
+	height:300px !important; 
+} 
+
+.image-and-erase-review{
+    float:right;    
+}
+/****************************** Publication Carousel End*********************/
+
+/****************************** Style Star Rating Widget Start*********************/
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+.rating { 
+  border: none;
+  float: left;
+}
+
+.rating > input { display: none; } 
+.rating > label:before { 
+  margin: 5px;
+  font-size: 1.25em;
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f005";
+}
+
+.rating > label { 
+  color: #ddd; 
+  float: right; 
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.rating > input:checked ~ label, /* show gold star when clicked */
+.rating:not(:checked) > label:hover, /* hover current star */
+.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+
+.rating > input:checked + label:hover, /* hover current star when changing rating */
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+.rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 
+/****************************** Style Star Rating Widget End *********************/

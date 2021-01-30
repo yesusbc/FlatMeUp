@@ -1,151 +1,167 @@
 <div class="col-12 col-md-4 col-md-offset-4">
 	<h1 class="h1-strong">{{title}}</h1>
 
-	<div class="profile-list col-lg-12">
-		<ul class="nav navbar-nav">
-		    <li>
-		    	<a [routerLink]="['/profile/'+user._id]" [routerLinkActive]="['active']">
-				<span class="glyphicon glyphicon-user"></span>
-		        {{ 'home.myProfile' | translate }}
-		    	</a>
-		    </li>
+	<div class="row">
+		<div class="profile-list col-lg-12">
+			<ul class="nav navbar-nav">
+			    <li>
+			    	<a [routerLink]="['/profile/'+user._id]" [routerLinkActive]="['active']">
+					<span class="glyphicon glyphicon-user"></span>
+			        {{ 'home.myProfile' | translate }}
+			    	</a>
+			    </li>
 
-		    <li>
-		    	<a [routerLink]="['/profile/my-reviews']" [routerLinkActive]="['active']">
-				<span class="glyphicon glyphicon-pencil"></span>
-		        {{ 'home.myReviews' | translate }}
-		        </a>
-		    </li>
+			    <li>
+			    	<a [routerLink]="['/profile/my-reviews']" [routerLinkActive]="['active']">
+					<span class="glyphicon glyphicon-pencil"></span>
+			        {{ 'home.myReviews' | translate }}
+			        </a>
+			    </li>
 
-		    <li>
-		    	<a [routerLink]="['/profile/messages']" [routerLinkActive]="['active']">
-				<span class="glyphicon glyphicon-envelope"></span>
-		        {{ 'home.myInbox' | translate }}
-		        </a>
-		    </li>
-		</ul>
+			    <li>
+			    	<a [routerLink]="['/profile/messages']" [routerLinkActive]="['active']">
+					<span class="glyphicon glyphicon-envelope"></span>
+			        {{ 'home.myInbox' | translate }}
+			        </a>
+			    </li>
+			</ul>
+		</div>
 	</div>
 
 	<div class="reviews col-lg-12">
 		<div *ngFor="let publication of publications" class="item-publication">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<div class="text col-lg-11 pull-left">
-						<div class="building-text">
-							<div class="row">
-								<h4 style="display: inline;">{{ 'myReviews.rate' | translate }}:</h4>
-								<li style="display: inline-block; margin: 2px;" *ngFor="let n of numSequence(publication.rate)" class="list-inline">
-									<span class="fa fa-star" style="color: orange;"></span>
-								</li>
+					<div>
+						<div class="text col-lg-11">
+							<div class="building-text">
+								<div class="row">
+									<h4 style="display: inline;">{{ 'myReviews.rate' | translate }}:</h4>
 
-								<li style="display: inline-block; margin: 2px;" *ngFor="let n of numSequence(5-publication.rate)" class="list-inline">
-									<span class="fa fa-star"></span>
-								</li>
-							</div>	
-					
-							<div class="row">
-								<h4 style="display: inline;">{{ 'myReviews.address' | translate }}:</h4> 
-								<a [routerLink]="['/building/'+publication.buildingId]">
-								{{publication.address.street}}, {{publication.address.buildingNumber}}. {{publication.address.country}}.
-								</a>
-							</div>
+									<span *ngIf="publication.rate">
+										<li style="display: inline-block; margin: 2px;" *ngFor="let n of numSequence(publication.rate)" class="list-inline">
+											<span class="fa fa-star" style="color: orange;"></span>
+										</li>
 
-							<div class="row">
-								<h4 style="display: inline;">{{ 'myReviews.review' | translate }}:</h4> 
-								<blockquote style="font-size:16px;">
-									<p>
-										{{publication.text}}
-									</p>
-								</blockquote>
-							</div>
-						</div>
-					</div>
+										<li style="display: inline-block; margin: 2px;" *ngFor="let n of numSequence(5-publication.rate)" class="list-inline">
+											<span class="fa fa-star"></span>
+										</li>
+									</span>
 
+									<span *ngIf="!publication.rate">
+										---
+									</span>
+								</div>	
+						
+								<div class="row">
+									<h4 style="display: inline;">{{ 'myReviews.address' | translate }}:</h4> 
+									<a [routerLink]="['/building/'+publication.buildingId]">
+									{{publication.address.street}}, {{publication.address.buildingNumber}}. {{publication.address.country}}.
+									</a>
+								</div>
 
-					<div class="image-and-erase-review col-lg-1">
-						<div class="row">
-							<!-- Show image -->
-							<div *ngIf="publication.file[0]">
-								<button class="btn btn-warning" pull-right (click)="showThisImage(publication._id)" *ngIf="showImage != publication._id">
-									<span class="glyphicon 	glyphicon-picture"></span>
-								</button>
-								<button class="btn btn-danger" pull-right (click)="hideThisImage(publication._id)" *ngIf="showImage == publication._id">
-									<span class="glyphicon 	glyphicon-remove-circle"></span>
-								</button>
-							</div>
-						</div>
-
-						<div class="row">
-							<!-- Delete Review -->
-							<div class="erase" *ngIf="publication.user == identity._id">
-								<a href="#myModal{{publication._id}}" class="btn btn-danger" data-toggle="modal" *ngIf="showImage != publication._id">
-									<span class="glyphicon 	glyphicon-trash"></span>
-								</a>	
-							</div>
-							<div id="myModal{{publication._id}}" class="modal fade">
-							    <div class="modal-dialog">
-							        <div class="modal-content">
-							            <div class="modal-header">
-							                <h3 class="modal-title">{{ 'myReviews.modalTitle' | translate }}</h3>
-							                <button type="button" class="close" data-dismiss="modal">&times;</button>
-							            </div>
-							            <div class="modal-body">
-							                <p>{{ 'myReviews.modalBody' | translate }}: {{publication.address.street}}, {{publication.address.buildingNumber}}.</p>
-							            </div>
-							            <div class="modal-footer">
-							                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'myReviews.cancel' | translate }}</button>
-							                <button type="button" class="btn btn-primary" (click)="deleteReview(publication._id)" data-dismiss="modal">{{ 'myReviews.eraseReview' | translate }}</button>
-							            </div>
-							        </div>
-							    </div>
-							</div>
-						</div>
-					</div>
-
-					<!--Carousel-->
-					<div class="publication-image col-lg-12" *ngIf="publication.file[0] != 'null' && showImage == publication._id"> 
-						<div class="publication-default" *ngIf="publication.file.length == 1" align="center">
-							<img src="{{url+'get-image/'+publication.file[0]}}" width="350" height="200"/>
-						</div>
-
-						<!--Carousel Wrapper-->
-						<div id="publication-image-gallery" class="carousel slide" data-ride="carousel" *ngIf="publication.file.length >1">
-						  	<!-- Indicators -->
-							<ol class="carousel-indicators">
-								<li data-target="#publication-image-gallery" data-slide-to="0" class="active"></li>
-								<li data-target="#publication-image-gallery" *ngFor="let image of publication.file.slice(1); let i = index" data-slide-to="{{i+1}}"></li>
-
-							</ol>
-
-							<!-- Wrapper for slides -->
-						  	<div class="carousel-inner" role="listbox" >
-							    <div class="item active">
-							    	<img src="{{url+'get-image/'+publication.file[0]}}" alt="0">
-							    </div>
-								
-								<div class="item" *ngFor="let image of publication.file.slice(1); let i = index">
-									<img src="{{url+'get-image/'+image}}" alt="{{i+1}}">
+								<div class="row">
+									<h4 style="display: inline;">{{ 'myReviews.review' | translate }}:</h4> 
+									<blockquote style="font-size:16px;">
+										<p>
+											{{publication.text}}
+										</p>
+									</blockquote>
 								</div>
 							</div>
-							
+						</div>
 
-							<!-- Controls -->
-							<a class="left carousel-control" href="#publication-image-gallery" role="button" data-slide="prev">
-								<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-							    <span class="sr-only">{{ 'general.previous' | translate }}</span>
-							</a>
-							  
-							<a class="right carousel-control" href="#publication-image-gallery" role="button" data-slide="next">
-								<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-								<span class="sr-only">{{ 'general.next' | translate }}</span>
-							</a>
+
+						<div class="image-and-erase-review col-lg-1">
+							<div class="row">
+								<!-- Show image -->
+								<div *ngIf="publication.file[0]">
+									<button class="btn btn-warning" pull-right (click)="showThisImage(publication._id)" *ngIf="showImage != publication._id">
+										<span class="glyphicon 	glyphicon-picture"></span>
+									</button>
+									<button class="btn btn-danger" pull-right (click)="hideThisImage(publication._id)" *ngIf="showImage == publication._id">
+										<span class="glyphicon 	glyphicon-remove-circle"></span>
+									</button>
+								</div>
+							</div>
+
+							<div class="row">
+								<!-- Delete Review -->
+								<div class="erase" *ngIf="publication.user == identity._id">
+									<a href="#myModal{{publication._id}}" class="btn btn-danger" data-toggle="modal" *ngIf="showImage != publication._id">
+										<span class="glyphicon 	glyphicon-trash"></span>
+									</a>	
+								</div>
+								<div id="myModal{{publication._id}}" class="modal fade">
+								    <div class="modal-dialog">
+								        <div class="modal-content">
+								            <div class="modal-header">
+								                <h3 class="modal-title">{{ 'myReviews.modalTitle' | translate }}</h3>
+								                <button type="button" class="close" data-dismiss="modal">&times;</button>
+								            </div>
+								            <div class="modal-body">
+								                <p>{{ 'myReviews.modalBody' | translate }}: {{publication.address.street}}, {{publication.address.buildingNumber}}.</p>
+								            </div>
+								            <div class="modal-footer">
+								                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'myReviews.cancel' | translate }}</button>
+								                <button type="button" class="btn btn-primary" (click)="deleteReview(publication._id)" data-dismiss="modal">{{ 'myReviews.eraseReview' | translate }}</button>
+								            </div>
+								        </div>
+								    </div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+					</div>
+
+					<div class="row">
+						<!--Carousel-->
+						<div class="publication-image col-lg-12" *ngIf="publication.file[0] != 'null' && showImage == publication._id"> 
+							<div class="publication-default" *ngIf="publication.file.length == 1" align="center">
+								<img src="{{url+'get-image/'+publication.file[0]}}" width="350" height="200"/>
+							</div>
+
+							<!--Carousel Wrapper-->
+							<div id="publication-image-gallery" class="carousel slide" data-ride="carousel" *ngIf="publication.file.length >1">
+							  	<!-- Indicators -->
+								<ol class="carousel-indicators">
+									<li data-target="#publication-image-gallery" data-slide-to="0" class="active"></li>
+									<li data-target="#publication-image-gallery" *ngFor="let image of publication.file.slice(1); let i = index" data-slide-to="{{i+1}}"></li>
+
+								</ol>
+
+								<!-- Wrapper for slides -->
+							  	<div class="carousel-inner" role="listbox" >
+								    <div class="item active">
+								    	<img src="{{url+'get-image/'+publication.file[0]}}" alt="0">
+								    </div>
+									
+									<div class="item" *ngFor="let image of publication.file.slice(1); let i = index">
+										<img src="{{url+'get-image/'+image}}" alt="{{i+1}}">
+									</div>
+								</div>
+								
+
+								<!-- Controls -->
+								<a class="left carousel-control" href="#publication-image-gallery" role="button" data-slide="prev">
+									<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+								    <span class="sr-only">{{ 'general.previous' | translate }}</span>
+								</a>
+								  
+								<a class="right carousel-control" href="#publication-image-gallery" role="button" data-slide="next">
+									<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+									<span class="sr-only">{{ 'general.next' | translate }}</span>
+								</a>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div>
+		<div class="row">
 			<ul class="pager pull-left">
 				<li *ngIf="page > 1"><a [routerLink]="['/profile/my-reviews', prev_page]">
 				{{ 'general.previous' | translate }}</a></li>

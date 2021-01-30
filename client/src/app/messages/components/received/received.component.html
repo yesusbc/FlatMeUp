@@ -1,29 +1,31 @@
 <div class="col-12 col-md-6">
 	<h1 class="h1-strong">{{ 'message.receivedTitle' | translate }}</h1>
 
-	<div class="profile-list col-lg-12">
-		<ul class="nav navbar-nav">
-		    <li>
-		    	<a [routerLink]="['/profile/'+identity._id]" [routerLinkActive]="['active']">
-				<span class="glyphicon glyphicon-user"></span>
-		        {{ 'home.myProfile' | translate }}
-		    	</a>
-		    </li>
+	<div class="row">
+		<div class="profile-list col-lg-12">
+			<ul class="nav navbar-nav">
+			    <li>
+			    	<a [routerLink]="['/profile/'+identity._id]" [routerLinkActive]="['active']">
+					<span class="glyphicon glyphicon-user"></span>
+			        {{ 'home.myProfile' | translate }}
+			    	</a>
+			    </li>
 
-		    <li>
-		    	<a [routerLink]="['/profile/my-reviews']" [routerLinkActive]="['active']">
-				<span class="glyphicon glyphicon-pencil"></span>
-		        {{ 'home.myReviews' | translate }}
-		        </a>
-		    </li>
+			    <li>
+			    	<a [routerLink]="['/profile/my-reviews']" [routerLinkActive]="['active']">
+					<span class="glyphicon glyphicon-pencil"></span>
+			        {{ 'home.myReviews' | translate }}
+			        </a>
+			    </li>
 
-		    <li>
-		    	<a [routerLink]="['/profile/messages']" [routerLinkActive]="['active']">
-				<span class="glyphicon glyphicon-envelope"></span>
-		        {{ 'home.myInbox' | translate }}
-		        </a>
-		    </li>
-		</ul>
+			    <li>
+			    	<a [routerLink]="['/profile/messages']" [routerLinkActive]="['active']">
+					<span class="glyphicon glyphicon-envelope"></span>
+			        {{ 'home.myInbox' | translate }}
+			        </a>
+			    </li>
+			</ul>
+		</div>
 	</div>
 
 
@@ -45,29 +47,42 @@
 							</span>
 							</p>
 						</div>
+					</div>
 
-						<div>
+					<div class="row">
+					</div>
+					
+					<div class="row">
+						<div class="col-md-10">
+							<blockquote style="font-size:16px;">
+								<p>
+									{{message.text}}
+								</p>
+							</blockquote>
+						</div>
+
+						<div class="col-md-2">
 							<button class="btn btn-primary pull-right" (click)="sendMessage(message.emitter._id)">
 								<span class="glyphicon 	glyphicon-envelope"></span>
 								{{ 'message.reply' | translate }}
 							</button>
 						</div>
 					</div>
-					
-					<div class="col-lg-10">
-						{{message.text}}
-					</div>
 
+
+	
 					
 				</div>
 			</div>
 		</div>
 
-		<ul class="pager pull-right">
-			<li *ngIf="page > 1"><a [routerLink]="['/profile/messages/received', prev_page]">
-			{{ 'general.previous' | translate }}</a></li>
-			<li *ngIf="pages!=page && pages!=0"><a [routerLink]="['/profile/messages/received', next_page]">
-			{{ 'general.next' | translate }}</a></li>
-		</ul>
+		<div class="row">
+			<ul class="pager pull-right">
+				<li *ngIf="page > 1"><a [routerLink]="['/profile/messages/received', prev_page]">
+				{{ 'general.previous' | translate }}</a></li>
+				<li *ngIf="pages!=page && pages!=0"><a [routerLink]="['/profile/messages/received', next_page]">
+				{{ 'general.next' | translate }}</a></li>
+			</ul>
+		</div>
 	</div>
 </div>

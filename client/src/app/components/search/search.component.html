@@ -55,7 +55,20 @@
 							building.address.country}}
 						</h4>
 						<p>
-						{{ 'building.headerGlobal' | translate }}: {{building.globalRate}}
+						{{ 'building.headerGlobal' | translate }}:
+							<span *ngIf="building.globalRate">
+								<li style="display: inline-block; margin: 2px;" *ngFor="let n of numSequence(building.globalRate)" class="list-inline">
+									<span class="fa fa-star" style="color: orange;"></span>
+								</li>
+
+								<li style="display: inline-block; margin: 2px;" *ngFor="let n of numSequence(5-building.globalRate)" class="list-inline">
+									<span class="fa fa-star"></span>
+								</li>
+							</span>
+
+							<span *ngIf="!building.globalRate">
+									---
+							</span>
 						</p>
 						<p>
 						{{ 'building.numberOfReviews' | translate }}: {{building.reviewsCounter}}
@@ -69,7 +82,7 @@
 		</div>
 	</div>
 
-	<div>
+	<div class = "row">
 		<ul class="pager pull-left" *ngIf="commingFromHome">
 			<li *ngIf="page > 1"><a [routerLink]="['/home', prev_page]">
 			{{ 'general.previous' | translate }}</a></li>
