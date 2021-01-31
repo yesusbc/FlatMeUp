@@ -15,31 +15,31 @@
 		<div class="form-group">
 			<label for="name" class="col-sm-3 control-label">{{ 'profile.name' | translate }}</label>
 			<div class="col-sm-9">
-				<input type="text" id="name" name="name" #name="ngModel" [(ngModel)]="user.name" required placeholder="{{ 'profile.name' | translate }}" class="form-control" autofocus>
-				<span *ngIf="!name.value && name.touch">{{ 'register.nameObligatory' | translate }}</span>
+				<input type="text" id="name" name="name" #name="ngModel" [(ngModel)]="user.name" required placeholder="{{ 'profile.name' | translate }}" class="form-control" pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,20}" maxlength="20">
+				<span *ngIf="!name.valid && name.touch">{{ 'register.nameObligatory' | translate }}</span>
 			</div>
 		</div>
 
 		<div class="form-group">
 			<label for="lastname" class="col-sm-3 control-label">{{ 'profile.lastname' | translate }}</label>
 			<div class="col-sm-9">
-				<input type="text" id="lastname" name="lastname" #lastname="ngModel" [(ngModel)]="user.lastname" placeholder="{{ 'profile.lastname' | translate }}" class="form-control" autofocus>
+				<input type="text" id="lastname" name="lastname" #lastname="ngModel" [(ngModel)]="user.lastname" placeholder="{{ 'profile.lastname' | translate }}" class="form-control" pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{0,25}" maxlength="25">
 			</div>
 		</div>
 
 		<div class="form-group">
 			<label for="userName" class="col-sm-3 control-label">{{ 'profile.username' | translate }}</label>
 			<div class="col-sm-3">
-				<input type="text" id="userName" name="userName" #userName="ngModel" [(ngModel)]="user.userName" required placeholder="{{ 'profile.username' | translate }}" class="form-control" autofocus>
-				<span *ngIf="!userName.value && userName.touch">{{ 'register.usernameObligatory' | translate }}</span>
+				<input type="text" id="userName" name="userName" #userName="ngModel" [(ngModel)]="user.userName" required placeholder="{{ 'profile.username' | translate }}" class="form-control" maxlength="20">
+				<span *ngIf="!userName.valid && userName.touch">{{ 'register.usernameObligatory' | translate }}</span>
 			</div>
 		</div>
 
 		<div class="form-group">
 			<label for="email" class="col-sm-3 control-label">{{ 'profile.email' | translate }}</label>
 			<div class="col-sm-9">
-				<input type="text" id="email" name="email" #email="ngModel" [(ngModel)]="user.email" required placeholder="{{ 'profile.email' | translate }}" class="form-control" autofocus>
-				<span *ngIf="!email.value && email.touch">{{ 'profile.emailObligatory' | translate }}</span>
+				<input type="text" id="email" name="email" #email="ngModel" [(ngModel)]="user.email" required placeholder="{{ 'profile.email' | translate }}" class="form-control" maxlength="50">
+				<span *ngIf="!email.valid && email.touch">{{ 'profile.emailObligatory' | translate }}</span>
 			</div>
 		</div>
 
@@ -70,35 +70,35 @@
 		<div class="form-group">
 			<label for="occupation" class="col-sm-3 control-label">{{ 'profile.occupation' | translate }}</label>
 			<div class="col-sm-9">
-				<input type="text" id="occupation" name="occupation" #occupation="ngModel" [(ngModel)]="user.occupation" placeholder="{{ 'profile.occupation' | translate }}" class="form-control" autofocus>
+				<input type="text" id="occupation" name="occupation" #occupation="ngModel" [(ngModel)]="user.occupation" placeholder="{{ 'profile.occupation' | translate }}" class="form-control" maxlength="50">
 			</div>
 		</div>
 
 		<div class="form-group">
 			<label for="birthday" class="col-sm-3 control-label">{{ 'profile.birthday' | translate }}</label>
 			<div class="col-sm-9">
-				<input type="date" id="birthday" name="birthday" #birthday="ngModel" [(ngModel)]="user.birthday" class="form-control" autofocus>
+				<input type="date" id="birthday" name="birthday" #birthday="ngModel" [(ngModel)]="user.birthday" class="form-control">
 			</div>
 		</div>
 
 		<div class="form-group">
 			<label for="country" class="col-sm-3 control-label">{{ 'profile.country' | translate }}</label>
-			<div class="col-sm-3">
-				<input type="text" id="country" name="country" #country="ngModel" [(ngModel)]="user.country" placeholder="{{ 'profile.country' | translate }}" class="form-control" autofocus>
+			<div class="col-sm-4">
+				<input type="text" id="country" name="country" #country="ngModel" [(ngModel)]="user.country" placeholder="{{ 'profile.country' | translate }}" class="form-control"   maxlength="30">
 			</div>
 		</div>
 
 		<div class="form-group">
 			<label for="state" class="col-sm-3 control-label">{{ 'profile.state' | translate }}</label>
-			<div class="col-sm-3">
-				<input type="text" id="state" name="state" #state="ngModel" [(ngModel)]="user.state"  placeholder="{{ 'profile.state' | translate }}" class="form-control" autofocus>
+			<div class="col-sm-4">
+				<input type="text" id="state" name="state" #state="ngModel" [(ngModel)]="user.state"  placeholder="{{ 'profile.state' | translate }}" class="form-control"  maxlength="30">
 			</div>
 		</div>
 
 		<div class="form-group">
 			<label for="city" class="col-sm-3 control-label">{{ 'profile.city' | translate }}</label>
-			<div class="col-sm-3">
-				<input type="text" id="city" name="city" #city="ngModel" [(ngModel)]="user.city" required placeholder="{{ 'profile.city' | translate }}" class="form-control" autofocus>
+			<div class="col-sm-4">
+				<input type="text" id="city" name="city" #city="ngModel" [(ngModel)]="user.city" placeholder="{{ 'profile.city' | translate }}" class="form-control"   maxlength="30">
 			</div>
 		</div>
 

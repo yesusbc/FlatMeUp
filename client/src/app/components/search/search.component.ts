@@ -86,7 +86,6 @@ export class SearchComponent implements OnInit{
                 this.getBuildingsByPage(page);
             }
             if(this.formattedaddress){
-                console.log("yes");
                 this.getBuildingsByAddress(page);
             }
         });

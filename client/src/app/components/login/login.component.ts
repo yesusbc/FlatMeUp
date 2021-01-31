@@ -35,7 +35,6 @@ export class LoginComponent implements OnInit{
 		this._userService.signup(this.user).subscribe(
 			response => {
 				this.identity = response.user;
-				console.log(this.identity);
 				if(!this.identity || !this.identity._id){
 					this.status = 'error';
 				}else{

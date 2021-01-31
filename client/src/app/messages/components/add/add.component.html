@@ -51,7 +51,7 @@
 
 			<p>
 				<label>{{ 'message.message' | translate }}: </label>
-				<textarea name="text" #text="ngModel" [(ngModel)]="message.text" class="form-control" required></textarea>
+				<textarea name="text" #text="ngModel" [(ngModel)]="message.text" class="form-control" required maxlength="350"></textarea>
 				<span *ngIf="!text.valid && text.touched">
 					{{ 'message.messageObligatory' | translate }}
 				</span>

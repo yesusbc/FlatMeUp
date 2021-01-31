@@ -18,7 +18,7 @@
 				<div class="input-group-addon">
 					<span class="glyphicon glyphicon-envelope"></span> 
 				</div>
-				<input id="email" type="email" name="email" #email="ngModel" [(ngModel)]="user.email" class="form-control" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="example@email.com">
+				<input id="email" type="email" name="email" #email="ngModel" [(ngModel)]="user.email" class="form-control" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="example@email.com" maxlength="50">
 			</div>
 			<span *ngIf="!email.valid && email.touched">
 				{{ 'login.emailInvalid' | translate }}
@@ -34,7 +34,7 @@
 				<div class="input-group-addon">
 					<span class="glyphicon glyphicon-lock"></span> 
 				</div>
-				<input id="password" type="password" name="password" #password="ngModel" [(ngModel)]="user.password" class="form-control" placeholder="{{ 'login.passwordRequired' | translate }}" required>
+				<input id="password" type="password" name="password" #password="ngModel" [(ngModel)]="user.password" class="form-control" placeholder="{{ 'login.passwordRequired' | translate }}" required maxlength="20">
 			</div>
 			<span *ngIf="!password.valid && password.touched">
 				{{ 'login.passwordRequired' | translate }}

@@ -48,7 +48,6 @@ export class MyReviewsComponent implements OnInit{
     actualPage(){
         this._route.params.subscribe( params => {
             let page = params['page'];
-            console.log(page);
             this.page = page;
 
             if(!params['page']){

@@ -50,9 +50,9 @@
 	{
 		"registerSuccessful": "Register completed successfully",
 		"registerFailed": "Register failed, try again",
-		"nameObligatory": "Name is obligatory ",
-		"usernameObligatory": "Username is obligatory ",
-		"passwordObligatory": "Password is obligatory ",
+		"nameObligatory": "Name is obligatory, letters, 2-20 characters",
+		"usernameObligatory": "Username is obligatory, letters, numbers, 5-12 characters",
+		"passwordObligatory": "Password is obligatory",
 		"emailInvalid": "Type valid email",
 		"emailObligatory": "Email is obligatory",
 		"passwordConfirm": "Confirm Password",

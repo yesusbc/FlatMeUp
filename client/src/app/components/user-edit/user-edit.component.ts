@@ -29,7 +29,6 @@ export class UserEditComponent implements OnInit{
 	}
 
 	ngOnInit(){
-		console.log(this.user);
 		console.log('user-edit.component has loaded');
 	}
 

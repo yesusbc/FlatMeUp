@@ -46,13 +46,12 @@
 		"passwordRequired": "La contraseña es obligatoria"
 	},
 
-
 	"register":
 	{
 		"registerSuccessful": "Registro Exitoso",
 		"registerFailed": "Registro fallido, intente otra vez",
-		"nameObligatory": "El nombre es obligatorio ",
-		"usernameObligatory": "El nombre de usuario es obligatorio ",
+		"nameObligatory": "El nombre es obligatorio, solo letras, 2-20 caracteres ",
+		"usernameObligatory": "El nombre de usuario es obligatorio, solo números y letras, 5-12 caracteres",
 		"passwordObligatory": "La contraseña es obligatoria ",
 		"emailInvalid": "Ingrese un correo electrónico válido",
 		"emailObligatory": "El correo electrónico es obligatorio",
