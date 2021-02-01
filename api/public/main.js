@@ -1964,7 +1964,7 @@ function SearchComponent_ul_40_Template(rf, ctx) { if (rf & 1) {
 } if (rf & 2) {
     const ctx_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r2.pages != ctx_r2.page && ctx_r2.pages != 0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r2.pages != ctx_r2.page && ctx_r2.pages > 1);
 } }
 function SearchComponent_ul_41_li_1_Template(rf, ctx) { if (rf & 1) {
     const _r24 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
@@ -2008,7 +2008,7 @@ function SearchComponent_ul_42_Template(rf, ctx) { if (rf & 1) {
 } if (rf & 2) {
     const ctx_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r4.pages != ctx_r4.page && ctx_r4.pages != 0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r4.pages != ctx_r4.page && ctx_r4.pages > 1);
 } }
 class SearchComponent {
     constructor(_router, _route, _publicationService) {
