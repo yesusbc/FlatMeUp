@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/yesus/Documents/FlatMeUp/client/src/main.ts */"zUnb");
+module.exports = __webpack_require__(/*! /home/ubuntu/FlatMeUp/client/src/main.ts */"zUnb");
 
 
 /***/ }),
@@ -2008,7 +2008,7 @@ function SearchComponent_ul_42_Template(rf, ctx) { if (rf & 1) {
 } if (rf & 2) {
     const ctx_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r4.pages != ctx_r4.page);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r4.pages != ctx_r4.page && ctx_r4.pages != 0);
 } }
 class SearchComponent {
     constructor(_router, _route, _publicationService) {
@@ -2135,6 +2135,7 @@ class SearchComponent {
     }
     //function to return list of numbers from 0 to n-1 
     numSequence(n) {
+        n = Math.floor(n);
         return Array(n);
     }
 }
@@ -4922,7 +4923,7 @@ UploadService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInj
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GLOBAL", function() { return GLOBAL; });
 var GLOBAL = {
-    /*url: 'http://localhost:3800/api/' */
+    /*url: 'http://localhost:8080/api/'*/
     url: 'api/'
 };
 

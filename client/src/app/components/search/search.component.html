@@ -99,7 +99,7 @@
    			</li>
    		</ul>
    		<ul class="pager pull-right" *ngIf="!commingFromHome">
-   			<li *ngIf="pages != page">
+   			<li *ngIf="pages != page && pages!=0">
        			<button type="button" (click)="getBuildingsByAddress(next_page)" >{{ 'general.next' | translate }}</button>
    			</li>
 		</ul>

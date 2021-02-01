@@ -7,8 +7,8 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/yesus/Documents/FlatMeUp/client/src/assets/styles.css */"o0eb");
-module.exports = __webpack_require__(/*! /home/yesus/Documents/FlatMeUp/client/node_modules/bootstrap/dist/css/bootstrap.min.css */"q4sD");
+__webpack_require__(/*! /home/ubuntu/FlatMeUp/client/src/assets/styles.css */"o0eb");
+module.exports = __webpack_require__(/*! /home/ubuntu/FlatMeUp/client/node_modules/bootstrap/dist/css/bootstrap.min.css */"q4sD");
 
 
 /***/ }),
