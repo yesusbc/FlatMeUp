@@ -172,7 +172,11 @@ export class SearchComponent implements OnInit{
 
     //function to return list of numbers from 0 to n-1 
     numSequence(n: number){
-        n = Math.floor(n);
+        n = Math.round(n);
+        if(n > 5)
+        {
+           n = 5;
+        }
         return Array(n); 
     }
 
