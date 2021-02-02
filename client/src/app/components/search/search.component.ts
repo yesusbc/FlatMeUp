@@ -177,6 +177,10 @@ export class SearchComponent implements OnInit{
         {
            n = 5;
         }
+        if(n < 0)
+        {
+           n = 0;
+        }
         return Array(n); 
     }
 

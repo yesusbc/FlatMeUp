@@ -119,7 +119,16 @@ export class MyReviewsComponent implements OnInit{
 
 
     //function to return list of numbers from 0 to n-1 
-    numSequence(n: number): Array<number> { 
+    numSequence(n: number){
+        n = Math.round(n);
+        if(n > 5)
+        {
+           n = 5;
+        }
+        if(n < 0)
+        {
+           n = 0;
+        }
         return Array(n); 
-    } 
+    }
 }

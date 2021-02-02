@@ -134,17 +134,18 @@ function savePublication(req, res){
 				    			if (err) console.log ("record not found");
 				    			else {
 				    				if(stats[0]["globalRate"]){
-					    				var reviewsCounter = addressExists.reviewsCounter+1; 
+				    					var prevReviewsCounter = addressExists.reviewsCounter;
+					    				var newReviewsCounter = addressExists.reviewsCounter+1; 
 										var lastAvg = stats[0]["globalRate"].toFixed(2);
 										var newAvg = lastAvg;
 										if (publication.rate){
-											var newAvg = ((lastAvg*(reviewsCounter))+publication.rate)/(reviewsCounter).toFixed(2);
+											var newAvg = ((lastAvg*(prevReviewsCounter))+publication.rate)/(newReviewsCounter).toFixed(2);
 										}
 									}
 				    			} 
 				    			// Update stats
 								Building.findByIdAndUpdate(addressExists.id, {
-									reviewsCounter: reviewsCounter,
+									reviewsCounter: newReviewsCounter,
 									globalRate : newAvg,
 								}, (err, updatedStats) =>{});
 								});
@@ -230,10 +231,26 @@ function getPublicationsUser(req, res){
 function deletePublication(req, res){
 	var publicationId = req.params.id;
 
-	Publication.find({'user': req.user.sub, '_id': publicationId}).remove((err, publicationRemoved)=> {
-		if(err) return res.status(500).send({message: 'Error when deleting review'});
-		return res.status(200).send({message: 'Publication removed'});
+	Publication.findById(publicationId, (err, publication) =>{
+		if(publication)
+		{
+			Building.findOne({'_id': publication.buildingId}).exec((err, buildingExists) => {
+				if(buildingExists){
+					if (publication.rate){
+						var newGlobalRate = ((buildingExists.reviewsCounter * buildingExists.globalRate) - publication.rate) / (buildingExists.reviewsCounter - 1) ;
+						Building.findByIdAndUpdate(publication.buildingId, {globalRate: newGlobalRate, reviewsCounter: buildingExists.reviewsCounter-1}, (err, buildingIdUpdated) =>{
+							Publication.find({'user': req.user.sub, '_id': publicationId}).remove((err, publicationRemoved)=> {
+								if(err) return res.status(500).send({message: 'Error when deleting review'});
+								return res.status(200).send({message: 'Publication removed'});
+							});
+						});
+					}
+				}
+			});
+		}
 	});
+
+
 }
 
 // Function to upload images of Publication (review)

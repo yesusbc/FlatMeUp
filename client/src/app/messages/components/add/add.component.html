@@ -32,7 +32,7 @@
   	<div class="col-lg-12" id="messages">
 		<!-- formulario envio mensajes -->
 		<div class="alert alert-success" *ngIf="status == 'success'">
-			{{ 'message.sentMessages' | translate }}, <a [routerLink]="['/profile/messages/sent']"></a> 
+			{{ 'message.sentSuccessful' | translate }}, <a [routerLink]="['/profile/messages/sent']"></a> 
 		</div>
 
 		<div class="alert alert-danger" *ngIf="status == 'error'">
