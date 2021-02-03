@@ -10,7 +10,7 @@
 						{{ 'writeAReview.publicationSuccessful' | translate }}
 					</div>
 
-					<div class="alert alert-danger" *ngIf="status == 'error'">
+					<div class="alert alert-danger" *ngIf="status == 'error' || status == 'dataMissing'">
 						{{ 'writeAReview.publicationFailed' | translate }}
 					</div>
 				</div>
@@ -20,7 +20,7 @@
 				<div class="col-md-8 col-md-offset-2">
 					<div class="input-group">
 						<input ngx-google-places-autocomplete [options]= 
-					   		'options'  (onAddressChange)="AddressChange($event)" placeholder="{{ 'writeAReview.enterAnAddress' | translate }}" aria-label="Search" class="form-control" required/> 
+					   		'options'  (onAddressChange)="AddressChange($event)" placeholder="{{ 'writeAReview.enterAnAddress' | translate }}" aria-label="Search" class="form-control" ngModel name="address" #address="ngModel" id="address" required/> 
 					  		{{ formattedaddress }}
 						<div class="input-group-btn">
 							<button type="button" class="btn btn-primary" aria-label="Left Align" data-toggle="modal" data-target="#helpModal">
@@ -34,6 +34,9 @@
 					</div>
 		  			<div class="alert alert-danger" *ngIf="addressCorrect == 'error'">
 						{{ 'writeAReview.addressIncorrect' | translate }}
+					</div>
+					<div *ngIf="address.errors?.required && status == 'dataMissing'" class="invalid-feedback">
+						{{ 'general.datafieldMissing' | translate }}
 					</div>
 				</div>
 			</div>
@@ -224,6 +227,9 @@
 					<span *ngIf="!text.valid && text.touched">
 						{{ 'writeAReview.reviewObligatory' | translate }}
 					</span>
+					<span *ngIf="text.errors?.required && status == 'dataMissing'" class="invalid-feedback">
+						{{ 'general.datafieldMissing' | translate }}
+					</span>
 
 				</div>
 			</div>
@@ -256,7 +262,7 @@
 
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2">
-					<input type="submit" value="{{ 'writeAReview.title' | translate }}" class="btn btn-primary btn-lg btn-block" [disabled]="!ReviewForm.form.valid || addressCorrect!='success'"/>
+					<input type="submit" value="{{ 'writeAReview.title' | translate }}" class="btn btn-primary btn-lg btn-block" />
 				</div>
 			</div>
 		</div>

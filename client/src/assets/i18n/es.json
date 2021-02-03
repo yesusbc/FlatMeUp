@@ -17,7 +17,8 @@
 		"images": "Imágenes",
 		"next": "Siguiente",
 		"previous": "Anterior",
-		"currentLanguage": "es"
+		"currentLanguage": "es",
+		"datafieldMissing": "Este campo es obligatorio."
 	},
 
 	"building": 
@@ -50,6 +51,7 @@
 	{
 		"registerSuccessful": "Registro Exitoso",
 		"registerFailed": "Registro fallido, intente otra vez",
+		"registerFailedUserTaken": "El usuario y/o email ya existe.",
 		"nameObligatory": "El nombre es obligatorio, solo letras, 2-20 caracteres ",
 		"usernameObligatory": "El nombre de usuario es obligatorio, solo números y letras, 5-12 caracteres",
 		"passwordObligatory": "La contraseña es obligatoria ",
@@ -57,7 +59,7 @@
 		"emailObligatory": "El correo electrónico es obligatorio",
 		"passwordConfirm": "Confirme la contraseña",
 		"passwordInvalid": "Las contraseñas no son iguales",
-		"passwordOk": "Contraseñas iguales",
+		"passwordOk": "Las contraseñas coinciden",
 		"placeholderName": "Nombre",
 		"placeholderUsername": "Nombre de usuario",
 		"placeholderLastname": "Apellido"
@@ -117,7 +119,7 @@
 		"addressCorrect": "La dirección es correcta",
 		"addressIncorrect": "La dirección es incorrecta, revisa que esté escribiendo una calle y un número de edificio correctamente.",
 		"helpModalLabel": "¿Por qué mi dirección es incorrecta?",
-		"modalBody": "Asegurese que la dirección que está ingresando cuente con almenos",
+		"modalBody": "Nosotros usamos los servicios de google maps para encontrar una dirección, asegurese de que la dirección aparezca en la lista, y después haga click en ella. La dirección debe contener almenos",
 		"modalBodyStreet": "Un nombre de calle",
 		"modalBodyStreetNumber": "Un número de domicilio",
 		"modalFooter": "Cerrar",

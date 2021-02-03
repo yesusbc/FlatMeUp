@@ -5,8 +5,12 @@
 		{{ 'register.registerSuccessful' | translate }}, <a [routerLink]="['/login']">{{ 'login.login' | translate }} </a> 
 	</div>
 
-	<div class="alert alert-danger" *ngIf="status == 'error'">
+	<div class="alert alert-danger" *ngIf="status == 'error' || status == 'dataMissing'">
 		{{ 'register.registerFailed' | translate }}
+	</div>
+
+	<div class="alert alert-danger" *ngIf="status == 'userTaken'">
+		{{ 'register.registerFailedUserTaken' | translate }}
 	</div>
 
 	<form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" class="form-horizontal">
@@ -16,6 +20,9 @@
 				<input id="name" type="text" name="name" #name="ngModel" [(ngModel)]="user.name" class="form-control" placeholder="{{ 'register.placeholderName' | translate }}*" required pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,20}" maxlength="20"/>
 				<span *ngIf="!name.valid && name.touched">
 						{{ 'register.nameObligatory' | translate }}
+				</span>
+  				<span *ngIf="name.errors?.required && status == 'dataMissing'" class="invalid-feedback">
+					{{ 'general.datafieldMissing' | translate }}
 				</span>
 			</div>
 
@@ -30,6 +37,9 @@
 				<span *ngIf="!userName.valid && userName.touched">
 						{{ 'register.usernameObligatory' | translate }}
 				</span>
+				<span *ngIf="userName.errors?.required && status == 'dataMissing'" class="invalid-feedback">
+					{{ 'general.datafieldMissing' | translate }}
+				</span>
 			</div>
 		</div>
 
@@ -39,6 +49,9 @@
 				<span *ngIf="!email.valid && email.touched">
 						{{ 'register.emailInvalid' | translate }}
 				</span>
+				<span *ngIf="email.errors?.required && status == 'dataMissing'" class="invalid-feedback">
+					{{ 'general.datafieldMissing' | translate }}
+				</span>
 			</div>
 		</div>
 
@@ -47,6 +60,9 @@
 				<input id="password" type="password" name="password" #password="ngModel" [(ngModel)]="user.password" class="form-control" placeholder="{{ 'login.password' | translate }}*" required maxlength="20"/>
 				<span *ngIf="!password.valid && password.touched">
 						{{ 'register.passwordObligatory' | translate }}
+				</span>
+				<span *ngIf="password.errors?.required && status == 'dataMissing'" class="invalid-feedback">
+					{{ 'general.datafieldMissing' | translate }}
 				</span>
 			</div>
 
@@ -61,6 +77,6 @@
 			</div>
 		</div>
 
-		<input type="submit" value="{{ 'home.register' | translate }}" class="btn btn-primary btn-block"[disabled]="!registerForm.form.valid || password.value!=confirm_password.value || password.value.length<1"/>
+		<input type="submit" value="{{ 'home.register' | translate }}" class="btn btn-primary btn-block" />
 	</form>
 </div>

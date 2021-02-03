@@ -94,6 +94,11 @@ export class PublicationComponent implements OnInit{
 						this.formattedaddress = "";
 					}else{
 						this.status = 'error';
+
+						if (response.message = "Either address or text is missing")
+						{
+							this.status = 'dataMissing';
+						}
 					}
 
 				},

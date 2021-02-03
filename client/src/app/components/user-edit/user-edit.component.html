@@ -5,8 +5,12 @@
 		{{ 'profile.dataSuccessful' | translate }}
 	</div>
 
-	<div class="alert alert-danger" *ngIf="status == 'error'">
+	<div class="alert alert-danger" *ngIf="status == 'error' || status == 'dataMissing'">
 		{{ 'profile.dataError' | translate }}
+	</div>
+
+	<div class="alert alert-danger" *ngIf="status == 'userTaken'">
+		{{ 'register.registerFailedUserTaken' | translate }}
 	</div>
 
 
@@ -17,6 +21,9 @@
 			<div class="col-sm-9">
 				<input type="text" id="name" name="name" #name="ngModel" [(ngModel)]="user.name" required placeholder="{{ 'profile.name' | translate }}" class="form-control" pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,20}" maxlength="20">
 				<span *ngIf="!name.valid && name.touch">{{ 'register.nameObligatory' | translate }}</span>
+				<span *ngIf="name.errors?.required && status == 'dataMissing'" class="invalid-feedback">
+						{{ 'general.datafieldMissing' | translate }}
+				</span>
 			</div>
 		</div>
 
@@ -32,6 +39,9 @@
 			<div class="col-sm-3">
 				<input type="text" id="userName" name="userName" #userName="ngModel" [(ngModel)]="user.userName" required placeholder="{{ 'profile.username' | translate }}" class="form-control" maxlength="20">
 				<span *ngIf="!userName.valid && userName.touch">{{ 'register.usernameObligatory' | translate }}</span>
+				<span *ngIf="userName.errors?.required && status == 'dataMissing'" class="invalid-feedback">
+						{{ 'general.datafieldMissing' | translate }}
+				</span>
 			</div>
 		</div>
 
@@ -40,6 +50,9 @@
 			<div class="col-sm-9">
 				<input type="text" id="email" name="email" #email="ngModel" [(ngModel)]="user.email" required placeholder="{{ 'profile.email' | translate }}" class="form-control" maxlength="50">
 				<span *ngIf="!email.valid && email.touch">{{ 'profile.emailObligatory' | translate }}</span>
+				<span *ngIf="email.errors?.required && status == 'dataMissing'" class="invalid-feedback">
+						{{ 'general.datafieldMissing' | translate }}
+				</span>
 			</div>
 		</div>
 
@@ -110,7 +123,7 @@
 	 		</div>
 
 	 		<div class="row col-sm-9 pull-right">
- 				<input type="submit" value="{{ 'profile.editProfile' | translate }}" class="btn btn-primary btn-block" [disabled]="!userEditForm.form.valid"/>
+ 				<input type="submit" value="{{ 'profile.editProfile' | translate }}" class="btn btn-primary btn-block"/>
  			</div>
  		</div>
 	</form>

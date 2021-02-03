@@ -29,7 +29,6 @@ export class UserEditComponent implements OnInit{
 	}
 
 	ngOnInit(){
-		console.log('user-edit.component has loaded');
 	}
 
 	onSubmit(){
@@ -37,6 +36,17 @@ export class UserEditComponent implements OnInit{
 			response => {
 				if(!response.user){
 					this.status = 'error';
+
+					if(response.message == "Data is already taken")
+					{
+						this.status = 'userTaken';
+					}
+
+					if(response.message == "Data fields missing")
+					{
+						this.status = 'dataMissing';
+					}
+
 				}else{
 					this.status = 'success';
 					localStorage.setItem('identity', JSON.stringify(this.user));

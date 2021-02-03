@@ -39,7 +39,6 @@ export class RegisterComponent implements OnInit{
 	}
 
 	ngOnInit(){
-		console.log('Componente de register cargado...');
 	}
 
 	onSubmit(registerForm){
@@ -50,6 +49,15 @@ export class RegisterComponent implements OnInit{
 					registerForm.reset();
 				}else{
 					this.status = 'error';
+					if(response.message == "Either username or email is already taken")
+					{
+						this.status = 'userTaken';
+					}
+
+					if(response.message == "Data fields missing")
+					{
+						this.status = 'dataMissing';
+					}
 				}
 			},
 			error => {

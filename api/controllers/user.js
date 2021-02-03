@@ -29,17 +29,17 @@ function saveUser(req, res){
 	var user = new User();
 
 	if (params.name && params.userName && params.email && params.password){
-		user.name                = params.name;
-		user.lastname            = params.lastname;
-		user.userName            = params.userName;
-		user.email               = params.email;
+		user.name                = params.name.toLowerCase();
+		user.lastname            = params.lastname.toLowerCase();
+		user.userName            = params.userName.toLowerCase();
+		user.email               = params.email.toLowerCase();
 		user.contributionsNumber = 0;
-		user.gender              = params.gender     ? params.gender     : null;
-		user.occupation          = params.occupation ? params.occupation : null;
-		user.country             = params.country    ? params.country    : null;
-		user.state               = params.state      ? params.state      : null;
-		user.city                = params.city       ? params.city       : null;
-		user.birthday            = params.birthday   ? params.birthday   : null;
+		user.gender              = params.gender     ? params.gender                  : null;
+		user.occupation          = params.occupation ? params.occupation.toLowerCase() : null;
+		user.country             = params.country    ? params.country.toLowerCase()    : null;
+		user.state               = params.state      ? params.state.toLowerCase()      : null;
+		user.city                = params.city       ? params.city.toLowerCase()       : null;
+		user.birthday            = params.birthday   ? params.birthday                : null;
 		user.role                = 'ROLE_USER';
 
 		// Look for repeated userName or repeted Email
@@ -49,7 +49,7 @@ function saveUser(req, res){
 					]}).exec((err, users) => {
 						if(err) return res.status(500).send({message: 'Error when retrieving users from database'});
 						if(users && users.length >= 1){
-							return res.status(200).send({mesage: 'Either username or email is already taken'});
+							return res.status(200).send({message: 'Either username or email is already taken'});
 						}else{
 							// Encode password				
 							bcrypt.hash(params.password, null, null, (err, hash) =>{
@@ -155,25 +155,41 @@ function updateUser(req, res){
 
 	if(userId != req.user.sub) return res.status(500).send({message: 'You are not allowed to acces to this user'});
 
-	// Look for repeated userName or repeted Email
-	User.find({ $or:[
-				{email: update.email.toLowerCase()},
-				{userName: update.userName.toLowerCase()}
-				]}).exec((err, users) => {
-					var user_isset = false;
-					users.forEach((user) => {
-						if(user && user._id != userId) user_isset = true;
-					});
-					if(user_isset) return res.status(404).send({message: 'Data is already taken'});
+	if (update.name && update.userName && update.email){
+		update.name                = update.name.toLowerCase();
+		update.lastname            = update.lastname.toLowerCase();
+		update.userName            = update.userName.toLowerCase();
+		update.email               = update.email.toLowerCase();
+		update.gender              = update.gender     ? update.gender                  : null;
+		update.occupation          = update.occupation ? update.occupation.toLowerCase() : null;
+		update.country             = update.country    ? update.country.toLowerCase()    : null;
+		update.state               = update.state      ? update.state.toLowerCase()      : null;
+		update.city                = update.city       ? update.city.toLowerCase()       : null;
+		update.birthday            = update.birthday   ? update.birthday                : null;
+		// Look for repeated userName or repeted Email
+		User.find({ $or:[
+					{email: update.email.toLowerCase()},
+					{userName: update.userName.toLowerCase()}
+					]}).exec((err, users) => {
+						var user_isset = false;
+						users.forEach((user) => {
+							if(user && user._id != userId) user_isset = true;
+						});
+						if(user_isset) return res.status(200).send({message: 'Data is already taken'});
 
-		User.findByIdAndUpdate(userId, update, {new: true}, (err, userUpdated) =>{
-			if(err) return res.status(500).send({message: 'Error in request'});
+			User.findByIdAndUpdate(userId, update, {new: true}, (err, userUpdated) =>{
+				if(err) return res.status(500).send({message: 'Error in request'});
 
-			if(!userUpdated) return res.status(404).send({message: 'User actualization Failed'});
+				if(!userUpdated) return res.status(404).send({message: 'User actualization Failed'});
 
-			return res.status(200).send({user: userUpdated});
+				return res.status(200).send({user: userUpdated});
+			});
 		});
-	});
+	}else{
+		res.status(200).send({
+			message: 'Data fields missing'
+		});
+	}
 }
 
 // Function to get user's public data
