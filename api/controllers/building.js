@@ -112,7 +112,7 @@ function getBuildingById(req, res){
 	        			 		'_id': null,
 	            				'globalRate': { '$avg': '$rate' },
 	            				'globalNoise': { '$avg': '$noise' },
-	            				'globalPriceBenefit': { '$avg': '$pricebenefit' },
+	            				'globalPriceBenefit': { '$avg': '$priceBenefit' },
 	            				'globalLandlordSupport': { '$avg': '$landlordSupport' },
 	            				'globalMaintenance': { '$avg': '$maintenance' }
 	        					}

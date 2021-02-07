@@ -70,7 +70,6 @@ export class PublicationComponent implements OnInit{
 	}
 
 	ngOnInit(){
-		console.log("write a review");
 	}
 
 	onSubmit(ReviewForm){

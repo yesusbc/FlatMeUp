@@ -57,8 +57,7 @@ export class BuildingComponent implements OnInit{
         this.url = GLOBAL.url;
     }
 
-    ngOnInit(){
-        console.log('building.component loaded');   
+    ngOnInit(){ 
         this.loadPage(); 
         this.getPublicationsByBuildingId(this.page);
     }

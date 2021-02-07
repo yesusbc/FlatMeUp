@@ -48,7 +48,6 @@ export class SearchComponent implements OnInit{
     }
 
     ngOnInit(){
-        console.log('address.component loaded');
         this.actualPage();
     }
 

@@ -41,7 +41,6 @@ export class MyReviewsComponent implements OnInit{
 	}
 
 	ngOnInit(){
-		console.log('My Reviews component has loaded');
         this.actualPage();
 	}
 
@@ -78,7 +77,7 @@ export class MyReviewsComponent implements OnInit{
 
 
                         if (page > this.pages){
-                            this._router.navigate(['/home']);
+                            this.status = 'noReviews';
                         }
                     }else{
                         this.status = 'error';

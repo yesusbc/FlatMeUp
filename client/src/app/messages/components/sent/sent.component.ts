@@ -37,7 +37,6 @@ export class SentComponent implements OnInit {
 	}
 
 	ngOnInit(){
-		console.log('sent.component loaded...');
 		this.actualPage();
 	}
 

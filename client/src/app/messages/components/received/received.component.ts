@@ -37,7 +37,6 @@ export class ReceivedComponent implements OnInit {
 	}
 
 	ngOnInit(){
-		console.log('received.component loaded...');
 		this.actualPage();
 	}
 

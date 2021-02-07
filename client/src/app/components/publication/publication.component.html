@@ -1,5 +1,5 @@
 <div class="col-md-6 col-md-offset-3">
-	<h1 class="h1-strong">{{ 'writeAReview.title' | translate }}</h1>
+	<h2 class="h1-strong">{{ 'writeAReview.title' | translate }}</h2>
 
 	<form #ReviewForm="ngForm" (ngSubmit)="onSubmit(ReviewForm)">
 		<div class="col-md-12 review-form">
@@ -67,6 +67,12 @@
 			</div>
 
 			<div class="row">
+				<div class="col-md-5 col-md-offset-2">
+					<input type="text" name="apartment" placeholder="{{ 'writeAReview.enterAnApt' | translate }}" class="form-control" #address.apartment="ngModel" [(ngModel)]="publication.address.apartment" >
+				</div>
+			</div>
+
+			<div class="row">
 		  		<div class="col-md-4 col-md-offset-2">
 					<label>{{ 'writeAReview.typeOfBuilding' | translate }}: </label>
 				</div>
@@ -78,21 +84,10 @@
 				</div> 
 			</div>
 
-			<div *ngIf="(publication.typeOfBuilding==1 || publication.typeOfBuilding==2 || publication.typeOfBuilding==4)" class="row">
-				<div class="col-md-4 col-md-offset-2">	
-					<label>Apt: </label>
-				</div>
-
-				<div class="col-md-4">
-					<input type="text" name="apartment" #address.apartment="ngModel" [(ngModel)]="publication.address.apartment" placeholder="Ex. 400B"/> 
-				</div>
-			</div>
-
-
 			<div class="row">
 				<div class="col-md-4 col-md-offset-2">
 					<div>
-						<label style="font-size: 2em;">{{ 'building.headerGlobal' | translate }}:</label>
+						<label style="font-size: 1.8em;">{{ 'building.headerGlobal' | translate }}:</label>
 					</div>
 				</div>
 				<div class="col-md-6">

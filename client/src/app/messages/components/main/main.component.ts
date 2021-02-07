@@ -13,6 +13,5 @@ export class MainComponent implements OnInit {
 	}
 
 	ngOnInit(){
-		console.log('main.component loaded...');
 	}
 }

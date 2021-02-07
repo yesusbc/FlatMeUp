@@ -27,7 +27,6 @@ export class LoginComponent implements OnInit{
 		this.user = new User( "","","","","","",0,0,"","","","",this.birthday);
 	}
 	ngOnInit(){
-		console.log('Componente de login cargado...');
 	}
 
 	onSubmit(){

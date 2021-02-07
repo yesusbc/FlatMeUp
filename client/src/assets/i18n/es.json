@@ -73,8 +73,8 @@
 		"modalTitle": "¿Estás seguro?",
 		"modalBody": "Esta acción va a remover permanentemente la reseña de la dirección",
 		"cancel": "Cancelar",
-		"eraseReview": "Borrar Reseña"
-
+		"eraseReview": "Borrar Reseña",
+		"noReviews": "No tiene reseñas escritas aun."
 	},
 
 	"profile":
@@ -116,6 +116,7 @@
 		"publicationSuccessful": "Publicacíon completada exitosamente",
 		"publicationFailed": "Publicación fallida, intente otra vez",
 		"enterAnAddress": "Ingrese una dirección",
+		"enterAnApt": "# de casa, piso, apto. Ex. 400B",
 		"addressCorrect": "La dirección es correcta",
 		"addressIncorrect": "La dirección es incorrecta, revisa que esté escribiendo una calle y un número de edificio correctamente.",
 		"helpModalLabel": "¿Por qué mi dirección es incorrecta?",

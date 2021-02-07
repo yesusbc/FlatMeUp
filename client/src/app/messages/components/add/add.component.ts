@@ -45,7 +45,6 @@ export class AddComponent implements OnInit {
 	}
 
 	ngOnInit(){
-		console.log('add.component loaded...');
 		this.getUserPublicData(this.destUserId);
 	}
 

@@ -1,7 +1,5 @@
 <div class="col-md-4 col-md-offset-4">
   	<div class="google-places-container"> 
-    	<h2>{{ 'search.title' | translate }}</h2> 
-
 	<div class="input-group">
 		<input ngx-google-places-autocomplete [options]= 
 	   		'options'  (onAddressChange)="AddressChange($event)" placeholder="{{ 'search.searchForAnAddress' | translate }}" aria-label="Search" class="form-control"/> 

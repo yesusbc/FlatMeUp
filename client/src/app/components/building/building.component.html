@@ -1,10 +1,10 @@
 <div class="col-md-6 col-md-offset-3">
-	<h1 class="h1-strong">{{ 'building.title' | translate }}</h1>
+	<h2 class="h1-strong">{{ 'building.title' | translate }}</h2>
 	
 		<div class="panel-body">
 			<div class="building-text col-md-6 pull-left">
 				<div class="row">
-					<h1 style="display: inline;">
+					<h2 style="display: inline;">
 					{{ 'building.headerGlobal' | translate }}: 
 						<span *ngIf="hasGlobalRate == false">
 							{{globalRate}}
@@ -18,16 +18,14 @@
 								<span class="fa fa-star"></span>
 							</li>
 						</div>
-					</h1>
+					</h2>
 				</div>
 
 				<div class="row">
 					<h3 style="color:gray">
-						{{building.address.street + ", " + 
+						{{building.address.street + " #" + 
 						building.address.buildingNumber}}
-						<span *ngIf="building.address.apartment">, {{building.address.apartment}}</span>
-						. 
-						{{building.address.state + ", " + 
+						<span *ngIf="building.address.apartment">Int. {{building.address.apartment}}</span>. {{building.address.state + ", " + 
 						building.address.country}}
 				    </h3>
 				</div>
