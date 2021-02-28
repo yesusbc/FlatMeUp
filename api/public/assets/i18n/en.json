@@ -17,7 +17,8 @@
 		"images": "Images",
 		"next": "Next",
 		"previous": "Previous",
-		"currentLanguage": "en"
+		"currentLanguage": "en",
+		"datafieldMissing": "This field is required."
 	},
 
 	"building": 
@@ -50,6 +51,7 @@
 	{
 		"registerSuccessful": "Register completed successfully",
 		"registerFailed": "Register failed, try again",
+		"registerFailedUserTaken": "Either username or email is already taken",
 		"nameObligatory": "Name is obligatory, letters, 2-20 characters",
 		"usernameObligatory": "Username is obligatory, letters, numbers, 5-12 characters",
 		"passwordObligatory": "Password is obligatory",
@@ -71,8 +73,8 @@
 		"modalTitle": "Are you sure?",
 		"modalBody": "Performing this action will permanently remove review with address",
 		"cancel": "Cancel",
-		"eraseReview": "Erase Review"
-
+		"eraseReview": "Erase Review",
+		"noReviews": "You have no reviews yet."
 	},
 
 	"profile":
@@ -114,10 +116,11 @@
 		"publicationSuccessful": "Publication completed successfully",
 		"publicationFailed": "Publication failed, try again",
 		"enterAnAddress": "Enter an address",
+		"enterAnApt": "Apartment, suite, etc. Ex. 400B",
 		"addressCorrect": "Address is correct",
 		"addressIncorrect": "Address is incorrect, check if you're typing building number and street name correctly.",
 		"helpModalLabel": "Why my address is incorrect?",
-		"modalBody": "Be sure the address you're entering counts with at least a",
+		"modalBody": "We use google maps services to match for an address. Make sure the address you are looking for appears on the list, and then click on it. The address must contain at least a",
 		"modalBodyStreet": "Street",
 		"modalBodyStreetNumber": "Street Number",
 		"modalFooter": "Close",

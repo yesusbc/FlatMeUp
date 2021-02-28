@@ -22,7 +22,7 @@ export class AppComponent implements OnInit, DoCheck{
     private translate: TranslateService
   ){
   	this.title = "Flat me Up";
-    this.translate.use('en');
+    this.translate.use('es');
   }
 
   ngOnInit(){

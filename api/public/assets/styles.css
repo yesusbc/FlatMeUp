@@ -17,6 +17,10 @@
 	cursor: pointer;
 }
 
+.invalid-feedback{
+  color: red;
+}
+
 
 /****************************** HEADER Start*********************/
 .navigation {
