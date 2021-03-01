@@ -21,10 +21,6 @@
   color: red;
 }
 
-body {
-  background-color: #f0f2f5 !important;
-}
-
 h1 {
   color: #1e517a !important;
 }
@@ -33,7 +29,9 @@ h2 {
   color: #1e517a !important;
 }
 
-
+body {
+  background-color: #f0f2f5 !important;
+}
 
 /****************************** HEADER Start*********************/
 .navigation {
@@ -52,6 +50,10 @@ h2 {
 
 .navigation .navbar a:hover{
 	background: #D3D3D3 !important;
+}
+
+.navbar-light .navbar-toggle .icon-bar {
+    background-color: #2a79b4;
 }
 /****************************** HEADER End *********************/
 
