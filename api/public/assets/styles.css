@@ -10,7 +10,7 @@
 }
 
 .active{
-	background: #D3D3D3;
+	background: #D3D3D3 !important;
 }
 
 .pointer{
@@ -20,6 +20,19 @@
 .invalid-feedback{
   color: red;
 }
+
+body {
+  background-color: #f0f2f5 !important;
+}
+
+h1 {
+  color: #1e517a !important;
+}
+
+h2 {
+  color: #1e517a !important;
+}
+
 
 
 /****************************** HEADER Start*********************/
@@ -31,6 +44,10 @@
 .navigation .navbar {
 	border-radius: 0px !important;
 	border: none;
+}
+
+.navigation .navbar {
+  background: #f8f8f8 !important;
 }
 
 .navigation .navbar a:hover{
@@ -72,10 +89,10 @@
     list-style-type: none;
 }
 .profile-list span{
-    color: black;
+    color: #1e517a;
 }
 .profile-list a{
-    color: black;
+    color: #1e517a;
 }
   
 
