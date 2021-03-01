@@ -145,7 +145,7 @@ export class SearchComponent implements OnInit{
                         this.buildings = response.buildings;
 
                         if (page > this.pages){
-                            this._router.navigate(['/home']);
+                            this.status = 'no entries yet';
                         }
                     }else{
                         this.status = 'error';

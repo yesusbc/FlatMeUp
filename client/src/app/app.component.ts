@@ -21,8 +21,8 @@ export class AppComponent implements OnInit, DoCheck{
   	private _userService:UserService,
     private translate: TranslateService
   ){
-  	this.title = "Flat me Up";
-    this.translate.use('es');
+  	this.title = "RateMyFlat";
+    this.translate.use('en');
   }
 
   ngOnInit(){

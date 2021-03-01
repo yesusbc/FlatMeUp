@@ -33,6 +33,11 @@
 		</div>
 	</div>
 
+	<div class="col-md-12 text-center" *ngIf="status == 'no entries yet'">
+		<br/>
+		{{'search.noEntriesYet' | translate }}
+	</div>
+
   	<div class="buildings-search">
 		<div *ngFor="let building of buildings" class="item-building">
 			<div class="panel panel-default">
@@ -41,7 +46,7 @@
 						<!-- Image fetching could be more elegant -->
 						<div align="center">
 							<img src="{{url+'get-image/'+building.file[0]}}" *ngIf="building.file[0]" width="300" height="150"/>
-							<img src="assets/building.png" class="building-default" *ngIf="!building.file[0]" width="350" height="200"/>
+							<img src="assets/building.png" class="building-default" *ngIf="!building.file[0]" width="250" height="150"/>
 						</div>
 					</div>
 					<div class="building-text pull-left">

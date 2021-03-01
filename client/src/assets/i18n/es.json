@@ -1,7 +1,7 @@
 {
 	"home": 
 	{
-		"title": "Bienvenido a FlatMeUp",
+		"title": "Bienvenido a Rate My Flat",
 		"language": "Lenguaje",
 		"register": "Registro",
 		"writeAReview": "Escribir una reseña",
@@ -9,7 +9,8 @@
 		"logout": "Salir",
 		"myProfile": "Mi Perfil",
 		"myReviews": "Mis Reseñas",
-		"myInbox": "Mensajes"
+		"myInbox": "Mensajes",
+		"needHelp": "¿Necesitas ayuda?"
 	},
 
 	"general":
@@ -107,7 +108,8 @@
 		"helpModalLabel": "¿Cómo buscar una dirección",
 		"modalBody": "Escribe la dirección deseas buscar. Puedes buscar por ciudades, estados, paises, calles, o una dirección especifica (calle, número, colonia, etc.).",
 		"modalBody2": "Solamente asegúrate que la dirección que buscas aparezca en la lista, y dale click.",
-		"modalFooter": "Cerrar"
+		"modalFooter": "Cerrar",
+		"noEntriesYet": "No hay reseñas en esta dirección aún :("
 	},
 
 	"writeAReview":
@@ -142,7 +144,6 @@
 		"sentSuccessful": "Mensaje Enviado Exitosamente",
 		"sentMessages": "Mensajes Enviados",
 		"sentFailed": "Mensaje fallido, intente otra vez",
-		"for": "Para",
 		"reference": "Referencia",
 		"message": "Mensaje",
 		"messageObligatory": "El mensaje es obligatorio",

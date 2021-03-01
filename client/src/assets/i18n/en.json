@@ -1,7 +1,7 @@
 {
 	"home": 
 	{
-		"title": "Welcome to FlatMeUp",
+		"title": "Welcome to Rate My Flat",
 		"language": "Language",
 		"register": "Register",
 		"writeAReview": "Write A Review",
@@ -9,7 +9,8 @@
 		"logout": "Log Out",
 		"myProfile": "My Profile",
 		"myReviews": "My Reviews",
-		"myInbox": "Inbox"
+		"myInbox": "Inbox",
+		"needHelp": "Need help?"
 	},
 
 	"general":
@@ -107,7 +108,8 @@
 		"helpModalLabel": "How to search for an address?",
 		"modalBody": "Type in the address you'd like to search on. You may look for cities, states, countries, or an specific address (street and street number).",
 		"modalBody2": "Just make sure the address you're looking for appears on the dropdown list.",
-		"modalFooter": "Close"
+		"modalFooter": "Close",
+		"noEntriesYet": "No reviews yet at this address :("
 	},
 
 	"writeAReview":

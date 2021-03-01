@@ -41,8 +41,8 @@
 
 		<form #formAdd="ngForm" (ngSubmit)="onSubmit(formAdd)">
 			<p *ngIf="destUser">
-				<label>{{ 'message.for' | translate }}: </label>
-				{{destUser.lastname}},{{destUser.name}} 
+				<label>{{ 'message.to' | translate }}: </label>
+				<span *ngIf=destUser.lastname>{{destUser.lastname}}, </span>{{destUser.name}} 
 			</p>
 			
 			<p> 

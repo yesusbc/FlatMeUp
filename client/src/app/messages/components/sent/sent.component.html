@@ -35,7 +35,9 @@
 				<div class="panel-body">
 					<div class="user-name pull-left">
 						<p class="name-lastname">
-							{{ 'message.to' | translate }}: {{message.receiver.lastname + ', ' + message.receiver.name}}
+							{{ 'message.to' | translate }}: 
+							<span *ngIf=message.receiver.lastname>{{message.receiver.lastname + ', ' }}</span>
+							{{message.receiver.name}}
 						&nbsp;&nbsp;|&nbsp;&nbsp;
 						<span class="date nickname text-muted">
 							{{ (message.created_at | amFromUnix) | amTimeAgo}}
