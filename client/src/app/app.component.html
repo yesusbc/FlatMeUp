@@ -76,6 +76,14 @@
       </div>
 
       <div class="collapse navbar-collapse" id="navbar-collapse-no-identity">
+        <ul class="nav navbar-nav navbar-left" *ngIf="!identity">
+          <li>
+            <a [routerLink]="['/write-a-review']" [routerLinkActive]="['active']">
+              <span class="glyphicon glyphicon-pencil"></span>
+              {{ 'home.writeAReview' | translate }}
+            </a>
+          </li>
+        </ul>
         <ul class="nav navbar-nav navbar-right" *ngIf="!identity">
           <li>
             <a [routerLink]="['/login']" [routerLinkActive]="['active']">
