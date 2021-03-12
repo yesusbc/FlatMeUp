@@ -143,6 +143,7 @@ export class SearchComponent implements OnInit{
                         this.total = response.total;
                         this.pages = response.pages;
                         this.buildings = response.buildings;
+			this.status = 'success';
 
                         if (page > this.pages){
                             this.status = 'no entries yet';

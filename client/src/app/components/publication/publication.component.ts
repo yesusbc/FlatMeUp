@@ -91,6 +91,7 @@ export class PublicationComponent implements OnInit{
 						}
 						ReviewForm.reset();
 						this.formattedaddress = "";
+						this._router.navigate(['/building/'+response.publication.buildingId]);
 					}else{
 						this.status = 'error';
 

@@ -160,7 +160,7 @@ function getBuildings(req, res){
 	}
 
 	var itemsPerPage = 4;
-	Building.find({}).select('address apartment globalRate file reviewsCounter created_at').paginate(page, itemsPerPage, (err, buildings, totalBuildings) => {	
+	Building.find({}).select('address apartment globalRate file reviewsCounter created_at').sort('-created_at').paginate(page, itemsPerPage, (err, buildings, totalBuildings) => {	
 		if (err) return res.status(500).send({message: 'Error when returning buildings'});
 		return res.status(200).send({
 			total: totalBuildings,

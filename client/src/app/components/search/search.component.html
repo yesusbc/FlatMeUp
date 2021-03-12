@@ -33,9 +33,12 @@
 		</div>
 	</div>
 
-	<div class="col-md-12 text-center" *ngIf="status == 'no entries yet'">
+
+	<div class="row" *ngIf="status == 'no entries yet'">
+	    <div class="col-md-12 text-center">
 		<br/>
 		{{'search.noEntriesYet' | translate }}
+	    </div>
 	</div>
 
   	<div class="buildings-search">
