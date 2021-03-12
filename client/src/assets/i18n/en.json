@@ -118,7 +118,7 @@
 		"publicationSuccessful": "Publication completed successfully",
 		"publicationFailed": "Publication failed, try again",
 		"enterAnAddress": "Enter an address",
-		"enterAnApt": "Apartment, suite, etc. Ex. 400B",
+		"enterAnApt": "# of apartment, suite, etc. Ex. 400B",
 		"addressCorrect": "Address is correct",
 		"addressIncorrect": "Address is incorrect, check if you're typing building number and street name correctly.",
 		"helpModalLabel": "Why my address is incorrect?",
