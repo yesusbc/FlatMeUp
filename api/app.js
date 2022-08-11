@@ -38,7 +38,7 @@ app.use('/api', publication_routes);
 app.use('/api', building_routes);
 app.use('/api', message_routes);
 
-app.set('port', (8080));
+app.set('port', (process.env.PORT || 5000));
 
 mongoose.Promise = global.Promise;
 
@@ -51,7 +51,7 @@ mongoose.connect(uri, {
         .then(() =>{
             console.log("Database connection successfully...");
 
-            var server = app.listen(8080, function () {
+            var server = app.listen(app.get('port'), function () {
     			var port = server.address().port;
     			console.log("App now running on port", port);
 
