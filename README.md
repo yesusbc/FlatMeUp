@@ -1,6 +1,6 @@
 # FlatMeUp
 
-Webiste: [https://rate-my-flat-com.herokuapp.com/](https://pages.github.com/).
+Website: [https://rate-my-flat-com.herokuapp.com/](https://pages.github.com/).
 
 ## To deploy locally
 After installing dependencies:
